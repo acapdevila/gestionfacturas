@@ -24,3 +24,4 @@ Thumbs.db
 *.suo
 GestionFacturas.Website/App_Data/**
 .vs/**
+/.vs
