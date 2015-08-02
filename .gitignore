@@ -23,5 +23,6 @@ Thumbs.db
 [Tt]est[Rr]esult*
 *.suo
 GestionFacturas.Website/App_Data/**
-.vs/**
-/.vs
+.vs/
+obj/
+
