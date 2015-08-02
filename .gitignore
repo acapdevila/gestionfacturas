@@ -26,3 +26,4 @@ GestionFacturas.Website/App_Data/**
 .vs/
 obj/
 
+/GestionFacturas.Website/obj
