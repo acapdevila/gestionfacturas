@@ -27,3 +27,4 @@ GestionFacturas.Website/App_Data/**
 obj/
 
 /GestionFacturas.Website/obj
+*.Release.config
