@@ -50,8 +50,27 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="TestsPersistenciaFacturasEnBd.cs" />
+    <Compile Include="TestsFactura.cs" />
+    <Compile Include="TestsPersistencia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GestionFacturas.Datos\GestionFacturas.Datos.csproj">
+      <Project>{6a203cf3-8aa5-4e51-8f7f-18ded40da663}</Project>
+      <Name>GestionFacturas.Datos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GestionFacturas.Modelos\GestionFacturas.Modelos.csproj">
+      <Project>{830b5222-2dbf-47b9-a9a0-c6b07294bff3}</Project>
+      <Name>GestionFacturas.Modelos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GestionFacturas.Servicios\GestionFacturas.Servicios.csproj">
+      <Project>{b5eca3f7-1858-49d0-a148-d4ab14b9c02b}</Project>
+      <Name>GestionFacturas.Servicios</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GestionFacturas.Website\GestionFacturas.Website.csproj">
+      <Project>{80dd7fbd-9b1c-4e7f-9aad-df57d3eb6ad2}</Project>
+      <Name>GestionFacturas.Website</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

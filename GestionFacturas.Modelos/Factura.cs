@@ -46,19 +46,26 @@ namespace GestionFacturas.Modelos
         public string Comentarios { get; set; }
         public string ComentariosPie { get; set; }
 
-        public void EstablecerVendedor(FormaJuridica vendedor)
+
+        public decimal BaseImponible()
         {
+            if (!Lineas.Any()) return 0;
+
+            return Lineas.Sum(m => m.PrecioXCantidad);
 
         }
-
-        public void EstablecerComprador(FormaJuridica comprador)
+        public decimal ImporteImpuestos()
         {
+            if (!Lineas.Any()) return 0;
 
+            return Lineas.Sum(m => m.PrecioXCantidad * m.PorcentajeImpuesto / 100);
         }
+        public decimal ImporteTotal()
+        {
+            if (!Lineas.Any()) return 0;
 
-        public decimal BaseImponibleFactura { get { return 0; } }
-        public decimal ImporteImpuestosFactura { get { return 0; } }
-        public decimal ImporteTotalFactura { get { return 0; } }
+            return Lineas.Sum(m => m.PrecioXCantidad + (m.PrecioXCantidad * m.PorcentajeImpuesto / 100));
+        }
     }
      public enum EstadoFacturaEnum
     {
