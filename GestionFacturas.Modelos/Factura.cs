@@ -14,38 +14,75 @@ namespace GestionFacturas.Modelos
         }
         
         public int Id { get; set; }
+           
+        public string SerieFactura { get; set; }
+        public int NumeracionFactura { get; set; }
+        public string FormatoNumeroFactura { get; set; }
 
-        public int VendedorId { get; set; }
-        public int CompradorId { get; set; }
-
-
-        public string NumeroSerie { get; set; }
-        public int NumeroFactura { get; set; }
-        public string NumeroFormato { get; set; }
-       
+        public string NumeroFactura { get { return string.Format(FormatoNumeroFactura, SerieFactura, NumeracionFactura); } }
+               
         public DateTime FechaEmisionFactura { get; set; }
-        public DateTime FechaVencimientoFactura { get; set; }
+        public DateTime FechaVencimientoFactura { get; set; }      
 
-        public int FormaPago { get; set; }
-        public bool EstaEnviada { get; set; }
-        public int  EstadoFactura { get; set; }
-        public string Comentarios { get; set; }
-        public string ComentariosPie { get; set; }
-        
-        public string RegistroCreadoPorUsuario { get; set; }
-        public DateTime RegistroCreadoEnFecha { get; set; }
-        public string RegistroEditadoPorUsuario { get; set; }
-        public DateTime RegistroEditadoEnFecha { get; set; }
-        
-        public virtual FormaJuridica Vendedor { get; set; }
-        public virtual FormaJuridica Comprador { get; set; }
+        public int? IdVendedor { get; set; }
+        public string VendedorNumeroIdentificacionFiscal { get; set; }
+        public string VendedorNombreOEmpresa { get; set; }
+        public string VendedorDireccion { get; set; }
+        public string VendedorLocalidad { get; set; }
+        public string VendedorProvincia { get; set; }
+        public string VendedorCodigoPostal { get; set; }
+
+        public int? IdComprador { get; set; }
+        public string CompradorNumeroIdentificacionFiscal { get; set; }
+        public string CompradorNombreOEmpresa { get; set; }
+        public string CompradorDireccion { get; set; }
+        public string CompradorLocalidad { get; set; }
+        public string CompradorProvincia { get; set; }
+        public string CompradorCodigoPostal { get; set; }
 
         public virtual ICollection<LineaFactura> Lineas { get; set; }
         
+        public EstadoFacturaEnum EstadoFactura { get; set; }
+        public string Comentarios { get; set; }
+        public string ComentariosPie { get; set; }
+
+        public void EstablecerVendedor(FormaJuridica vendedor)
+        {
+
+        }
+
+        public void EstablecerComprador(FormaJuridica comprador)
+        {
+
+        }
+
+        public decimal BaseImponibleFactura { get { return 0; } }
+        public decimal ImporteImpuestosFactura { get { return 0; } }
+        public decimal ImporteTotalFactura { get { return 0; } }
     }
+     public enum EstadoFacturaEnum
+    {
+        Borrador = 0,
+        Creada = 1,
+        Enviada = 2,
+        Cobrada = 3,
+        Anulada = 4
+    }
+
 
     public class LineaFactura
     {
-
+        public int Id { get; set; }
+        public int IdFactura { get; set; }
+        public string Descripcion { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioUnitario { get; set; }
+        public decimal PrecioXCantidad { get { return PrecioUnitario * Cantidad; } }
+        public int PorcentajeImpuesto { get; set; }
+        public decimal ImporteBruto { get { return PrecioXCantidad + ((PrecioXCantidad * PorcentajeImpuesto) /100); } }
+        public virtual Factura Factura { get; set; }
     }
+
+
+   
 }
