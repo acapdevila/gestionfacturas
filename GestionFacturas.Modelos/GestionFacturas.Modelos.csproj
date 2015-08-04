@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="Factura.cs" />
     <Compile Include="FormaJuridica.cs" />
-    <Compile Include="IdentityModels.cs" />
+    <Compile Include="Usuario.cs" />
     <Compile Include="Impuesto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

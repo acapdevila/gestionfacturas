@@ -11,7 +11,7 @@ namespace GestionFacturas.Tests
         private int PorcentajeIva { get { return 21; } }
 
 
-        private Factura CreaFacturaConTresLineas()
+        private Factura FacturaEjemploConTresLineas()
         {
             return new Factura
             {
@@ -30,7 +30,7 @@ namespace GestionFacturas.Tests
         [TestMethod]
         public void CaluculaBaseImponible_FacturaConTresLineas()
         {
-            var factura = CreaFacturaConTresLineas();
+            var factura = FacturaEjemploConTresLineas();
 
             var baseImponible = factura.BaseImponible();
 
@@ -40,7 +40,7 @@ namespace GestionFacturas.Tests
         [TestMethod]
         public void CaluculaImporteImpuestos_FacturaConTresLineas()
         {
-            var factura = CreaFacturaConTresLineas();
+            var factura = FacturaEjemploConTresLineas();
 
             var impuestos = factura.ImporteImpuestos();
 
@@ -50,7 +50,7 @@ namespace GestionFacturas.Tests
         [TestMethod]
         public void CaluculaImporteTotal_FacturaConTresLineas()
         {
-            var factura = CreaFacturaConTresLineas();
+            var factura = FacturaEjemploConTresLineas();
 
             var importeTotal = factura.ImporteTotal();
 
@@ -60,7 +60,7 @@ namespace GestionFacturas.Tests
         [TestMethod]
         public void ElNumeroDeLaFactura_TieneUnFormatoCorrecto()
         {
-            var factura = CreaFacturaConTresLineas();
+            var factura = FacturaEjemploConTresLineas();
 
             var numeroFactura = factura.NumeroFactura;
 

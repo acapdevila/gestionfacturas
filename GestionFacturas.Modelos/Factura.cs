@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace GestionFacturas.Modelos
         }
         
         public int Id { get; set; }
-           
+        public string IdUsuario { get; set; }
+        
         public string SerieFactura { get; set; }
         public int NumeracionFactura { get; set; }
         public string FormatoNumeroFactura { get; set; }
@@ -41,6 +43,7 @@ namespace GestionFacturas.Modelos
         public string CompradorCodigoPostal { get; set; }
 
         public virtual ICollection<LineaFactura> Lineas { get; set; }
+        public virtual Usuario Usuario { get; set; }
         
         public EstadoFacturaEnum EstadoFactura { get; set; }
         public string Comentarios { get; set; }
@@ -89,7 +92,6 @@ namespace GestionFacturas.Modelos
         public decimal ImporteBruto { get { return PrecioXCantidad + ((PrecioXCantidad * PorcentajeImpuesto) /100); } }
         public virtual Factura Factura { get; set; }
     }
-
 
    
 }
