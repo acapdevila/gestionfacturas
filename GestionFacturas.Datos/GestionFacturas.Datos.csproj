@@ -58,6 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContextoBaseDatos.cs" />
+    <Compile Include="Migrations\201508040947297_Init.cs" />
+    <Compile Include="Migrations\201508040947297_Init.Designer.cs">
+      <DependentUpon>201508040947297_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +74,11 @@
       <Project>{830b5222-2dbf-47b9-a9a0-c6b07294bff3}</Project>
       <Name>GestionFacturas.Modelos</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201508040947297_Init.resx">
+      <DependentUpon>201508040947297_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

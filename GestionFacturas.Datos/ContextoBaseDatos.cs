@@ -9,6 +9,7 @@ namespace GestionFacturas.Datos
         public ContextoBaseDatos()
             : base("CadenaConexionGestionFacturas", throwIfV1Schema: false)
         {
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public static ContextoBaseDatos Create()
