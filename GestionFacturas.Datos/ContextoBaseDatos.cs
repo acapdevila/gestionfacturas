@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GestionFacturas.Modelos;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GestionFacturas.Datos
 {
-    public class ContextoBaseDatos
+ 
+    public class ContextoBaseDatos : IdentityDbContext<ApplicationUser>
     {
+        public ContextoBaseDatos()
+            : base("DefaultConnection", throwIfV1Schema: false)
+        {
+        }
 
+        public static ContextoBaseDatos Create()
+        {
+            return new ContextoBaseDatos();
+        }
     }
 }

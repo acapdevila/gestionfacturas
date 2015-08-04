@@ -174,7 +174,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -245,6 +244,20 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GestionFacturas.Datos\GestionFacturas.Datos.csproj">
+      <Project>{6a203cf3-8aa5-4e51-8f7f-18ded40da663}</Project>
+      <Name>GestionFacturas.Datos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GestionFacturas.Modelos\GestionFacturas.Modelos.csproj">
+      <Project>{830b5222-2dbf-47b9-a9a0-c6b07294bff3}</Project>
+      <Name>GestionFacturas.Modelos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GestionFacturas.Servicios\GestionFacturas.Servicios.csproj">
+      <Project>{b5eca3f7-1858-49d0-a148-d4ab14b9c02b}</Project>
+      <Name>GestionFacturas.Servicios</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
