@@ -28,3 +28,5 @@ obj/
 
 /GestionFacturas.Website/obj
 *.Release.config
+*.ldf
+*.mdf
