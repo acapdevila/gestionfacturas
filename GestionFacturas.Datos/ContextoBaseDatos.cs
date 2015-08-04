@@ -7,7 +7,7 @@ namespace GestionFacturas.Datos
     public class ContextoBaseDatos : IdentityDbContext<ApplicationUser>
     {
         public ContextoBaseDatos()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("CadenaConexionGestionFacturas", throwIfV1Schema: false)
         {
         }
 
