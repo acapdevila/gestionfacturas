@@ -32,5 +32,6 @@ namespace GestionFacturas.Datos
         {
             return new ContextoBaseDatos();
         }
+        
     }
 }

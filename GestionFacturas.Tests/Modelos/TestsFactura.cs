@@ -3,30 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GestionFacturas.Modelos;
 using System.Collections.Generic;
 
-namespace GestionFacturas.Tests
+namespace GestionFacturas.Tests.Modelos
 {
     [TestClass]
     public class TestsFactura
-    {
-        private int PorcentajeIva { get { return 21; } }
-
-
-        private Factura FacturaEjemploConTresLineas()
-        {
-            return new Factura
-            {
-                FormatoNumeroFactura = "{0}{1:1000}",
-                SerieFactura = "AC / ",
-                NumeracionFactura = 12,
-                Lineas = new List<LineaFactura>
-                {
-                    new LineaFactura { PorcentajeImpuesto = PorcentajeIva, PrecioUnitario = 20, Cantidad = 2 },
-                    new LineaFactura { PorcentajeImpuesto = PorcentajeIva, PrecioUnitario = (decimal)23.5, Cantidad = 1 },
-                    new LineaFactura { PorcentajeImpuesto = PorcentajeIva, PrecioUnitario = 4, Cantidad = 2 }
-                }
-            };
-        }
-
+    {        
         [TestMethod]
         public void CaluculaBaseImponible_FacturaConTresLineas()
         {
@@ -65,6 +46,25 @@ namespace GestionFacturas.Tests
             var numeroFactura = factura.NumeroFactura;
 
             Assert.AreEqual("AC / 1012",numeroFactura, @"El número de la factura no se formatea correctamente");
+        }
+
+
+        private Factura FacturaEjemploConTresLineas()
+        {
+            var porcentajeIva = 21;
+
+            return new Factura
+            {
+                FormatoNumeroFactura = "{0}{1:1000}",
+                SerieFactura = "AC / ",
+                NumeracionFactura = 12,
+                Lineas = new List<LineaFactura>
+                {
+                    new LineaFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = 20, Cantidad = 2 },
+                    new LineaFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = (decimal)23.5, Cantidad = 1 },
+                    new LineaFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = 4, Cantidad = 2 }
+                }
+            };
         }
 
     }

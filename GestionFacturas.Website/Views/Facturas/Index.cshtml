@@ -1,0 +1,165 @@
+﻿@model IEnumerable<GestionFacturas.Modelos.Factura>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SerieFactura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeracionFactura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormatoNumeroFactura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaEmisionFactura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaVencimientoFactura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdVendedor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VendedorNumeroIdentificacionFiscal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VendedorNombreOEmpresa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VendedorDireccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VendedorLocalidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VendedorProvincia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VendedorCodigoPostal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdComprador)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompradorNumeroIdentificacionFiscal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompradorNombreOEmpresa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompradorDireccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompradorLocalidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompradorProvincia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompradorCodigoPostal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoFactura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comentarios)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ComentariosPie)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SerieFactura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumeracionFactura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormatoNumeroFactura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaEmisionFactura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaVencimientoFactura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdVendedor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendedorNumeroIdentificacionFiscal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendedorNombreOEmpresa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendedorDireccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendedorLocalidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendedorProvincia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendedorCodigoPostal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdComprador)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompradorNumeroIdentificacionFiscal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompradorNombreOEmpresa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompradorDireccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompradorLocalidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompradorProvincia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompradorCodigoPostal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoFactura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comentarios)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ComentariosPie)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

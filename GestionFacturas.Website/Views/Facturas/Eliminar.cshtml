@@ -1,0 +1,208 @@
+﻿@model GestionFacturas.Modelos.Factura
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Factura</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SerieFactura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SerieFactura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeracionFactura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeracionFactura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormatoNumeroFactura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormatoNumeroFactura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaEmisionFactura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaEmisionFactura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaVencimientoFactura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaVencimientoFactura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdVendedor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdVendedor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VendedorNumeroIdentificacionFiscal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VendedorNumeroIdentificacionFiscal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VendedorNombreOEmpresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VendedorNombreOEmpresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VendedorDireccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VendedorDireccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VendedorLocalidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VendedorLocalidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VendedorProvincia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VendedorProvincia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VendedorCodigoPostal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VendedorCodigoPostal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdComprador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdComprador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompradorNumeroIdentificacionFiscal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompradorNumeroIdentificacionFiscal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompradorNombreOEmpresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompradorNombreOEmpresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompradorDireccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompradorDireccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompradorLocalidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompradorLocalidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompradorProvincia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompradorProvincia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompradorCodigoPostal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompradorCodigoPostal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoFactura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoFactura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comentarios)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comentarios)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComentariosPie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComentariosPie)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
