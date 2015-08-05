@@ -8,18 +8,18 @@ using Owin;
 using GestionFacturas.Website.Models;
 using GestionFacturas.Modelos;
 using GestionFacturas.Datos;
+using Microsoft.Owin.Security.DataProtection;
 
 namespace GestionFacturas.Website
 {
     public partial class Startup
     {
+        public static IDataProtectionProvider DataProtectionProvider { get; private set; }
+
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(ContextoBaseDatos.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            DataProtectionProvider = app.GetDataProtectionProvider();
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider

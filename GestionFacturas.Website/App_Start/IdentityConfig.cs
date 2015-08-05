@@ -35,20 +35,14 @@ namespace GestionFacturas.Website
         public ApplicationUserManager(IUserStore<Usuario> store)
             : base(store)
         {
-        }
-
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
-        {
-            var manager = new ApplicationUserManager(new UserStore<Usuario>(context.Get<ContextoBaseDatos>()));
-            // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<Usuario>(manager)
+            UserValidator = new UserValidator<Usuario>(this)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
 
             // Configure validation logic for passwords
-            manager.PasswordValidator = new PasswordValidator
+            PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
                 RequireNonLetterOrDigit = true,
@@ -58,31 +52,34 @@ namespace GestionFacturas.Website
             };
 
             // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = true;
-            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+            UserLockoutEnabledByDefault = true;
+            DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            MaxFailedAccessAttemptsBeforeLockout = 5;
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<Usuario>
+            RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<Usuario>
             {
                 MessageFormat = "Your security code is {0}"
             });
-            manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<Usuario>
+
+            RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<Usuario>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
-            manager.EmailService = new EmailService();
-            manager.SmsService = new SmsService();
-            var dataProtectionProvider = options.DataProtectionProvider;
-            if (dataProtectionProvider != null)
+
+
+            EmailService = new EmailService();
+            SmsService = new SmsService();
+
+            if (Startup.DataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
-                    new DataProtectorTokenProvider<Usuario>(dataProtectionProvider.Create("ASP.NET Identity"));
+                UserTokenProvider =
+                    new DataProtectorTokenProvider<Usuario>(Startup.DataProtectionProvider.Create("ASP.NET Identity"));
             }
-            return manager;
         }
+
     }
 
     // Configure the application sign-in manager which is used in this application.
@@ -91,6 +88,7 @@ namespace GestionFacturas.Website
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
+
         }
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(Usuario user)
@@ -98,9 +96,5 @@ namespace GestionFacturas.Website
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }
 
-        public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
-        {
-            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
-        }
     }
 }
