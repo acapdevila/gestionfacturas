@@ -32,3 +32,5 @@ obj/
 *.mdf
 GestionFacturas.Deploy.Ejemplo/*
 *.Ejemplo.config
+GestionFacturas.Deploy.Demo/*
+*.Demo.config
