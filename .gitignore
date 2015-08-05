@@ -27,10 +27,7 @@ GestionFacturas.Website/App_Data/**
 obj/
 
 /GestionFacturas.Website/obj
-*.Release.config
 *.ldf
 *.mdf
-GestionFacturas.Deploy.Ejemplo/*
-*.Ejemplo.config
 GestionFacturas.Deploy.Demo/*
 *.Demo.config
