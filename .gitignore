@@ -30,3 +30,5 @@ obj/
 *.Release.config
 *.ldf
 *.mdf
+GestionFacturas.Deploy.Ejemplo/*
+*.Ejemplo.config
