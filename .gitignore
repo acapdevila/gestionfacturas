@@ -30,3 +30,5 @@ obj/
 *.mdf
 GestionFacturas.Deploy.Demo/*
 *.Demo.config
+GestionFacturas.Datos/App.Debug.config
+GestionFacturas.Datos/App.Release.config
