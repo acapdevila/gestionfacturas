@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace GestionFacturas.Website
+namespace GestionFacturas.Website.Views.Error
 {
     public partial class _404 : System.Web.UI.Page
     {

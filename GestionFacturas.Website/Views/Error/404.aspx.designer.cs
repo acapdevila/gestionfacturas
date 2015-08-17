@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GestionFacturas.Website
+namespace GestionFacturas.Website.Views.Error
 {
 
 

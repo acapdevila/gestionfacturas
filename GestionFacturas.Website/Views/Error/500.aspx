@@ -13,7 +13,7 @@
         
         <h1>Error</h1>
         <h2 class="text-danger">  
-        Se ha producido un error mientras se procesaba la petición, disculpa les molestias.
+        Se ha producido un error mientras se procesaba la petición, disculpa les molestias (aspx).
         </h2>
          
              <p><a href="/">Volver a la página principal</a></p>
