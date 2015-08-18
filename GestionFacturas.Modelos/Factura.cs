@@ -79,7 +79,6 @@ namespace GestionFacturas.Modelos
         Anulada = 4
     }
 
-
     public class LineaFactura
     {
         public int Id { get; set; }
@@ -93,5 +92,27 @@ namespace GestionFacturas.Modelos
         public virtual Factura Factura { get; set; }
     }
 
-   
+    public class ItemListaFacturas
+    {
+        public int Id { get; set; }
+        public string IdUsuario { get; set; }
+
+        public string SerieFactura { get; set; }
+        public int NumeracionFactura { get; set; }
+        public string FormatoNumeroFactura { get; set; }
+
+        public string NumeroFactura { get { return string.Format(FormatoNumeroFactura, SerieFactura, NumeracionFactura); } }
+
+        public DateTime FechaEmisionFactura { get; set; }
+        public DateTime FechaVencimientoFactura { get; set; }
+
+        public int? IdVendedor { get; set; }
+        public string VendedorNombreOEmpresa { get; set; }
+
+        public decimal ImporteTotal { get; set; }
+
+        public EstadoFacturaEnum EstadoFactura { get; set; }
+
+    }
+
 }

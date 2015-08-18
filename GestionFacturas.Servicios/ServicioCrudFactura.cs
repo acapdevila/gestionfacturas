@@ -7,7 +7,7 @@ namespace GestionFacturas.Servicios
 {
     public class ServicioCrudFactura
     {
-        private readonly ContextoBaseDatos _contexto;
+        protected readonly ContextoBaseDatos _contexto;
 
         public ServicioCrudFactura(ContextoBaseDatos contexto)
         {

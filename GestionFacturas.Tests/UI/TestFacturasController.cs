@@ -1,5 +1,6 @@
 ﻿using GestionFacturas.Datos;
 using GestionFacturas.Modelos;
+using GestionFacturas.Servicios;
 using GestionFacturas.Website.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -77,7 +78,7 @@ namespace GestionFacturas.Tests.UI
 
         private FacturasController ObtenerFacturasControllador()
         {
-            return new FacturasController(new ContextoBaseDatos());
+            return new FacturasController(new ServicioFactura(new ContextoBaseDatos()));
         }
 
     }

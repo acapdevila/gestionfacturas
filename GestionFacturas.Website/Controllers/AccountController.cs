@@ -56,7 +56,11 @@ namespace GestionFacturas.Website.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+
+                    return returnUrl != null
+                            ? RedirectToLocal(returnUrl)
+                            : RedirectToAction("AccessSuccess");
+                    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -66,6 +70,14 @@ namespace GestionFacturas.Website.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+        
+        public ActionResult AccessSuccess(string redirectUrl)
+        {
+            if (!string.IsNullOrEmpty(redirectUrl))
+                return RedirectToLocal(redirectUrl);
+            
+            return RedirectToAction("Index", "Facturas");
         }
 
         //
@@ -113,7 +125,6 @@ namespace GestionFacturas.Website.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -122,7 +133,6 @@ namespace GestionFacturas.Website.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

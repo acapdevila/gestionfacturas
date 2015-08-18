@@ -10,24 +10,33 @@ using System.Web.Mvc;
 using Microsoft.Owin.Security;
 using GestionFacturas.Datos;
 using GestionFacturas.Modelos;
+using Webdiyer.WebControls.Mvc;
+using GestionFacturas.Servicios;
+using GestionFacturas.Website.Viewmodels.Facturas;
 
 namespace GestionFacturas.Website.Controllers
 {
     [Authorize]
     public class FacturasController : Controller
     {
+        private readonly ServicioFactura _servicioFactura;
         private readonly ContextoBaseDatos _db;
 
-        public FacturasController(ContextoBaseDatos contexto)
+        public FacturasController(ServicioFactura servicioFactura)
         {
-            _db = contexto;
+            _servicioFactura = _servicioFactura;
         }
         
 
         public async Task<ActionResult> Index()
         {
-            var facturas = _db.Facturas.Include(f => f.Lineas);
-            return View("Index",await facturas.ToListAsync());
+            var facturas = await _servicioFactura.ListaFacturasAsync();
+
+            var viewmodel = new FacturasIndexViewModel {
+                ListaFacturas = facturas.ToPagedList(1, 20)
+            };
+
+            return View("Index", viewmodel);
         }
 
         public async Task<ActionResult> Detalles(int? id)
