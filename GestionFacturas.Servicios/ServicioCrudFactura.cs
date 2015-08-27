@@ -2,6 +2,8 @@
 using GestionFacturas.Modelos;
 using System.Linq;
 using System.Data.Entity;
+using System.Threading.Tasks;
+using Omu.ValueInjecter;
 
 namespace GestionFacturas.Servicios
 {
@@ -13,20 +15,37 @@ namespace GestionFacturas.Servicios
         {
             _contexto = contexto;
         }
-        public void Crear(Factura factura)
+            
+
+        public async Task<int> CrearFacturaAsync(EditorFactura editor)
         {
+            var factura = new Factura();
+            factura.InyectaEditorFactura(editor);
+
             _contexto.Facturas.Add(factura);
-            _contexto.SaveChanges();
-        }
 
-        public Factura Obtener(int idFactura) {
-            return _contexto.Facturas.Include(m=>m.Lineas).FirstOrDefault(m=>m.Id == idFactura);
-        }
+            var cambios = await GuardarCambiosAsync();
+            
+            editor.InyectaFactura(factura);
 
-        public void Eliminar(int idFactura)
+            return cambios;
+        }
+        
+        public async Task<int> ActualizarFacturaAsync(EditorFactura editor)
         {
-            var factura = Obtener(idFactura);
+            var factura = await ObtenerFacturaAsync(editor.Id);
+            factura.InyectaEditorFactura(editor);
 
+            _contexto.Entry(factura).State = EntityState.Modified;
+            return  await GuardarCambiosAsync();
+         }
+
+     
+
+        public async Task<int> EliminarFactura(int idFactura)
+        {
+            var factura = await ObtenerFacturaAsync(idFactura);
+            
             while (factura.Lineas.Any())
             {
                 var linea = factura.Lineas.First();
@@ -35,12 +54,24 @@ namespace GestionFacturas.Servicios
 
             _contexto.Facturas.Remove(factura);
 
-            _contexto.SaveChanges();
+           return  await GuardarCambiosAsync();
         }
 
-        public int GuardarCambios()
+       
+        public async Task<int> GuardarCambiosAsync()
         {
-            return _contexto.SaveChanges();
+            return await _contexto.SaveChangesAsync();
+        }
+
+        public async Task<Factura> ObtenerFacturaAsync(int idFactura)
+        {
+            return await _contexto.Facturas.Include(m => m.Lineas).FirstOrDefaultAsync(m => m.Id == idFactura);
+        }
+
+
+        public void Dispose()
+        {
+            _contexto.Dispose();
         }
     }
 }

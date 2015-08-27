@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.Owin.Security;
-using GestionFacturas.Datos;
 using GestionFacturas.Modelos;
 using Webdiyer.WebControls.Mvc;
 using GestionFacturas.Servicios;
@@ -20,11 +12,10 @@ namespace GestionFacturas.Website.Controllers
     public class FacturasController : Controller
     {
         private readonly ServicioFactura _servicioFactura;
-        private readonly ContextoBaseDatos _db;
-
+      
         public FacturasController(ServicioFactura servicioFactura)
         {
-            _servicioFactura = _servicioFactura;
+            _servicioFactura = servicioFactura;
         }
         
 
@@ -33,7 +24,7 @@ namespace GestionFacturas.Website.Controllers
             var facturas = await _servicioFactura.ListaFacturasAsync();
 
             var viewmodel = new FacturasIndexViewModel {
-                ListaFacturas = facturas.ToPagedList(1, 20)
+                 ListaFacturas = facturas.ToPagedList(1, 20)
             };
 
             return View("Index", viewmodel);
@@ -45,7 +36,7 @@ namespace GestionFacturas.Website.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Factura factura = await _db.Facturas.FindAsync(id);
+            var factura = await _servicioFactura.ObtenerFacturaAsync(id.Value);
             if (factura == null)
             {
                 return HttpNotFound();
@@ -63,12 +54,11 @@ namespace GestionFacturas.Website.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Crear([Bind(Include = "Id,IdUsuario,SerieFactura,NumeracionFactura,FormatoNumeroFactura,FechaEmisionFactura,FechaVencimientoFactura,IdVendedor,VendedorNumeroIdentificacionFiscal,VendedorNombreOEmpresa,VendedorDireccion,VendedorLocalidad,VendedorProvincia,VendedorCodigoPostal,IdComprador,CompradorNumeroIdentificacionFiscal,CompradorNombreOEmpresa,CompradorDireccion,CompradorLocalidad,CompradorProvincia,CompradorCodigoPostal,EstadoFactura,Comentarios,ComentariosPie")] Factura factura)
+        public async Task<ActionResult> Crear([Bind(Include = "Id,IdUsuario,SerieFactura,NumeracionFactura,FormatoNumeroFactura,FechaEmisionFactura,FechaVencimientoFactura,IdVendedor,VendedorNumeroIdentificacionFiscal,VendedorNombreOEmpresa,VendedorDireccion,VendedorLocalidad,VendedorProvincia,VendedorCodigoPostal,IdComprador,CompradorNumeroIdentificacionFiscal,CompradorNombreOEmpresa,CompradorDireccion,CompradorLocalidad,CompradorProvincia,CompradorCodigoPostal,EstadoFactura,Comentarios,ComentariosPie")] EditorFactura factura)
         {
             if (ModelState.IsValid)
             {
-                _db.Facturas.Add(factura);
-                await _db.SaveChangesAsync();
+                await _servicioFactura.CrearFacturaAsync(factura);
                 return RedirectToAction("Index");
             }
             
@@ -81,7 +71,7 @@ namespace GestionFacturas.Website.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Factura factura = await _db.Facturas.FindAsync(id);
+            var factura = await _servicioFactura.BuscaFacturaEditor(id);
             if (factura == null)
             {
                 return HttpNotFound();
@@ -93,12 +83,11 @@ namespace GestionFacturas.Website.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Editar([Bind(Include = "Id,IdUsuario,SerieFactura,NumeracionFactura,FormatoNumeroFactura,FechaEmisionFactura,FechaVencimientoFactura,IdVendedor,VendedorNumeroIdentificacionFiscal,VendedorNombreOEmpresa,VendedorDireccion,VendedorLocalidad,VendedorProvincia,VendedorCodigoPostal,IdComprador,CompradorNumeroIdentificacionFiscal,CompradorNombreOEmpresa,CompradorDireccion,CompradorLocalidad,CompradorProvincia,CompradorCodigoPostal,EstadoFactura,Comentarios,ComentariosPie")] Factura factura)
+        public async Task<ActionResult> Editar([Bind(Include = "Id,IdUsuario,SerieFactura,NumeracionFactura,FormatoNumeroFactura,FechaEmisionFactura,FechaVencimientoFactura,IdVendedor,VendedorNumeroIdentificacionFiscal,VendedorNombreOEmpresa,VendedorDireccion,VendedorLocalidad,VendedorProvincia,VendedorCodigoPostal,IdComprador,CompradorNumeroIdentificacionFiscal,CompradorNombreOEmpresa,CompradorDireccion,CompradorLocalidad,CompradorProvincia,CompradorCodigoPostal,EstadoFactura,Comentarios,ComentariosPie")] EditorFactura factura)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(factura).State = EntityState.Modified;
-                await _db.SaveChangesAsync();
+                await _servicioFactura.ActualizarFacturaAsync(factura);
                 return RedirectToAction("Index");
             }
             return View(factura);
@@ -110,7 +99,7 @@ namespace GestionFacturas.Website.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Factura factura = await _db.Facturas.FindAsync(id);
+            var factura = await _servicioFactura.BuscaFacturaEditor(id.Value);
             if (factura == null)
             {
                 return HttpNotFound();
@@ -122,9 +111,8 @@ namespace GestionFacturas.Website.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EliminarConfirmacion(int id)
         {
-            Factura factura = await _db.Facturas.FindAsync(id);
-            _db.Facturas.Remove(factura);
-            await _db.SaveChangesAsync();
+            await _servicioFactura.EliminarFactura(id);
+          
             return RedirectToAction("Index");
         }
 
@@ -132,7 +120,7 @@ namespace GestionFacturas.Website.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                _servicioFactura.Dispose();
             }
             base.Dispose(disposing);
         }

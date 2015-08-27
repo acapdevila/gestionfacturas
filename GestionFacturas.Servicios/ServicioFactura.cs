@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Omu.ValueInjecter;
 
 namespace GestionFacturas.Servicios
 {
@@ -36,6 +37,14 @@ namespace GestionFacturas.Servicios
             var facturas = await consultaFacturas.ToListAsync();
 
             return facturas;
+        }
+
+        public async Task<EditorFactura> BuscaFacturaEditor(int? id)
+        {
+            var factura = await _contexto.Facturas.FindAsync(id);
+            var editor = new EditorFactura();
+            editor.InjectFrom(factura);
+            return editor;
         }
     }
 }

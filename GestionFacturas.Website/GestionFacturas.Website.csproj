@@ -255,6 +255,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Viewmodels\AccountViewModels.cs" />
+    <Compile Include="Viewmodels\Facturas\FacturasCrudViewModel.cs" />
     <Compile Include="Viewmodels\Facturas\FacturasIndexViewModel.cs" />
     <Compile Include="Viewmodels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
