@@ -41,11 +41,20 @@ namespace GestionFacturas.Servicios
             return facturas;
         }
 
-        public async Task<EditorFactura> BuscaFacturaEditor(int? id)
+
+        public async Task<VisorFactura> BuscarVisorFacturaAsync(int? idFactura)
         {
-            var factura = await _contexto.Facturas.FindAsync(id);
+            var factura = await BuscarFacturaAsync(idFactura); 
+            var visor = new VisorFactura();
+            visor.InyectaFactura(factura);
+            return visor;
+        }
+
+        public async Task<EditorFactura> BuscaFacturaEditorAsync(int? idFactura)
+        {
+            var factura = await BuscarFacturaAsync(idFactura);
             var editor = new EditorFactura();
-            editor.InjectFrom(factura);
+            editor.InyectaFactura(factura);
             return editor;
         }
     }

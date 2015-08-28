@@ -7,8 +7,13 @@ using Webdiyer.WebControls.Mvc;
 
 namespace GestionFacturas.Website.Viewmodels.Facturas
 {
-    public class FacturasIndexViewModel
+    public class ListaGestionFacturasViewModel
     {
         public IEnumerable<ItemListaFacturas> ListaFacturas { get; set; }
+    }
+
+    public class DetallesFacturaViewModel
+    {
+        public VisorFactura Factura { get; set; }
     }
 }

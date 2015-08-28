@@ -1,4 +1,4 @@
-﻿@model GestionFacturas.Website.Viewmodels.Facturas.FacturasIndexViewModel
+﻿@model GestionFacturas.Website.Viewmodels.Facturas.ListaGestionFacturasViewModel
 
 @{
     ViewBag.Title = "Lista de facturas";
@@ -42,7 +42,7 @@
 @foreach (var item in Model.ListaFacturas) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.NumeroFactura)
+            @Html.ActionLink(item.NumeroFactura, "Detalles", new { id = item.Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FechaEmisionFactura, "FechaCorta")
@@ -67,7 +67,6 @@
         </td>      
         <td>
             @Html.ActionLink("Editar", "Editar", new { id=item.Id }) |
-            @Html.ActionLink("Detalles", "Detalles", new { id=item.Id }) |
             @Html.ActionLink("Eliminar", "Eliminar", new { id=item.Id })
         </td>
     </tr>

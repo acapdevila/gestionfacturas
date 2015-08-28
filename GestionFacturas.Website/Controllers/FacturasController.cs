@@ -24,7 +24,7 @@ namespace GestionFacturas.Website.Controllers
 
         public async Task<ActionResult> ListaGestionFacturas()
         {            
-            var viewmodel = new FacturasIndexViewModel {
+            var viewmodel = new ListaGestionFacturasViewModel {
                  ListaFacturas = await _servicioFactura.ListaGestionFacturasAsync()
             };
 
@@ -37,12 +37,17 @@ namespace GestionFacturas.Website.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var factura = await _servicioFactura.ObtenerFacturaAsync(id.Value);
-            if (factura == null)
+
+            var viewmodel = new DetallesFacturaViewModel
+            {
+                Factura = await _servicioFactura.BuscarVisorFacturaAsync(id)
+            };
+            
+            if (viewmodel.Factura == null)
             {
                 return HttpNotFound();
             }
-            return View(factura);
+            return View(viewmodel);
         }
 
         public ActionResult Crear()
@@ -72,7 +77,7 @@ namespace GestionFacturas.Website.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var factura = await _servicioFactura.BuscaFacturaEditor(id);
+            var factura = await _servicioFactura.BuscaFacturaEditorAsync(id);
             if (factura == null)
             {
                 return HttpNotFound();
@@ -100,7 +105,7 @@ namespace GestionFacturas.Website.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var factura = await _servicioFactura.BuscaFacturaEditor(id.Value);
+            var factura = await _servicioFactura.BuscaFacturaEditorAsync(id.Value);
             if (factura == null)
             {
                 return HttpNotFound();

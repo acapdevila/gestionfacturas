@@ -23,7 +23,7 @@ namespace GestionFacturas.Tests.Servicios
 
             // Crear
             await servicioFactura.CrearFacturaAsync(editorFactura);
-            var facturaCreada = await servicioFactura.ObtenerFacturaAsync(editorFactura.Id);
+            var facturaCreada = await servicioFactura.BuscarFacturaAsync(editorFactura.Id);
 
             Assert.IsNotNull(facturaCreada, "La factura no se ha creado en la base de datos");
             Assert.IsTrue(facturaCreada.Lineas.Any(), "No se han creado lineas de factura");
@@ -33,7 +33,7 @@ namespace GestionFacturas.Tests.Servicios
             // Actualizar
             editorFactura.FechaVencimientoFactura = editorFactura.FechaVencimientoFactura.AddMonths(1);
             var cambios =  await servicioFactura.ActualizarFacturaAsync(editorFactura);
-            var facturaActualizada = await servicioFactura.ObtenerFacturaAsync(editorFactura.Id);
+            var facturaActualizada = await servicioFactura.BuscarFacturaAsync(editorFactura.Id);
 
             Assert.IsTrue(cambios > 0, "La factura no se ha podido actualizar en la base de datos");
             Assert.IsNotNull(facturaActualizada, "La factura no se ha actualizado en la base de datos");
@@ -42,7 +42,7 @@ namespace GestionFacturas.Tests.Servicios
             // Borrar
             await servicioFactura.EliminarFactura(editorFactura.Id);
 
-            var facturaEliminada = await servicioFactura.ObtenerFacturaAsync(editorFactura.Id);
+            var facturaEliminada = await servicioFactura.BuscarFacturaAsync(editorFactura.Id);
 
             Assert.IsNull(facturaEliminada, "La facrura no se ha podido eliminar de la base de datos");
         }

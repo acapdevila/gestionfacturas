@@ -44,5 +44,19 @@ namespace GestionFacturas.Servicios
                 editor.Lineas.Add(lineaEditor);
             }
         }
+
+        public static void InyectaFactura(this VisorFactura visor, Factura factura)
+        {
+            visor.InjectFrom(factura);
+
+            visor.BorrarLineasFactura();
+
+            foreach (var lineaFactura in factura.Lineas)
+            {
+                var lineaVisor = new LineaVisorFactura();
+                lineaVisor.InjectFrom(lineaFactura);
+                visor.Lineas.Add(lineaVisor);
+            }
+        }
     }
 }

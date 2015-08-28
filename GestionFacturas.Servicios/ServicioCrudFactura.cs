@@ -32,7 +32,7 @@ namespace GestionFacturas.Servicios
         
         public async Task<int> ActualizarFacturaAsync(EditorFactura editor)
         {
-            var factura = await ObtenerFacturaAsync(editor.Id);
+            var factura = await BuscarFacturaAsync(editor.Id);
             factura.InyectaEditorFactura(editor);
 
             _contexto.Entry(factura).State = EntityState.Modified;
@@ -43,7 +43,7 @@ namespace GestionFacturas.Servicios
 
         public async Task<int> EliminarFactura(int idFactura)
         {
-            var factura = await ObtenerFacturaAsync(idFactura);
+            var factura = await BuscarFacturaAsync(idFactura);
             
             while (factura.Lineas.Any())
             {
@@ -62,7 +62,7 @@ namespace GestionFacturas.Servicios
             return await _contexto.SaveChangesAsync();
         }
 
-        public async Task<Factura> ObtenerFacturaAsync(int idFactura)
+        public async Task<Factura> BuscarFacturaAsync(int? idFactura)
         {
             return await _contexto.Facturas.Include(m => m.Lineas).FirstOrDefaultAsync(m => m.Id == idFactura);
         }
