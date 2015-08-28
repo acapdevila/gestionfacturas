@@ -9,7 +9,7 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
 {
     public class ListaGestionFacturasViewModel
     {
-        public IEnumerable<ItemListaFacturas> ListaFacturas { get; set; }
+        public IEnumerable<LineaListaGestionFacturas> ListaFacturas { get; set; }
     }
 
     public class DetallesFacturaViewModel

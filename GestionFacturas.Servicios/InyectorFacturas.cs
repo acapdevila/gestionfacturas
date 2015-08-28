@@ -49,6 +49,9 @@ namespace GestionFacturas.Servicios
         {
             visor.InjectFrom(factura);
 
+            visor.FormaPagoNombre = "Transferencia bancaria";
+            visor.FormaPagoDetalles  = "XXXX-XX-XXXXXXXXX";
+
             visor.BorrarLineasFactura();
 
             foreach (var lineaFactura in factura.Lineas)

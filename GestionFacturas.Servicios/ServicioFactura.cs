@@ -17,9 +17,9 @@ namespace GestionFacturas.Servicios
           
         }
 
-        public async Task<IEnumerable<ItemListaFacturas>> ListaGestionFacturasAsync()
+        public async Task<IEnumerable<LineaListaGestionFacturas>> ListaGestionFacturasAsync()
         {
-            var consultaFacturas = _contexto.Facturas.Select(m => new ItemListaFacturas
+            var consultaFacturas = _contexto.Facturas.Select(m => new LineaListaGestionFacturas
             {
                 Id = m.Id,
                 IdUsuario = m.IdUsuario,

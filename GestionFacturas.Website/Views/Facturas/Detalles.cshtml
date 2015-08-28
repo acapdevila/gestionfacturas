@@ -4,14 +4,15 @@
     ViewBag.Title = "Detalles factura";
 }
 
-<h2>Detalles</h2>
+<h2>Factura @Model.Factura.NumeroFactura</h2>
 
 <div>
-    <h4>Factura</h4>
-    <hr />
     @Html.DisplayFor(m => m.Factura, "VisorFactura")
 </div>
 <p>
-    @Html.ActionLink("Editar", "Editar", new { id = Model.Factura.Id }) |
-    @Html.ActionLink("Lista facturas", "ListaGestionFacturas")
+   
+        @Html.ActionLink("Editar", "Editar", new { id = Model.Factura.Id }, new { @class = "btn btn-default" })
+       
+        @Html.ActionLink("Lista facturas", "ListaGestionFacturas", null , new { @class = "btn btn-link" })
+   
 </p>
