@@ -312,6 +312,7 @@
     <Content Include="Views\Shared\EditorTemplates\SlugEditor.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SrcEditor.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Moneda.cshtml" />
+    <Content Include="Views\Error\BadRequest400.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

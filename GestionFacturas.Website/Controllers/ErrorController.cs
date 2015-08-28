@@ -34,6 +34,13 @@ namespace Bn.LookAuto.Website.Controllers.Common
             return View("NotFound404");
         }
 
-   
+        public ViewResult BadRequest400()
+        {
+            Response.TrySkipIisCustomErrors = true;
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return View("BadRequest400");
+        }
+
+
     }
 }
