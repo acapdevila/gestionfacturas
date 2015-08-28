@@ -305,6 +305,13 @@
     <Content Include="Views\Error\InternalError500.cshtml" />
     <Content Include="Views\Error\NotFound404.cshtml" />
     <Content Include="Views\Shared\_MenuAdmin.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FechaCorta.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Booleano.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Fecha.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Enum.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SlugEditor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SrcEditor.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Moneda.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -342,7 +349,7 @@
     <Content Include="Views\Facturas\Eliminar.cshtml" />
     <Content Include="Views\Facturas\Detalles.cshtml" />
     <Content Include="Views\Facturas\Editar.cshtml" />
-    <Content Include="Views\Facturas\Index.cshtml" />
+    <Content Include="Views\Facturas\ListaGestionFacturas.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

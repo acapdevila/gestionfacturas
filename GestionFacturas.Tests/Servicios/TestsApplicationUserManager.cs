@@ -14,7 +14,7 @@ namespace GestionFacturas.Tests.Servicios
     public class TestsApplicationUserManager
     {        
         [TestMethod]
-        public void Registrar_Obterer_CambiarContrasena_Borrar_Uasuario()
+        public void Registrar_Obterer_CambiarContraseña_Borrar_Uasuario()
         {
             var servicioUsuario = new ApplicationUserManager(new UserStore<Usuario>(new ContextoBaseDatos()));
 

@@ -3,7 +3,6 @@ using GestionFacturas.Modelos;
 using System.Linq;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using Omu.ValueInjecter;
 
 namespace GestionFacturas.Servicios
 {

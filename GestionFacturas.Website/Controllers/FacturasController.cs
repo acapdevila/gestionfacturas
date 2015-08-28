@@ -2,7 +2,6 @@
 using System.Net;
 using System.Web.Mvc;
 using GestionFacturas.Modelos;
-using Webdiyer.WebControls.Mvc;
 using GestionFacturas.Servicios;
 using GestionFacturas.Website.Viewmodels.Facturas;
 
@@ -17,17 +16,19 @@ namespace GestionFacturas.Website.Controllers
         {
             _servicioFactura = servicioFactura;
         }
-        
 
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var facturas = await _servicioFactura.ListaFacturasAsync();
+            return RedirectToAction("ListaGestionFacturas");
+        }
 
+        public async Task<ActionResult> ListaGestionFacturas()
+        {            
             var viewmodel = new FacturasIndexViewModel {
-                 ListaFacturas = facturas.ToPagedList(1, 20)
+                 ListaFacturas = await _servicioFactura.ListaGestionFacturasAsync()
             };
 
-            return View("Index", viewmodel);
+            return View("ListaGestionFacturas", viewmodel);
         }
 
         public async Task<ActionResult> Detalles(int? id)

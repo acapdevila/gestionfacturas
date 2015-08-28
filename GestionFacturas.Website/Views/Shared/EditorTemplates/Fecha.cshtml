@@ -1,0 +1,23 @@
+﻿@model DateTime?
+          
+    @{
+        string name = ViewData.TemplateInfo.HtmlFieldPrefix;
+        string id = name.Replace(".", "_");
+     }
+    
+    @RazorHelper.LinksCssDatepicker(Url)
+    @RazorHelper.ScriptsDatepicker(Url)
+
+ @Html.TextBox("", (Model.HasValue ? Model.Value.ToShortDateString() : string.Empty), new { style = "width:70px" }) 
+     
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#@id").datepicker({
+                showOn: "button",
+                buttonImage: "/Content/Images/calendar.gif",
+                buttonImageOnly: true,
+                showOtherMonths: true,
+                selectOtherMonths: true
+            });
+        });
+   </script>  

@@ -1,0 +1,42 @@
+﻿@using System.ComponentModel.DataAnnotations  
+@using Bn.Nedaelmon.Localization.Website
+@model Enum
+@{
+    
+    Func<object, string> getDisplayName = o =>
+    {
+        var result = null as string;
+        var display = o.GetType()
+                       .GetMember(o.ToString()).First()
+                       .GetCustomAttributes(false)
+                       .OfType<DisplayAttribute>()
+                       .LastOrDefault();
+        if (display != null)
+        {
+            result = display.GetName();
+        }
+
+        return result ?? o.ToString();
+    };
+    
+    var isRequired = this.ViewData.ModelMetadata.IsRequired;
+
+    Type type = this.ViewData.ModelMetadata.ModelType;
+    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+    {              
+        type = type.GetGenericArguments()[0];
+    }
+
+    var items = Enum.GetValues(type).Cast<object>()
+              .Select(v => new SelectListItem
+              {
+                  Selected = v.Equals(Model),
+                  Text = getDisplayName(v),
+                  Value = v.ToString()
+              });                      
+                            
+                            
+}
+
+ 
+@Html.DropDownListFor(m => m, items, isRequired ? CommonResources.DropDownSelectValue : string.Empty, new { @style = ViewData["htmlAttibuteWidth"] })

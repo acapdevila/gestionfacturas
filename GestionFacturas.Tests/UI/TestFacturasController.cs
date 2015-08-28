@@ -2,6 +2,7 @@
 using GestionFacturas.Modelos;
 using GestionFacturas.Servicios;
 using GestionFacturas.Website.Controllers;
+using GestionFacturas.Website.Viewmodels.Facturas;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -17,18 +18,18 @@ namespace GestionFacturas.Tests.UI
     {
       
         [TestMethod]
-        public void Index_HttpGet_EsOk()
+        public void ListaGestionFacturas_HttpGet_EsOk()
         {
             // Arrange
             var controller = ObtenerFacturasControllador();
            
             // Act
-            var result = controller.Index().Result;
+            var result = controller.ListaGestionFacturas().Result;
 
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ActionResult));
-            Assert.IsInstanceOfType((List<Factura>)((ViewResult)result).ViewData.Model, typeof(ICollection<Factura>));
+            Assert.IsInstanceOfType((FacturasIndexViewModel)((ViewResult)result).ViewData.Model, typeof(FacturasIndexViewModel));
         }
 
         [TestMethod]

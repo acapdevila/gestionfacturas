@@ -17,20 +17,22 @@ namespace GestionFacturas.Servicios
           
         }
 
-        public async Task<IEnumerable<ItemListaFacturas>> ListaFacturasAsync()
+        public async Task<IEnumerable<ItemListaFacturas>> ListaGestionFacturasAsync()
         {
             var consultaFacturas = _contexto.Facturas.Select(m => new ItemListaFacturas
             {
-                EstadoFactura = m.EstadoFactura,
-                FechaEmisionFactura = m.FechaEmisionFactura,
-                FechaVencimientoFactura = m.FechaVencimientoFactura,
-                FormatoNumeroFactura = m.FormatoNumeroFactura,
                 Id = m.Id,
                 IdUsuario = m.IdUsuario,
                 IdVendedor = m.IdVendedor,
-                ImporteTotal = m.Lineas.Sum(l => l.PrecioXCantidad + (l.PrecioXCantidad * l.PorcentajeImpuesto / 100)),
+                FormatoNumeroFactura = m.FormatoNumeroFactura,
                 NumeracionFactura = m.NumeracionFactura,
                 SerieFactura = m.SerieFactura,
+                FechaEmisionFactura = m.FechaEmisionFactura,
+                FechaVencimientoFactura = m.FechaVencimientoFactura,
+                EstadoFactura = m.EstadoFactura,
+                BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
+                Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
+                ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0,
                 VendedorNombreOEmpresa = m.VendedorNombreOEmpresa
             });
 

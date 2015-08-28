@@ -106,9 +106,13 @@ namespace GestionFacturas.Modelos
         public DateTime FechaEmisionFactura { get; set; }
         public DateTime FechaVencimientoFactura { get; set; }
 
+        public string Concepto { get; set; }
+
         public int? IdVendedor { get; set; }
         public string VendedorNombreOEmpresa { get; set; }
 
+        public decimal BaseImponible { get; set; }
+        public decimal Impuestos { get; set; }
         public decimal ImporteTotal { get; set; }
 
         public EstadoFacturaEnum EstadoFactura { get; set; }

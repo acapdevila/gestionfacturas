@@ -9,6 +9,6 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
 {
     public class FacturasIndexViewModel
     {
-        public PagedList<ItemListaFacturas> ListaFacturas { get; set; }
+        public IEnumerable<ItemListaFacturas> ListaFacturas { get; set; }
     }
 }
