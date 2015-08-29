@@ -33,20 +33,15 @@ namespace GestionFacturas.Website.Controllers
 
         public async Task<ActionResult> Detalles(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            
             var viewmodel = new DetallesFacturaViewModel
             {
                 Factura = await _servicioFactura.BuscarVisorFacturaAsync(id)
             };
             
-            if (viewmodel.Factura == null)
-            {
-                return HttpNotFound();
-            }
+            if (viewmodel.Factura == null) return HttpNotFound();
+
             return View(viewmodel);
         }
 
@@ -62,41 +57,37 @@ namespace GestionFacturas.Website.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Crear([Bind(Include = "Id,IdUsuario,SerieFactura,NumeracionFactura,FormatoNumeroFactura,FechaEmisionFactura,FechaVencimientoFactura,IdVendedor,VendedorNumeroIdentificacionFiscal,VendedorNombreOEmpresa,VendedorDireccion,VendedorLocalidad,VendedorProvincia,VendedorCodigoPostal,IdComprador,CompradorNumeroIdentificacionFiscal,CompradorNombreOEmpresa,CompradorDireccion,CompradorLocalidad,CompradorProvincia,CompradorCodigoPostal,EstadoFactura,Comentarios,ComentariosPie")] EditorFactura factura)
         {
-            if (ModelState.IsValid)
-            {
-                await _servicioFactura.CrearFacturaAsync(factura);
-                return RedirectToAction("Index");
-            }
-            
-            return View(factura);
+            if (!ModelState.IsValid) return View(factura);
+
+            await _servicioFactura.CrearFacturaAsync(factura);
+            return RedirectToAction("Index");
+
         }
 
         public async Task<ActionResult> Editar(int? id)
         {
-            if (id == null)
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var viewmodel = new EditarFacturaViewModel
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var factura = await _servicioFactura.BuscaFacturaEditorAsync(id);
-            if (factura == null)
-            {
-                return HttpNotFound();
-            }
-            return View(factura);
+                Factura = await _servicioFactura.BuscaFacturaEditorAsync(id)
+            };
+            
+            if (viewmodel.Factura == null) return HttpNotFound();
+            
+            return View(viewmodel);
         }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Editar([Bind(Include = "Id,IdUsuario,SerieFactura,NumeracionFactura,FormatoNumeroFactura,FechaEmisionFactura,FechaVencimientoFactura,IdVendedor,VendedorNumeroIdentificacionFiscal,VendedorNombreOEmpresa,VendedorDireccion,VendedorLocalidad,VendedorProvincia,VendedorCodigoPostal,IdComprador,CompradorNumeroIdentificacionFiscal,CompradorNombreOEmpresa,CompradorDireccion,CompradorLocalidad,CompradorProvincia,CompradorCodigoPostal,EstadoFactura,Comentarios,ComentariosPie")] EditorFactura factura)
+        public async Task<ActionResult> Editar(EditarFacturaViewModel viewmodel)
         {
-            if (ModelState.IsValid)
-            {
-                await _servicioFactura.ActualizarFacturaAsync(factura);
-                return RedirectToAction("Index");
-            }
-            return View(factura);
+            if (!ModelState.IsValid) return View(viewmodel);
+            
+            await _servicioFactura.ActualizarFacturaAsync(viewmodel.Factura);
+            return RedirectToAction("Detalles", new { Id = viewmodel.Factura.Id });
         }
 
         public async Task<ActionResult> Eliminar(int? id)

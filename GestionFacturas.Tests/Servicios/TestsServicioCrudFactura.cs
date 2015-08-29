@@ -31,7 +31,7 @@ namespace GestionFacturas.Tests.Servicios
 
 
             // Actualizar
-            editorFactura.FechaVencimientoFactura = editorFactura.FechaVencimientoFactura.AddMonths(1);
+            editorFactura.Comentarios = editorFactura.Comentarios + " Ok";
             var cambios =  await servicioFactura.ActualizarFacturaAsync(editorFactura);
             var facturaActualizada = await servicioFactura.BuscarFacturaAsync(editorFactura.Id);
 
@@ -62,6 +62,7 @@ namespace GestionFacturas.Tests.Servicios
                 NumeracionFactura = 12,
                 FechaEmisionFactura = DateTime.Now,
                 FechaVencimientoFactura = DateTime.Now,
+                Comentarios = "Test",
                 Lineas = new List<LineaEditorFactura>
                 {
                     new LineaEditorFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = 20, Cantidad = 2 },

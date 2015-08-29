@@ -24,11 +24,11 @@
                     <div class="panel panel-default height">
                         <div class="panel-heading">Datos de la factura</div>
                         <div class="panel-body">
-                            <strong>Número de factura:</strong> @Html.DisplayFor(m=>m.NumeroFactura)<br>
-                            <strong>Fecha de emisión:</strong> @Html.DisplayFor(m=> m.FechaEmisionFactura, "FechaCorta")<br>
+                            <strong>Número:</strong> @Html.DisplayFor(m=>m.NumeroFactura)<br>
+                            <strong>Fecha:</strong> @Html.DisplayFor(m=> m.FechaEmisionFactura, "FechaCorta")<br>
                            @if (Model.FechaVencimientoFactura.HasValue)
                            {
-                            <strong>Fecha de vencimiento:</strong> @Html.DisplayFor(m => Model.FechaVencimientoFactura.Value, "FechaCorta") <br>
+                            <strong>Vencimiento:</strong> @Html.DisplayFor(m => Model.FechaVencimientoFactura.Value, "FechaCorta") <br>
                            }
                             
                         </div>
@@ -38,7 +38,7 @@
                     <div class="panel panel-default height">
                         <div class="panel-heading">Forma de pago</div>
                         <div class="panel-body">
-                            <strong>@Html.DisplayFor(m => m.FormaPagoNombre)</strong><br>
+                            <strong>@Html.DisplayFor(m => m.FormaPago, "FormaPagoEnum")</strong><br>
                             @Html.DisplayFor(m => m.FormaPagoDetalles)<br>
                             
                         </div>

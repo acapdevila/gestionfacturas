@@ -29,10 +29,11 @@ namespace GestionFacturas.Datos.Configuraciones
                 .IsRequired();
 
             Property(m => m.FechaEmisionFactura)
-                .IsRequired();
+              .IsRequired();
 
-            Property(m => m.FechaVencimientoFactura)
-                .IsRequired();
+            Property(m => m.FormaPagoDetalles)
+                .HasMaxLength(50);
+                     
 
             Property(m => m.Comentarios)
                 .HasMaxLength(250);

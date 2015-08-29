@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
@@ -21,10 +22,16 @@ namespace GestionFacturas.Modelos
         public int NumeracionFactura { get; set; }
         public string FormatoNumeroFactura { get; set; }
 
-        public string NumeroFactura { get { return string.Format(FormatoNumeroFactura, SerieFactura, NumeracionFactura); } }
+        public string NumeroFactura { get { return string.Format(FormatoNumeroFactura ?? "", SerieFactura ?? "", NumeracionFactura); } }
                
         public DateTime FechaEmisionFactura { get; set; }
-        public DateTime FechaVencimientoFactura { get; set; }      
+        public DateTime? FechaVencimientoFactura { get; set; }
+
+        [Display(Name = "Forma de pago")]
+        public FormaPagoEnum FormaPago { get; set; }
+
+        [Display(Name = "Detalles forma pago")]
+        public string FormaPagoDetalles { get; set; }
 
         public int? IdVendedor { get; set; }
         public string VendedorNumeroIdentificacionFiscal { get; set; }
@@ -79,6 +86,17 @@ namespace GestionFacturas.Modelos
         Anulada = 4
     }
 
+    public enum FormaPagoEnum
+    {
+        [Display(Name = @"Sin definir")]
+        SinDefinir = 0,
+        Transferencia = 1,
+        Tarjeta = 2,
+        Efectivo = 3,
+        [Display(Name = @"Domiciliación")]
+        Domiciliacion = 4
+    }
+
     public class LineaFactura
     {
         public int Id { get; set; }
@@ -104,12 +122,12 @@ namespace GestionFacturas.Modelos
         public string NumeroFactura { get { return string.Format(FormatoNumeroFactura, SerieFactura, NumeracionFactura); } }
 
         public DateTime FechaEmisionFactura { get; set; }
-        public DateTime FechaVencimientoFactura { get; set; }
+        public DateTime? FechaVencimientoFactura { get; set; }
 
         public string Concepto { get; set; }
 
-        public int? IdVendedor { get; set; }
-        public string VendedorNombreOEmpresa { get; set; }
+        public int? IdComprador { get; set; }
+        public string CompradorNombreOEmpresa { get; set; }
 
         public decimal BaseImponible { get; set; }
         public decimal Impuestos { get; set; }
@@ -129,58 +147,89 @@ namespace GestionFacturas.Modelos
         public int Id { get; set; }
         public string IdUsuario { get; set; }
 
+        [Required]
+        [Display(Name="Serie")]
         public string SerieFactura { get; set; }
+
+        [Required]
+        [Display(Name = "Número")]
         public int NumeracionFactura { get; set; }
+
+        [Required]
         public string FormatoNumeroFactura { get; set; }
 
         public string NumeroFactura { get { return string.Format(FormatoNumeroFactura, SerieFactura, NumeracionFactura); } }
 
+        [Required]
+        [Display(Name = "Fecha emisión")]
         public DateTime FechaEmisionFactura { get; set; }
-        public DateTime FechaVencimientoFactura { get; set; }
 
+        [Display(Name = "Fecha vencimiento")]
+        public DateTime? FechaVencimientoFactura { get; set; }
+
+        [Display(Name = "Forma de pago")]
+        public FormaPagoEnum FormaPago { get; set; }
+
+        [Display(Name = "Detalles forma pago")]
+        public string FormaPagoDetalles { get; set; }
+
+        [Display(Name = "Número de referencia")]
         public int? IdVendedor { get; set; }
+
+        [Display(Name = "Identificación fiscal")]
         public string VendedorNumeroIdentificacionFiscal { get; set; }
+
+        [Display(Name = "Nombre o empresa")]
         public string VendedorNombreOEmpresa { get; set; }
+
+        [Display(Name = "Dirección")]
         public string VendedorDireccion { get; set; }
+
+        [Display(Name = "Municipio")]
         public string VendedorLocalidad { get; set; }
+
+        [Display(Name = "Provincia")]
         public string VendedorProvincia { get; set; }
+
+        [Display(Name = "Código postal")]
         public string VendedorCodigoPostal { get; set; }
 
+        [Display(Name = "Número de referencia")]
         public int? IdComprador { get; set; }
+
+        [Display(Name = "Identificación fiscal")]
         public string CompradorNumeroIdentificacionFiscal { get; set; }
+
+        [Display(Name = "Nombre o empresa")]
         public string CompradorNombreOEmpresa { get; set; }
+
+        [Display(Name = "Dirección")]
         public string CompradorDireccion { get; set; }
+
+        [Display(Name = "Municipio")]
         public string CompradorLocalidad { get; set; }
+
+        [Display(Name = "Provincia")]
         public string CompradorProvincia { get; set; }
+
+        [Display(Name = "Código postal")]
         public string CompradorCodigoPostal { get; set; }
+
+
+
+
 
         public virtual ICollection<LineaEditorFactura> Lineas { get; set; }
         public virtual Usuario Usuario { get; set; }
 
+        [Display(Name = "Estado")]
         public EstadoFacturaEnum EstadoFactura { get; set; }
         public string Comentarios { get; set; }
+
+        [Display(Name = "Pie")]
         public string ComentariosPie { get; set; }
 
 
-        public decimal BaseImponible()
-        {
-            if (!Lineas.Any()) return 0;
-
-            return Lineas.Sum(m => m.PrecioXCantidad);
-
-        }
-        public decimal ImporteImpuestos()
-        {
-            if (!Lineas.Any()) return 0;
-
-            return Lineas.Sum(m => m.PrecioXCantidad * m.PorcentajeImpuesto / 100);
-        }
-        public decimal ImporteTotal()
-        {
-            if (!Lineas.Any()) return 0;
-
-            return Lineas.Sum(m => m.PrecioXCantidad + (m.PrecioXCantidad * m.PorcentajeImpuesto / 100));
-        }
 
         public void BorrarLineasFactura()
         {
@@ -229,7 +278,7 @@ namespace GestionFacturas.Modelos
         public string CompradorProvincia { get; set; }
         public string CompradorCodigoPostal { get; set; }
 
-        public string FormaPagoNombre { get; set; }
+        public FormaPagoEnum FormaPago { get; set; }
         public string FormaPagoDetalles { get; set; }
 
         public virtual ICollection<LineaVisorFactura> Lineas { get; set; }

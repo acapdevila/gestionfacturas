@@ -16,7 +16,7 @@ namespace GestionFacturas.Servicios
 
             foreach (var lineaEditor in editor.Lineas)
             {
-                var lineaFactura = factura.Lineas.FirstOrDefault(m=> m.Id == lineaEditor.Id);
+                var lineaFactura = factura.Lineas.FirstOrDefault(m=> lineaEditor.Id > 0 && m.Id == lineaEditor.Id);
 
                 if (lineaFactura != null)
                 {
@@ -48,10 +48,7 @@ namespace GestionFacturas.Servicios
         public static void InyectaFactura(this VisorFactura visor, Factura factura)
         {
             visor.InjectFrom(factura);
-
-            visor.FormaPagoNombre = "Transferencia bancaria";
-            visor.FormaPagoDetalles  = "XXXX-XX-XXXXXXXXX";
-
+            
             visor.BorrarLineasFactura();
 
             foreach (var lineaFactura in factura.Lineas)

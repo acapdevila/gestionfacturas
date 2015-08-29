@@ -308,12 +308,13 @@
     <Content Include="Views\Shared\DisplayTemplates\FechaCorta.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Booleano.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Fecha.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Enum.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SlugEditor.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SrcEditor.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Moneda.cshtml" />
     <Content Include="Views\Error\BadRequest400.cshtml" />
     <Content Include="Views\Facturas\DisplayTemplates\VisorFactura.cshtml" />
+    <Content Include="Views\Facturas\EditorTemplates\EditorFactura.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FormaPagoEnum.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

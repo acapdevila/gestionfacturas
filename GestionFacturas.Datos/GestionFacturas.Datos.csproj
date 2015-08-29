@@ -72,7 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuraciones\ConfiguracionTablasFacturas.cs" />
+    <Compile Include="Configuraciones\ConfiguracionTablaFacturas.cs" />
     <Compile Include="Configuraciones\ConfiguracionTablaUsuarios.cs" />
     <Compile Include="ContextoBaseDatos.cs" />
     <Compile Include="Migrations\201508040947297_Init.cs" />
@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201508041330362_Facturas.cs" />
     <Compile Include="Migrations\201508041330362_Facturas.Designer.cs">
       <DependentUpon>201508041330362_Facturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508290953036_Facturas_AñadirFormaPago.cs" />
+    <Compile Include="Migrations\201508290953036_Facturas_AñadirFormaPago.Designer.cs">
+      <DependentUpon>201508290953036_Facturas_AñadirFormaPago.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508041330362_Facturas.resx">
       <DependentUpon>201508041330362_Facturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508290953036_Facturas_AñadirFormaPago.resx">
+      <DependentUpon>201508290953036_Facturas_AñadirFormaPago.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

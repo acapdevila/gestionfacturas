@@ -32,6 +32,8 @@ namespace GestionFacturas.Tests.UI
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ActionResult));
             Assert.IsInstanceOfType((ListaGestionFacturasViewModel)((ViewResult)result).ViewData.Model, typeof(ListaGestionFacturasViewModel));
+
+            controller.Dispose();
         }
 
         [TestMethod]
@@ -55,12 +57,12 @@ namespace GestionFacturas.Tests.UI
         {
             // Arrange
             var controller = ObtenerFacturasControllador();
-            var primerFacturaConLineas = _contexto.Facturas.FirstOrDefault(m => m.Lineas.Any());
+            var factura = ObtenerPrimeraFacturaConLineas();
 
-            if (primerFacturaConLineas == null) return;
+            if (factura == null) return;
 
             // Act
-            var result = controller.Detalles(primerFacturaConLineas.Id).Result;
+            var result = controller.Detalles(factura.Id).Result;
 
             // Assert
             Assert.IsNotNull(result);
@@ -69,6 +71,7 @@ namespace GestionFacturas.Tests.UI
             controller.Dispose();
         }
 
+     
         [TestMethod]
         public void Crear_HttpGet_EsOk()
         {
@@ -86,17 +89,23 @@ namespace GestionFacturas.Tests.UI
         }
 
         [TestMethod]
-        public void Editar_HttpGet_EsOk()
+        public void Get_Editar_EsOk()
         {
             // Arrange
             var controller = ObtenerFacturasControllador();
+            var factura = ObtenerPrimeraFacturaConLineas();
+
+            if (factura == null) return;
 
             // Act
-            var result = controller.Editar(1).Result;
+            var result = controller.Editar(factura.Id).Result;
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
+            Assert.IsInstanceOfType(((ViewResult)result).Model, typeof(EditarFacturaViewModel));
+            
+
+            controller.Dispose();
         }
 
         [TestMethod]
@@ -118,6 +127,11 @@ namespace GestionFacturas.Tests.UI
         {
             _contexto = new ContextoBaseDatos();
             return new FacturasController(new ServicioFactura(_contexto));
+        }
+
+        private Factura ObtenerPrimeraFacturaConLineas()
+        {
+            return _contexto.Facturas.FirstOrDefault(m => m.Lineas.Any());
         }
 
     }

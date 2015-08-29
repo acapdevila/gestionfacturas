@@ -63,10 +63,10 @@
             @Html.DisplayFor(modelItem => item.ImporteTotal, "Moneda")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.VendedorNombreOEmpresa)
+            @Html.DisplayFor(modelItem => item.CompradorNombreOEmpresa)
         </td>      
         <td>
-            @Html.ActionLink("Editar", "Editar", new { id=item.Id }) |
+            @Html.ActionLink("Editar", "Editar", new { id=item.Id }, new { @class = "btn btn-default btn-sm" })
             @Html.ActionLink("Eliminar", "Eliminar", new { id=item.Id })
         </td>
     </tr>

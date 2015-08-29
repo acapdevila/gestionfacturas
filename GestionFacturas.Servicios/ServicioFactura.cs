@@ -23,7 +23,7 @@ namespace GestionFacturas.Servicios
             {
                 Id = m.Id,
                 IdUsuario = m.IdUsuario,
-                IdVendedor = m.IdVendedor,
+                IdComprador = m.IdComprador,
                 FormatoNumeroFactura = m.FormatoNumeroFactura,
                 NumeracionFactura = m.NumeracionFactura,
                 SerieFactura = m.SerieFactura,
@@ -33,7 +33,7 @@ namespace GestionFacturas.Servicios
                 BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
                 Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
                 ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0,
-                VendedorNombreOEmpresa = m.VendedorNombreOEmpresa
+                CompradorNombreOEmpresa = m.CompradorNombreOEmpresa
             });
 
             var facturas = await consultaFacturas.ToListAsync();
