@@ -141,7 +141,7 @@ namespace GestionFacturas.Modelos
     {
         public EditorFactura()
         {
-            Lineas = new List<LineaEditorFactura>();
+            Lineas = new List<EditorLineaFactura>();
         }
 
         public int Id { get; set; }
@@ -219,7 +219,7 @@ namespace GestionFacturas.Modelos
 
 
 
-        public virtual ICollection<LineaEditorFactura> Lineas { get; set; }
+        public virtual ICollection<EditorLineaFactura> Lineas { get; set; }
         public virtual Usuario Usuario { get; set; }
 
         [Display(Name = "Estado")]
@@ -230,6 +230,7 @@ namespace GestionFacturas.Modelos
         public string ComentariosPie { get; set; }
 
 
+        public int PorcentajeIvaPorDefecto { get; set; }
 
         public void BorrarLineasFactura()
         {
@@ -328,17 +329,34 @@ namespace GestionFacturas.Modelos
         }
     }
 
-    public class LineaEditorFactura
+    public class EditorLineaFactura
     {
+        public EditorLineaFactura(int iva)
+        {
+            Cantidad = 1;
+            PorcentajeImpuesto = iva;
+        }
+        public EditorLineaFactura()
+        {
+        }
+
+        
         public int Id { get; set; }
         public int IdFactura { get; set; }
+
+        [Display(Name = "Concepto")]
         public string Descripcion { get; set; }
+
+        [Display(Name = "Cantidad")]
         public int Cantidad { get; set; }
+
+        [Display(Name = "Precio unitario")]
         public decimal PrecioUnitario { get; set; }
-        public decimal PrecioXCantidad { get { return PrecioUnitario * Cantidad; } }
+
+        [Display(Name = "% IVA")]
         public int PorcentajeImpuesto { get; set; }
-        public decimal ImporteBruto { get { return PrecioXCantidad + ((PrecioXCantidad * PorcentajeImpuesto) / 100); } }
-        public virtual Factura Factura { get; set; }
+
+        public bool EstaMarcadoParaEliminar { get; set; }
     }
 
     public class LineaVisorFactura
@@ -351,7 +369,6 @@ namespace GestionFacturas.Modelos
         public decimal PrecioXCantidad { get { return PrecioUnitario * Cantidad; } }
         public int PorcentajeImpuesto { get; set; }
         public decimal ImporteBruto { get { return PrecioXCantidad + ((PrecioXCantidad * PorcentajeImpuesto) / 100); } }
-        public virtual Factura Factura { get; set; }
-    }
+     }
 
 }

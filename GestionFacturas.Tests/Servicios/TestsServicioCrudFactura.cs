@@ -63,11 +63,11 @@ namespace GestionFacturas.Tests.Servicios
                 FechaEmisionFactura = DateTime.Now,
                 FechaVencimientoFactura = DateTime.Now,
                 Comentarios = "Test",
-                Lineas = new List<LineaEditorFactura>
+                Lineas = new List<EditorLineaFactura>
                 {
-                    new LineaEditorFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = 20, Cantidad = 2 },
-                    new LineaEditorFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = (decimal)23.5, Cantidad = 1 },
-                    new LineaEditorFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = 4, Cantidad = 2 }
+                    new EditorLineaFactura { PorcentajeIva = porcentajeIva, PrecioUnitario = 20, Cantidad = 2 },
+                    new EditorLineaFactura { PorcentajeIva = porcentajeIva, PrecioUnitario = (decimal)23.5, Cantidad = 1 },
+                    new EditorLineaFactura { PorcentajeIva = porcentajeIva, PrecioUnitario = 4, Cantidad = 2 }
                 }
             };            
         }

@@ -46,7 +46,7 @@ namespace GestionFacturas.Servicios
         {
             var factura = await BuscarFacturaAsync(idFactura); 
             var visor = new VisorFactura();
-            visor.InyectaFactura(factura);
+            visor.InyectarFactura(factura);
             return visor;
         }
 
@@ -54,7 +54,7 @@ namespace GestionFacturas.Servicios
         {
             var factura = await BuscarFacturaAsync(idFactura);
             var editor = new EditorFactura();
-            editor.InyectaFactura(factura);
+            editor.InyectarFactura(factura);
             return editor;
         }
     }

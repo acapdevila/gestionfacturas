@@ -3,12 +3,18 @@ using GestionFacturas.Modelos;
 using System.Linq;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using Omu.ValueInjecter;
 
 namespace GestionFacturas.Servicios
 {
     public class ServicioCrudFactura
     {
+        
         protected readonly ContextoBaseDatos _contexto;
+
+        private Factura Factura { get; set; }
 
         public ServicioCrudFactura(ContextoBaseDatos contexto)
         {
@@ -18,40 +24,42 @@ namespace GestionFacturas.Servicios
 
         public async Task<int> CrearFacturaAsync(EditorFactura editor)
         {
-            var factura = new Factura();
-            factura.InyectaEditorFactura(editor);
+            Factura = new Factura();
 
-            _contexto.Facturas.Add(factura);
+            ModificarFactura(editor);         
+
+            _contexto.Facturas.Add(Factura);
 
             var cambios = await GuardarCambiosAsync();
             
-            editor.InyectaFactura(factura);
+            editor.InyectarFactura(Factura);
 
             return cambios;
-        }
-        
+        }     
+
         public async Task<int> ActualizarFacturaAsync(EditorFactura editor)
         {
-            var factura = await BuscarFacturaAsync(editor.Id);
-            factura.InyectaEditorFactura(editor);
+            Factura = await BuscarFacturaAsync(editor.Id);
 
-            _contexto.Entry(factura).State = EntityState.Modified;
+            ModificarFactura(editor);
+                             
+            _contexto.Entry(Factura).State = EntityState.Modified;
             return  await GuardarCambiosAsync();
          }
 
-     
+        
 
         public async Task<int> EliminarFactura(int idFactura)
         {
-            var factura = await BuscarFacturaAsync(idFactura);
+            Factura = await BuscarFacturaAsync(idFactura);
             
-            while (factura.Lineas.Any())
+            while (Factura.Lineas.Any())
             {
-                var linea = factura.Lineas.First();
+                var linea = Factura.Lineas.First();
                 _contexto.LineasFacturas.Remove(linea);
             }
 
-            _contexto.Facturas.Remove(factura);
+            _contexto.Facturas.Remove(Factura);
 
            return  await GuardarCambiosAsync();
         }
@@ -72,5 +80,45 @@ namespace GestionFacturas.Servicios
         {
             _contexto.Dispose();
         }
+
+        #region Lineas de factura
+
+        private void ModificarFactura(EditorFactura editor)
+        {
+            ModificarCabeceraFactura(editor);
+            ModificarLineasFactura(editor.Lineas);
+        }
+
+        private void ModificarCabeceraFactura(EditorFactura editor)
+        {
+            Factura.InjectFrom(editor);
+        }
+
+        private void ModificarLineasFactura(ICollection<EditorLineaFactura> lineasEditor)
+        {
+            foreach (var lineaEditor in lineasEditor)
+            {
+                var lineaFactura = Factura.Lineas.FirstOrDefault(m => lineaEditor.Id > 0 && m.Id == lineaEditor.Id);
+
+                if (lineaFactura != null)
+                {
+                    if (lineaEditor.EstaMarcadoParaEliminar)
+                    {
+                        Factura.Lineas.Remove(lineaFactura);
+                        _contexto.LineasFacturas.Remove(lineaFactura);
+                    }
+                    else
+                        lineaFactura.InjectFrom(lineaEditor);
+                }
+                else if (!lineaEditor.EstaMarcadoParaEliminar)
+                {
+                    lineaFactura = new LineaFactura();
+                    lineaFactura.InjectFrom(lineaEditor);
+                    Factura.Lineas.Add(lineaFactura);
+                }
+            }
+        }
+
+        #endregion
     }
 }

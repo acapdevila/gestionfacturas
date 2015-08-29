@@ -254,6 +254,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ListEditorHelper.cs" />
     <Compile Include="Viewmodels\AccountViewModels.cs" />
     <Compile Include="Viewmodels\Facturas\FacturasCrudViewModel.cs" />
     <Compile Include="Viewmodels\Facturas\FacturasViewModel.cs" />
@@ -284,6 +285,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.1.4-vsdoc.js" />
+    <Content Include="Scripts\comavalidation\comavalidation.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
@@ -292,6 +294,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\listEditor\listeditor.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -315,6 +318,7 @@
     <Content Include="Views\Facturas\DisplayTemplates\VisorFactura.cshtml" />
     <Content Include="Views\Facturas\EditorTemplates\EditorFactura.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FormaPagoEnum.cshtml" />
+    <Content Include="Views\Facturas\EditorTemplates\EditorLineaFactura.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
