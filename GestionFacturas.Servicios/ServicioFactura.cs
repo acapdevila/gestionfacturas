@@ -49,6 +49,7 @@ namespace GestionFacturas.Servicios
         public async Task<EditorFactura> ObtenerEditorFacturaParaCrearNuevaFactura(string serie)
         {
             var numero = 1;
+            var formato = "{0}{1:1000}";
 
             var ultimaFacturaCreada = await ObtenerUlitmaFacturaDeLaSerie(serie);
 
@@ -56,13 +57,14 @@ namespace GestionFacturas.Servicios
             {
                 serie = ultimaFacturaCreada.SerieFactura;
                 numero = ultimaFacturaCreada.NumeracionFactura + 1;
+                formato = ultimaFacturaCreada.FormatoNumeroFactura;
             }
 
             return new EditorFactura
             {
                 SerieFactura = serie,
                 NumeracionFactura = numero,
-                FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
+                FormatoNumeroFactura = formato,
                 FechaEmisionFactura = DateTime.Today,
                 PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
                 FormaPago = FormaPagoEnum.Transferencia,
