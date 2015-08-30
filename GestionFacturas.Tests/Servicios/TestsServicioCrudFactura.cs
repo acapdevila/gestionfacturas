@@ -65,9 +65,9 @@ namespace GestionFacturas.Tests.Servicios
                 Comentarios = "Test",
                 Lineas = new List<EditorLineaFactura>
                 {
-                    new EditorLineaFactura { PorcentajeIva = porcentajeIva, PrecioUnitario = 20, Cantidad = 2 },
-                    new EditorLineaFactura { PorcentajeIva = porcentajeIva, PrecioUnitario = (decimal)23.5, Cantidad = 1 },
-                    new EditorLineaFactura { PorcentajeIva = porcentajeIva, PrecioUnitario = 4, Cantidad = 2 }
+                    new EditorLineaFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = 20, Cantidad = 2 },
+                    new EditorLineaFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = (decimal)23.5, Cantidad = 1 },
+                    new EditorLineaFactura { PorcentajeImpuesto = porcentajeIva, PrecioUnitario = 4, Cantidad = 2 }
                 }
             };            
         }

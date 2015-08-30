@@ -256,7 +256,6 @@
     </Compile>
     <Compile Include="Helpers\ListEditorHelper.cs" />
     <Compile Include="Viewmodels\AccountViewModels.cs" />
-    <Compile Include="Viewmodels\Facturas\FacturasCrudViewModel.cs" />
     <Compile Include="Viewmodels\Facturas\FacturasViewModel.cs" />
     <Compile Include="Viewmodels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -319,6 +318,7 @@
     <Content Include="Views\Facturas\EditorTemplates\EditorFactura.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FormaPagoEnum.cshtml" />
     <Content Include="Views\Facturas\EditorTemplates\EditorLineaFactura.cshtml" />
+    <Content Include="Views\Facturas\EliminarConfirmado.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -23,7 +23,7 @@ namespace GestionFacturas.Tests.UI
         public void Get_ListaGestionFacturas_EsOk()
         {
             // Arrange
-            var controller = ObtenerFacturasControllador();
+            var controller = ObtenerControladorFacturas();
            
             // Act
             var result = controller.ListaGestionFacturas().Result;
@@ -40,7 +40,7 @@ namespace GestionFacturas.Tests.UI
         public void Get_Detalles_sin_indicar_idfactura_EsPeticionIncorrecta()
         {
             // Arrange
-            var controller = ObtenerFacturasControllador();
+            var controller = ObtenerControladorFacturas();
 
             // Act
             var result = controller.Detalles(null).Result;
@@ -56,7 +56,7 @@ namespace GestionFacturas.Tests.UI
         public void Get_Detalles_EsOk()
         {
             // Arrange
-            var controller = ObtenerFacturasControllador();
+            var controller = ObtenerControladorFacturas();
             var factura = ObtenerPrimeraFacturaConLineas();
 
             if (factura == null) return;
@@ -73,17 +73,18 @@ namespace GestionFacturas.Tests.UI
 
      
         [TestMethod]
-        public void Crear_HttpGet_EsOk()
+        public void Get_Crear_EsOk()
         {
             // Arrange
-            var controller = ObtenerFacturasControllador();
-
+            var controller = ObtenerControladorFacturas();
+         
             // Act
-            var result = controller.Crear();
+            var result = controller.Crear().Result;
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
+            Assert.IsInstanceOfType(((ViewResult)result).Model, typeof(CrearFacturaViewModel));
+
 
             controller.Dispose();
         }
@@ -92,7 +93,7 @@ namespace GestionFacturas.Tests.UI
         public void Get_Editar_EsOk()
         {
             // Arrange
-            var controller = ObtenerFacturasControllador();
+            var controller = ObtenerControladorFacturas();
             var factura = ObtenerPrimeraFacturaConLineas();
 
             if (factura == null) return;
@@ -112,7 +113,7 @@ namespace GestionFacturas.Tests.UI
         public void Eliminar_HttpGet_EsOk()
         {
             // Arrange
-            var controller = ObtenerFacturasControllador();
+            var controller = ObtenerControladorFacturas();
 
             // Act
             var result = controller.Eliminar(1).Result;
@@ -123,7 +124,7 @@ namespace GestionFacturas.Tests.UI
         }
                
 
-        private FacturasController ObtenerFacturasControllador()
+        private FacturasController ObtenerControladorFacturas()
         {
             _contexto = new ContextoBaseDatos();
             return new FacturasController(new ServicioFactura(_contexto));

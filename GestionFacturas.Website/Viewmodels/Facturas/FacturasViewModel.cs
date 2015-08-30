@@ -21,4 +21,13 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
     {
         public EditorFactura Factura { get; set; }
     }
+    public class CrearFacturaViewModel
+    {
+        public EditorFactura Factura { get; set; }
+    }
+
+    public class EliminarFacturaViewModel
+    {
+        public EditorFactura Factura { get; set; }
+    }
 }

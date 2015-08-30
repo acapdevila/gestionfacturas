@@ -4,6 +4,8 @@ using System.Web.Mvc;
 using GestionFacturas.Modelos;
 using GestionFacturas.Servicios;
 using GestionFacturas.Website.Viewmodels.Facturas;
+using System.Collections.Generic;
+using Microsoft.AspNet.Identity;
 
 namespace GestionFacturas.Website.Controllers
 {
@@ -45,9 +47,12 @@ namespace GestionFacturas.Website.Controllers
             return View(viewmodel);
         }
 
-        public ActionResult Crear()
+        public async Task<ActionResult> Crear()
         {
-            return View();
+            var viewmodel = new CrearFacturaViewModel {
+                Factura = await _servicioFactura.ObtenerEditorFacturaParaCrearNuevaFactura(string.Empty)
+            };
+            return View(viewmodel);
         }
 
         // POST: Facturas/Create
@@ -55,12 +60,14 @@ namespace GestionFacturas.Website.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Crear([Bind(Include = "Id,IdUsuario,SerieFactura,NumeracionFactura,FormatoNumeroFactura,FechaEmisionFactura,FechaVencimientoFactura,IdVendedor,VendedorNumeroIdentificacionFiscal,VendedorNombreOEmpresa,VendedorDireccion,VendedorLocalidad,VendedorProvincia,VendedorCodigoPostal,IdComprador,CompradorNumeroIdentificacionFiscal,CompradorNombreOEmpresa,CompradorDireccion,CompradorLocalidad,CompradorProvincia,CompradorCodigoPostal,EstadoFactura,Comentarios,ComentariosPie")] EditorFactura factura)
+        public async Task<ActionResult> Crear(CrearFacturaViewModel viewmodel)
         {
-            if (!ModelState.IsValid) return View(factura);
+            if (!ModelState.IsValid) return View(viewmodel);
 
-            await _servicioFactura.CrearFacturaAsync(factura);
-            return RedirectToAction("Index");
+            viewmodel.Factura.IdUsuario = User.Identity.GetUserId();
+
+            await _servicioFactura.CrearFacturaAsync(viewmodel.Factura);
+            return RedirectToAction("Detalles", new { Id = viewmodel.Factura.Id });
 
         }
 
@@ -70,7 +77,7 @@ namespace GestionFacturas.Website.Controllers
 
             var viewmodel = new EditarFacturaViewModel
             {
-                Factura = await _servicioFactura.BuscaFacturaEditorAsync(id)
+                Factura = await _servicioFactura.BuscaEditorFacturaAsync(id)
             };
             
             if (viewmodel.Factura == null) return HttpNotFound();
@@ -92,26 +99,40 @@ namespace GestionFacturas.Website.Controllers
 
         public async Task<ActionResult> Eliminar(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var factura = await _servicioFactura.BuscaFacturaEditorAsync(id.Value);
-            if (factura == null)
-            {
-                return HttpNotFound();
-            }
-            return View(factura);
+            if (id == null)  return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            
+            var viewmodel = new EliminarFacturaViewModel {
+                Factura = await _servicioFactura.BuscaEditorFacturaAsync(id.Value)
+            };
+            
+            if (viewmodel.Factura == null)  return HttpNotFound();
+            
+            return View(viewmodel);
         }
 
-        [HttpPost, ActionName("Eliminar")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EliminarConfirmacion(int id)
+        public async Task<ActionResult> Eliminar(EliminarFacturaViewModel viewmodel)
         {
-            await _servicioFactura.EliminarFactura(id);
-          
-            return RedirectToAction("Index");
+            if (!ModelState.IsValid) return View(viewmodel);
+
+            await _servicioFactura.EliminarFactura(viewmodel.Factura.Id);
+
+            var numeroFacturaCodificada = WebUtility.UrlEncode(viewmodel.Factura.NumeroFactura);
+
+            return RedirectToAction("EliminarConfirmado", new { numeroFacturaEliminada = numeroFacturaCodificada });
         }
+
+        public ActionResult EliminarConfirmado(string numeroFacturaEliminada)
+        {
+            if (string.IsNullOrEmpty(numeroFacturaEliminada)) return HttpNotFound();
+            
+            ViewBag.NumeroFacturaEliminada = WebUtility.UrlDecode(numeroFacturaEliminada);
+
+            return View("EliminarConfirmado");
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

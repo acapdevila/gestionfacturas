@@ -12,6 +12,11 @@ namespace GestionFacturas.Servicios
 {
     public class ServicioFactura : ServicioCrudFactura
     {
+        private int PorcentajeIvaPorDefecto
+        {
+            get { return 21; }
+        }
+
         public ServicioFactura(ContextoBaseDatos contexto) : base(contexto)
         {
           
@@ -41,7 +46,35 @@ namespace GestionFacturas.Servicios
             return facturas;
         }
 
+        public async Task<EditorFactura> ObtenerEditorFacturaParaCrearNuevaFactura(string serie)
+        {
+            var numero = 1;
 
+            var ultimaFacturaCreada = await ObtenerUlitmaFacturaDeLaSerie(serie);
+
+            if(ultimaFacturaCreada != null)
+            {
+                serie = ultimaFacturaCreada.SerieFactura;
+                numero = ultimaFacturaCreada.NumeracionFactura + 1;
+            }
+
+            return new EditorFactura
+            {
+                SerieFactura = serie,
+                NumeracionFactura = numero,
+                FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
+                FechaEmisionFactura = DateTime.Today,
+                PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+                FormaPago = FormaPagoEnum.Transferencia,
+                
+                Lineas = new List<EditorLineaFactura> {
+                            new EditorLineaFactura {
+                                    Cantidad = 1,
+                                    PorcentajeImpuesto = PorcentajeIvaPorDefecto
+                            }
+                      }
+            };
+        }
         public async Task<VisorFactura> BuscarVisorFacturaAsync(int? idFactura)
         {
             var factura = await BuscarFacturaAsync(idFactura); 
@@ -50,12 +83,26 @@ namespace GestionFacturas.Servicios
             return visor;
         }
 
-        public async Task<EditorFactura> BuscaFacturaEditorAsync(int? idFactura)
+        public async Task<EditorFactura> BuscaEditorFacturaAsync(int? idFactura)
         {
             var factura = await BuscarFacturaAsync(idFactura);
             var editor = new EditorFactura();
             editor.InyectarFactura(factura);
             return editor;
+        }
+
+        private async Task<Factura> ObtenerUlitmaFacturaDeLaSerie(string serie)
+        {
+            var consulta = _contexto.Facturas.AsQueryable();
+
+            if (!string.IsNullOrEmpty(serie))
+            {
+                consulta = consulta.Where(m => m.SerieFactura == serie);
+            }                    
+
+            return await consulta
+                         .OrderByDescending(m => m.FechaEmisionFactura)
+                        .FirstOrDefaultAsync();
         }
     }
 }
