@@ -1,5 +1,13 @@
-﻿    <ul class="nav navbar-nav">
-        
-        <li>@Html.ActionLink("Facturas", "Index", "Facturas")</li>
-    </ul>    
-
+﻿<div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+        <li class="active">@Html.ActionLink("Facturas", "Index", "Facturas")</li>
+    </ul>
+    <ul class="nav nav-sidebar">
+        <li>
+            @Html.ActionLink("Mis datos", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Mis datos" })
+        </li>
+        <li>
+            @Html.ActionLink("Registrar nuevo usuario", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+        </li>
+    </ul>
+</div>

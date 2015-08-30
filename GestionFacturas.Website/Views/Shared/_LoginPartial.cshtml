@@ -1,22 +1,27 @@
-﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
+﻿@if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Mis datos", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Mis datos" })
-        </li>
-        <li>@Html.ActionLink("Registrar nuevo usuario", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesion</a>
+            </li>
+            <li>
+                &nbsp; &nbsp; &nbsp;
+            </li>
+        </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">       
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Admin", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        </li>
+        <li>
+            &nbsp; &nbsp; &nbsp;
+        </li>
     </ul>
 }
