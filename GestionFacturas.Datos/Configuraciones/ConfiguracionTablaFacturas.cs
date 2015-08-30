@@ -39,7 +39,7 @@ namespace GestionFacturas.Datos.Configuraciones
                 .HasMaxLength(250);
 
             Property(m => m.ComentariosPie)
-                .HasMaxLength(250);
+                .HasMaxLength(500);
 
             Property(m => m.VendedorNumeroIdentificacionFiscal)
                 .HasMaxLength(50);
@@ -54,10 +54,10 @@ namespace GestionFacturas.Datos.Configuraciones
             .HasMaxLength(50);
 
             Property(m => m.VendedorProvincia)
-            .HasMaxLength(10);
+            .HasMaxLength(50);
 
             Property(m => m.VendedorCodigoPostal)
-            .HasMaxLength(50);
+            .HasMaxLength(10);
             
             Property(m => m.CompradorNumeroIdentificacionFiscal)
             .HasMaxLength(50);

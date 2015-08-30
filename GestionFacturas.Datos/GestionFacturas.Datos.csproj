@@ -87,6 +87,10 @@
     <Compile Include="Migrations\201508290953036_Facturas_AñadirFormaPago.Designer.cs">
       <DependentUpon>201508290953036_Facturas_AñadirFormaPago.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508301728593_Facturas_AumentarComentariosPie.cs" />
+    <Compile Include="Migrations\201508301728593_Facturas_AumentarComentariosPie.Designer.cs">
+      <DependentUpon>201508301728593_Facturas_AumentarComentariosPie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -112,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508290953036_Facturas_AñadirFormaPago.resx">
       <DependentUpon>201508290953036_Facturas_AñadirFormaPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508301728593_Facturas_AumentarComentariosPie.resx">
+      <DependentUpon>201508301728593_Facturas_AumentarComentariosPie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

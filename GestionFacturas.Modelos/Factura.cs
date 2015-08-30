@@ -149,6 +149,7 @@ namespace GestionFacturas.Modelos
 
         [Required]
         [Display(Name="Serie")]
+        [StringLength(50)]
         public string SerieFactura { get; set; }
 
         [Required]
@@ -156,6 +157,7 @@ namespace GestionFacturas.Modelos
         public int NumeracionFactura { get; set; }
 
         [Required]
+        [StringLength(50)]
         public string FormatoNumeroFactura { get; set; }
 
         public string NumeroFactura { get { return string.Format(FormatoNumeroFactura, SerieFactura, NumeracionFactura); } }
@@ -171,48 +173,61 @@ namespace GestionFacturas.Modelos
         public FormaPagoEnum FormaPago { get; set; }
 
         [Display(Name = "Detalles forma pago")]
+        [StringLength(50)]
         public string FormaPagoDetalles { get; set; }
 
         [Display(Name = "Número de referencia")]
         public int? IdVendedor { get; set; }
 
         [Display(Name = "Identificación fiscal")]
+        [StringLength(50)]
         public string VendedorNumeroIdentificacionFiscal { get; set; }
 
         [Display(Name = "Nombre o empresa")]
+        [StringLength(50)]
         public string VendedorNombreOEmpresa { get; set; }
 
         [Display(Name = "Dirección")]
+        [StringLength(50)]
         public string VendedorDireccion { get; set; }
 
         [Display(Name = "Municipio")]
+        [StringLength(50)]
         public string VendedorLocalidad { get; set; }
 
         [Display(Name = "Provincia")]
+        [StringLength(50)]
         public string VendedorProvincia { get; set; }
 
         [Display(Name = "Código postal")]
+        [StringLength(10)]
         public string VendedorCodigoPostal { get; set; }
 
         [Display(Name = "Número de referencia")]
         public int? IdComprador { get; set; }
 
         [Display(Name = "Identificación fiscal")]
+        [StringLength(50)]
         public string CompradorNumeroIdentificacionFiscal { get; set; }
 
         [Display(Name = "Nombre o empresa")]
+        [StringLength(50)]
         public string CompradorNombreOEmpresa { get; set; }
 
         [Display(Name = "Dirección")]
+        [StringLength(50)]
         public string CompradorDireccion { get; set; }
 
         [Display(Name = "Municipio")]
+        [StringLength(50)]
         public string CompradorLocalidad { get; set; }
 
         [Display(Name = "Provincia")]
+        [StringLength(50)]
         public string CompradorProvincia { get; set; }
 
         [Display(Name = "Código postal")]
+        [StringLength(10)]
         public string CompradorCodigoPostal { get; set; }
 
 
@@ -224,9 +239,12 @@ namespace GestionFacturas.Modelos
 
         [Display(Name = "Estado")]
         public EstadoFacturaEnum EstadoFactura { get; set; }
+
+        [StringLength(250)]
         public string Comentarios { get; set; }
 
         [Display(Name = "Pie")]
+        [StringLength(500)]
         public string ComentariosPie { get; set; }
 
 
