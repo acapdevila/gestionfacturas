@@ -8,8 +8,6 @@
         <li class="@(currentController == "Facturas" ? activeClass : string.Empty)">
             @Html.ActionLink("Facturas", "Index", "Facturas")
         </li>
-    </ul>
-    <ul class="nav nav-sidebar">
         <li class="@(currentController == "Manage" ? activeClass : string.Empty)">
             @Html.ActionLink("Mis datos", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Mis datos" })
         </li>

@@ -22,24 +22,40 @@ namespace GestionFacturas.Servicios
           
         }
 
-        public async Task<IEnumerable<LineaListaGestionFacturas>> ListaGestionFacturasAsync()
+        public async Task<IEnumerable<LineaListaGestionFacturas>> ListaGestionFacturasAsync(FiltroBusquedaFactura filtroBusqueda)
         {
-            var consultaFacturas = _contexto.Facturas.Select(m => new LineaListaGestionFacturas
+            var consulta = _contexto.Facturas.AsQueryable();
+
+            if (filtroBusqueda.TieneValores)
             {
-                Id = m.Id,
-                IdUsuario = m.IdUsuario,
-                IdComprador = m.IdComprador,
-                FormatoNumeroFactura = m.FormatoNumeroFactura,
-                NumeracionFactura = m.NumeracionFactura,
-                SerieFactura = m.SerieFactura,
-                FechaEmisionFactura = m.FechaEmisionFactura,
-                FechaVencimientoFactura = m.FechaVencimientoFactura,
-                EstadoFactura = m.EstadoFactura,
-                BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
-                Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
-                ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0,
-                CompradorNombreOEmpresa = m.CompradorNombreOEmpresa
-            });
+                if (!string.IsNullOrEmpty(filtroBusqueda.NombreOEmpresaCliente))
+                {
+                    consulta = consulta.Where(m => m.CompradorNombreOEmpresa.Contains(filtroBusqueda.NombreOEmpresaCliente));
+                }
+
+                if (filtroBusqueda.FechaDesde.HasValue && filtroBusqueda.FechaHasta.HasValue)
+                {
+                    consulta = consulta.Where(m => m.FechaEmisionFactura >= filtroBusqueda.FechaDesde.Value && m.FechaEmisionFactura <= filtroBusqueda.FechaHasta.Value);
+                }
+            }
+
+            var consultaFacturas = consulta
+                .Select(m => new LineaListaGestionFacturas
+                {
+                    Id = m.Id,
+                    IdUsuario = m.IdUsuario,
+                    IdComprador = m.IdComprador,
+                    FormatoNumeroFactura = m.FormatoNumeroFactura,
+                    NumeracionFactura = m.NumeracionFactura,
+                    SerieFactura = m.SerieFactura,
+                    FechaEmisionFactura = m.FechaEmisionFactura,
+                    FechaVencimientoFactura = m.FechaVencimientoFactura,
+                    EstadoFactura = m.EstadoFactura,
+                    BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
+                    Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
+                    ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0,
+                    CompradorNombreOEmpresa = m.CompradorNombreOEmpresa
+                });
 
             var facturas = await consultaFacturas.ToListAsync();
 

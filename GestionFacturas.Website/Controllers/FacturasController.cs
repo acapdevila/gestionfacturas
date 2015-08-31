@@ -6,6 +6,7 @@ using GestionFacturas.Servicios;
 using GestionFacturas.Website.Viewmodels.Facturas;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
+using System;
 
 namespace GestionFacturas.Website.Controllers
 {
@@ -19,19 +20,33 @@ namespace GestionFacturas.Website.Controllers
             _servicioFactura = servicioFactura;
         }
 
+      
         public ActionResult Index()
         {
             return RedirectToAction("ListaGestionFacturas");
         }
 
-        public async Task<ActionResult> ListaGestionFacturas()
-        {            
-            var viewmodel = new ListaGestionFacturasViewModel {
-                 ListaFacturas = await _servicioFactura.ListaGestionFacturasAsync()
-            };
+        [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
+        public async Task<ActionResult> ListaGestionFacturas(FiltroBusquedaFactura filtroBusqueda)
+        {
+            if (!filtroBusqueda.TieneValores)
+            {
+                filtroBusqueda = new FiltroBusquedaFactura
+                {
+                    FechaDesde = ServicioFechas.PrimerDiaMesActual(),
+                    FechaHasta = ServicioFechas.UltimoDiaMesActual()
+                };
+            }
 
+            var viewmodel = new ListaGestionFacturasViewModel {
+                    FiltroBusqueda = filtroBusqueda,
+                    ListaFacturas = await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda)
+            };            
+       
             return View("ListaGestionFacturas", viewmodel);
         }
+
+       
 
         public async Task<ActionResult> Detalles(int? id)
         {

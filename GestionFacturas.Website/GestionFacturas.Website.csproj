@@ -324,6 +324,7 @@
     <Content Include="Views\Facturas\EliminarConfirmado.cshtml" />
     <Content Include="Views\Shared\_MenuAdmin.cshtml" />
     <Content Include="Views\Shared\_MenuPrincipal.cshtml" />
+    <Content Include="Views\Facturas\EditorTemplates\FiltroBusquedaFactura.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

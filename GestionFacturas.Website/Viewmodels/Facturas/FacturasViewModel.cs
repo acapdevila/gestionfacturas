@@ -9,6 +9,7 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
 {
     public class ListaGestionFacturasViewModel
     {
+        public FiltroBusquedaFactura FiltroBusqueda { get; set; }
         public IEnumerable<LineaListaGestionFacturas> ListaFacturas { get; set; }
     }
 
@@ -29,5 +30,10 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
     public class EliminarFacturaViewModel
     {
         public EditorFactura Factura { get; set; }
+    }
+
+    public class BuscadorFacturasViewModel
+    {
+        public FiltroBusquedaFactura FiltroBusqueda { get; set; }
     }
 }
