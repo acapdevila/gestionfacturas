@@ -379,7 +379,7 @@ namespace GestionFacturas.Website.Controllers
         public ActionResult LogOff()
         {
             _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Inicio");
         }
 
         //

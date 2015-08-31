@@ -1,4 +1,5 @@
-﻿@if (Request.IsAuthenticated)
+﻿@using GestionFacturas.Website.Helpers
+@if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -16,8 +17,13 @@
 }
 else
 {
+   
+        var currentController = (string)ViewContext.RouteData.Values[RouteDataKey.Controller];
+        const string activeClass = "active";
+    
+
     <ul class="nav navbar-nav navbar-right">
-        <li>
+        <li class="@(currentController == "Account" ? activeClass : string.Empty)">
             @Html.ActionLink("Admin", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
         </li>
         <li>
