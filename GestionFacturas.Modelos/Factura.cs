@@ -124,7 +124,11 @@ namespace GestionFacturas.Modelos
         public DateTime FechaEmisionFactura { get; set; }
         public DateTime? FechaVencimientoFactura { get; set; }
 
-        public string Concepto { get; set; }
+        public IEnumerable<string> ListaDescripciones { get; set; }
+
+        public string ResumenDescripciones { get {
+                return string.Join(", ", ListaDescripciones);
+            } }
 
         public int? IdComprador { get; set; }
         public string CompradorNombreOEmpresa { get; set; }
@@ -307,6 +311,12 @@ namespace GestionFacturas.Modelos
         public string Comentarios { get; set; }
         public string ComentariosPie { get; set; }
 
+
+        public string Titulo { get
+            {
+                return string.Format("Factura {0} {1}", NumeroFactura, CompradorNombreOEmpresa);
+            }
+        }
 
         public decimal BaseImponible
         {

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Omu.ValueInjecter;
+using Microsoft.Reporting.WebForms;
 
 namespace GestionFacturas.Servicios
 {
@@ -54,7 +55,8 @@ namespace GestionFacturas.Servicios
                     BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
                     Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
                     ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0,
-                    CompradorNombreOEmpresa = m.CompradorNombreOEmpresa
+                    CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
+                    ListaDescripciones = m.Lineas.Select(l=>l.Descripcion)
                 });
 
             var facturas = await consultaFacturas.ToListAsync();
@@ -121,6 +123,17 @@ namespace GestionFacturas.Servicios
             return await consulta
                          .OrderByDescending(m => m.FechaEmisionFactura)
                         .FirstOrDefaultAsync();
+        }
+
+        public async Task<LocalReport> GenerarInformeLocalFactura(int id, string reportPath)
+        {
+            var factura = await BuscarFacturaAsync(id);
+
+            if (factura == null) return null;
+
+            var informeLocal = new LocalReport { ReportPath = reportPath };
+                                  
+            return informeLocal;            
         }
     }
 }

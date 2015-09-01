@@ -7,6 +7,7 @@ using GestionFacturas.Website.Viewmodels.Facturas;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 using System;
+using Microsoft.Reporting.WebForms;
 
 namespace GestionFacturas.Website.Controllers
 {
@@ -14,7 +15,7 @@ namespace GestionFacturas.Website.Controllers
     public class FacturasController : Controller
     {
         private readonly ServicioFactura _servicioFactura;
-      
+
         public FacturasController(ServicioFactura servicioFactura)
         {
             _servicioFactura = servicioFactura;
@@ -146,7 +147,29 @@ namespace GestionFacturas.Website.Controllers
 
             return View("EliminarConfirmado");
         }
+        
+        public async Task<ActionResult> Imprimir(int id, string titulo)
+        {
+            var informeLocal = await _servicioFactura.GenerarInformeLocalFactura(id, reportPath : Server.MapPath("~/Informes/Factura.rdlc"));
 
+            if (informeLocal == null) return HttpNotFound();
+
+            string mimeType;
+
+            byte[] renderedBytes = ServicioImpresion.GenerarPdf(informeLocal, out mimeType);
+
+            var cabecera = new System.Net.Mime.ContentDisposition
+            {
+                FileName = string.Format("{0}.pdf", titulo),
+                
+                // Si es verdadero el navegador trata de mostrar el archivo directamente
+                Inline = true,
+            };
+
+            Response.AppendHeader("Content-Disposition", cabecera.ToString());
+          
+            return File(renderedBytes, mimeType);
+        }
 
 
         protected override void Dispose(bool disposing)
