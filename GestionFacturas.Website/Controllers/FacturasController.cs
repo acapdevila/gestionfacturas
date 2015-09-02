@@ -150,9 +150,11 @@ namespace GestionFacturas.Website.Controllers
         
         public async Task<ActionResult> Imprimir(int id, string titulo)
         {
-            var informeLocal = await _servicioFactura.GenerarInformeLocalFactura(id, reportPath : Server.MapPath("~/Informes/Factura.rdlc"));
+            var facturaAImprimir = await _servicioFactura.BuscarFacturaAsync(id);
 
-            if (informeLocal == null) return HttpNotFound();
+            if (facturaAImprimir == null) return HttpNotFound();
+
+            var informeLocal = GenerarInformeLocalFactura(facturaAImprimir, rutaPlantillaInforme: Server.MapPath("~/Informes/Factura.rdlc"));
 
             string mimeType;
 
@@ -169,6 +171,18 @@ namespace GestionFacturas.Website.Controllers
             Response.AppendHeader("Content-Disposition", cabecera.ToString());
           
             return File(renderedBytes, mimeType);
+        }
+
+        public LocalReport GenerarInformeLocalFactura(Factura factura, string rutaPlantillaInforme)
+        {
+            var informeLocal = new LocalReport { ReportPath = rutaPlantillaInforme };
+
+            var datasetFactura = factura.ConvertirADataSet();
+
+            informeLocal.DataSources.Add(new ReportDataSource("Facturas", datasetFactura.Tables[0]));
+            informeLocal.DataSources.Add(new ReportDataSource("Lineas", datasetFactura.Tables[1]));
+
+            return informeLocal;
         }
 
 

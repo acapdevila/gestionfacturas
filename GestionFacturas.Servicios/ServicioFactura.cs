@@ -125,15 +125,6 @@ namespace GestionFacturas.Servicios
                         .FirstOrDefaultAsync();
         }
 
-        public async Task<LocalReport> GenerarInformeLocalFactura(int id, string reportPath)
-        {
-            var factura = await BuscarFacturaAsync(id);
-
-            if (factura == null) return null;
-
-            var informeLocal = new LocalReport { ReportPath = reportPath };
-                                  
-            return informeLocal;            
-        }
+  
     }
 }

@@ -39,5 +39,57 @@ namespace GestionFacturas.Servicios
                 visor.Lineas.Add(lineaVisor);
             }
         }
+
+        public static void InyectarFactura(this DataSetFactura datasetFactura, Factura factura)
+        {
+            var filaDatasetFactura = datasetFactura.Facturas.NewFacturasRow();
+
+            filaDatasetFactura.InyectarFactura(factura);
+            
+            datasetFactura.Facturas.AddFacturasRow(filaDatasetFactura);
+
+            foreach (var linea in factura.Lineas)
+            {
+                var filaDatasetLineaFactura = datasetFactura.FacturasLineas.NewFacturasLineasRow();
+
+                filaDatasetLineaFactura.Id = linea.Id;
+                filaDatasetLineaFactura.IdFactura = linea.IdFactura;
+                filaDatasetLineaFactura.Descripcion = linea.Descripcion;
+                filaDatasetLineaFactura.Cantidad = linea.Cantidad;
+                filaDatasetLineaFactura.PrecioUnitario = linea.PrecioUnitario;
+                filaDatasetLineaFactura.PorcentajeImpuesto = linea.PorcentajeImpuesto;
+
+                datasetFactura.FacturasLineas.AddFacturasLineasRow(filaDatasetLineaFactura);
+            }           
+        }
+
+        public static void InyectarFactura(this DataSetFactura.FacturasRow fila, Factura factura)
+        {            
+            fila.Id = factura.Id;
+            fila.NumeroFactura = factura.NumeroFactura;
+            fila.FechaEmisionFactura = factura.FechaEmisionFactura;
+
+            if (factura.FechaVencimientoFactura.HasValue)
+                fila.FechaVencimientoFactura = factura.FechaVencimientoFactura.Value;
+            else
+                fila.SetFechaVencimientoFacturaNull();
+
+            fila.VendedorNumeroIdentificacionFiscal = factura.VendedorNumeroIdentificacionFiscal;
+            fila.VendedorNombreOEmpresa= factura.VendedorNombreOEmpresa;
+            fila.VendedorDireccion = factura.VendedorDireccion;
+            fila.VendedorLocalidad = factura.VendedorLocalidad;
+            fila.VendedorProvincia = factura.VendedorProvincia;
+            fila.VendedorCodigoPostal = factura.VendedorCodigoPostal;
+
+            fila.CompradorNumeroIdentificacionFiscal = factura.CompradorNumeroIdentificacionFiscal;
+            fila.CompradorNombreOEmpresa = factura.CompradorNombreOEmpresa;
+            fila.CompradorDireccion = factura.CompradorDireccion;
+            fila.CompradorLocalidad = factura.CompradorLocalidad;
+            fila.CompradorProvincia = factura.CompradorProvincia;
+            fila.CompradorCodigoPostal = factura.CompradorCodigoPostal;
+
+            fila.FormaPago = (int)factura.FormaPago;
+            fila.FormaPagoDetalles = factura.FormaPagoDetalles;
+        }
     }
 }
