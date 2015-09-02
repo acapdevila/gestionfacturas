@@ -381,9 +381,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Informes\Factura.rdlc">
+    <Content Include="Informes\Factura.rdlc">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
