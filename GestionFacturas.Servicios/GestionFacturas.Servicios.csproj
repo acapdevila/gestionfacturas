@@ -83,13 +83,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConversorFacturas.cs" />
-    <Compile Include="ServicioEnumerable.cs" />
+    <Compile Include="ExtensionesEnumerables.cs" />
     <Compile Include="ServicioFechas.cs" />
     <Compile Include="InyectorFacturas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicioCrudFactura.cs" />
     <Compile Include="ServicioFactura.cs" />
     <Compile Include="ServicioImpresion.cs" />
+    <Compile Include="ExtensionesStrings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GestionFacturas.Datos\GestionFacturas.Datos.csproj">

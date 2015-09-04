@@ -59,6 +59,14 @@ namespace GestionFacturas.Modelos
         public string NombreArchivoLogo { get; set; }
         public string NombreArchivoPlantillaInforme { get; set; }
 
+        public string Titulo
+        {
+            get
+            {
+                return string.Format("Factura {0} {1}", NumeroFactura, CompradorNombreOEmpresa);
+            }
+        }
+
         public decimal BaseImponible()
         {
             if (!Lineas.Any()) return 0;
@@ -312,14 +320,9 @@ namespace GestionFacturas.Modelos
         public EstadoFacturaEnum EstadoFactura { get; set; }
         public string Comentarios { get; set; }
         public string ComentariosPie { get; set; }
-
-
-        public string Titulo { get
-            {
-                return string.Format("Factura {0} {1}", NumeroFactura, CompradorNombreOEmpresa);
-            }
-        }
-
+        
+        public string Titulo { get; set; }
+       
         public decimal BaseImponible
         {
             get {

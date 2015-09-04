@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace GestionFacturas.Servicios
 {  
 
-    public static class ServicioEnumerable
+    public static class ExtensionesEnumerables
     {
        public static string ObtenerNombreAtributoDisplay(this Enum value)
        {

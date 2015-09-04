@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using System;
 using Microsoft.Reporting.WebForms;
 using GestionFacturas.Website.Helpers;
+using System.Linq;
+using System.IO;
+using Ionic.Zip;
 
 namespace GestionFacturas.Website.Controllers
 {
@@ -33,11 +36,7 @@ namespace GestionFacturas.Website.Controllers
         {
             if (!filtroBusqueda.TieneValores)
             {
-                filtroBusqueda = new FiltroBusquedaFactura
-                {
-                    FechaDesde = ServicioFechas.PrimerDiaMesActual(),
-                    FechaHasta = ServicioFechas.UltimoDiaMesActual()
-                };
+                filtroBusqueda = FiltroBusquedaConValoresPorDefecto();
             }
 
             var viewmodel = new ListaGestionFacturasViewModel {
@@ -48,7 +47,7 @@ namespace GestionFacturas.Website.Controllers
             return View("ListaGestionFacturas", viewmodel);
         }
 
-       
+   
 
         public async Task<ActionResult> Detalles(int? id)
         {
@@ -174,6 +173,39 @@ namespace GestionFacturas.Website.Controllers
             return File(renderedBytes, mimeType);
         }
 
+        public async Task<ActionResult> DescargarZip(FiltroBusquedaFactura filtroBusqueda)
+        {
+            if (!filtroBusqueda.TieneValores)
+            {
+                filtroBusqueda = FiltroBusquedaConValoresPorDefecto();
+            }
+
+            var listaGestionFacturas = await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda);
+                        
+            if (!listaGestionFacturas.Any())
+                return RedirectToAction("ListaGestionFacturas");
+
+            var archivoZip = await GenerarZip(listaGestionFacturas);
+
+            var nombreArchivoZip = string.Format("Facturas_desde_{0}_hasta_{1}.zip", 
+                filtroBusqueda.FechaDesde.Value.ToString("dd-MM-yyyy"),
+                filtroBusqueda.FechaHasta.Value.ToString("dd-MM-yyyy"));
+
+            archivoZip.Position = 0;
+            HttpContext.Response.AppendHeader("content-disposition", "attachment; filename=" + nombreArchivoZip);
+            return File(archivoZip, "application/zip");
+
+        }
+            
+        private FiltroBusquedaFactura FiltroBusquedaConValoresPorDefecto()
+        {
+            return new FiltroBusquedaFactura
+            {
+                FechaDesde = ServicioFechas.PrimerDiaMesActual(),
+                FechaHasta = ServicioFechas.UltimoDiaMesActual()
+            };
+        }
+
         public LocalReport GenerarInformeLocalFactura(Factura factura)
         {
             var rutaPlantillaInforme = ObtenerRutaPlantillaInforme(factura);
@@ -188,8 +220,7 @@ namespace GestionFacturas.Website.Controllers
             var datasetFactura = factura.ConvertirADataSet(urlRaizWeb);
 
             informeLocal.DataSources.Add(new ReportDataSource("Facturas", datasetFactura.Tables[0]));
-            informeLocal.DataSources.Add(new ReportDataSource("Lineas", datasetFactura.Tables[1]));
-            
+            informeLocal.DataSources.Add(new ReportDataSource("Lineas", datasetFactura.Tables[1]));            
 
             return informeLocal;
         }
@@ -202,6 +233,27 @@ namespace GestionFacturas.Website.Controllers
             return Server.MapPath("~/Uploads/Informes/" + factura.NombreArchivoPlantillaInforme);
         }
 
+        private async Task<MemoryStream> GenerarZip(IEnumerable<LineaListaGestionFacturas> listaGestionFacturas)
+        {
+            var archivoZip = new MemoryStream();
+
+            using (var zip = new ZipFile())
+            {
+                foreach (var itemFactura in listaGestionFacturas)
+                {
+                    var factura = await _servicioFactura.BuscarFacturaAsync(itemFactura.Id);
+                    var informeLocal = GenerarInformeLocalFactura(factura);
+                    string mimeType;
+                    byte[] renderedBytes = ServicioImpresion.GenerarPdf(informeLocal, out mimeType);
+                    var nombrePdf = factura.Titulo.Replace(":", " ").Replace("·", "").Replace("€", "").Replace("/", "-").EliminarDiacriticos() + ".pdf";
+                    zip.AddEntry(nombrePdf, renderedBytes);
+                }
+                zip.Save(archivoZip);
+            }
+
+            return archivoZip;
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

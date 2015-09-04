@@ -6,19 +6,34 @@
     ViewBag.Title = "Lista de facturas";
 }
 
+@section scripts{    
+    <script type="text/javascript">
+    function DescargarZip() {
+        window.location = '@Url.Action("DescargarZip")?' + ParametrosBusquedaFormulario();
+    }
+
+     function ParametrosBusquedaFormulario() {
+            return $('#formularioBusqueda').serialize();
+           
+        }
+</script>
+}
+
 <h2>Facturas</h2>
 
-
 <div class="panel panel-default">
-
     <div class="panel-heading">
         @Html.ActionLink("Crear nueva factura", "Crear", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Descargar Zip", "DescargarZip", null, new { @class = "btn btn-default", onclick="DescargarZip();return false;" })    
     </div>
 
     <div class="panel-body">
-        @Html.EditorFor(m => m.FiltroBusqueda, "FiltroBusquedaFactura")
+       @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline", Id = "formularioBusqueda" }))
+       {
+           @Html.EditorFor(m => m.FiltroBusqueda, "FiltroBusquedaFactura")
+       }
     </div>
-  
+
             <table class="table table-striped">
                 <tr>
                     <th>
@@ -50,7 +65,7 @@
                 </tr>
 
                 @foreach (var item in Model.ListaFacturas)
-            {
+                {
                 <tr>
                     <td>
                         @Html.ActionLink(item.NumeroFactura, "Detalles", new { id = item.Id })
