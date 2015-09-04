@@ -284,6 +284,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dashboard.css" />
+    <Content Include="Content\Logos\LogoGF.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -381,7 +382,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Informes\Factura.rdlc">
+    <Content Include="Content\Informes\Factura.rdlc">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -402,6 +403,10 @@
       <Project>{b5eca3f7-1858-49d0-a148-d4ab14b9c02b}</Project>
       <Name>GestionFacturas.Servicios</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Uploads\Informes\" />
+    <Folder Include="Uploads\Logos\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

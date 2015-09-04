@@ -10,11 +10,11 @@ namespace GestionFacturas.Servicios
     public static class ConversorFacturas
     {
    
-        public static DataSetFactura ConvertirADataSet(this Factura factura)
+        public static DataSetFactura ConvertirADataSet(this Factura factura, string urlRaizWeb)
         {
             var datasetFactura = new DataSetFactura();
 
-            datasetFactura.InyectarFactura(factura);
+            datasetFactura.InyectarFactura(factura, urlRaizWeb);         
 
             return datasetFactura;
         }

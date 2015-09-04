@@ -323,6 +323,8 @@ namespace GestionFacturas.Modelos {
             
             private global::System.Data.DataColumn columnId;
             
+            private global::System.Data.DataColumn columnRutaLogo;
+            
             private global::System.Data.DataColumn columnNumeroFactura;
             
             private global::System.Data.DataColumn columnFechaEmisionFactura;
@@ -360,6 +362,12 @@ namespace GestionFacturas.Modelos {
             private global::System.Data.DataColumn columnFormaPago;
             
             private global::System.Data.DataColumn columnFormaPagoDetalles;
+            
+            private global::System.Data.DataColumn columnBaseImponible;
+            
+            private global::System.Data.DataColumn columnImporteImpuestos;
+            
+            private global::System.Data.DataColumn columnImporteTotal;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -399,6 +407,14 @@ namespace GestionFacturas.Modelos {
             public global::System.Data.DataColumn IdColumn {
                 get {
                     return this.columnId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RutaLogoColumn {
+                get {
+                    return this.columnRutaLogo;
                 }
             }
             
@@ -556,6 +572,30 @@ namespace GestionFacturas.Modelos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BaseImponibleColumn {
+                get {
+                    return this.columnBaseImponible;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ImporteImpuestosColumn {
+                get {
+                    return this.columnImporteImpuestos;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ImporteTotalColumn {
+                get {
+                    return this.columnImporteTotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -592,6 +632,7 @@ namespace GestionFacturas.Modelos {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public FacturasRow AddFacturasRow(
+                        string RutaLogo, 
                         string NumeroFactura, 
                         System.DateTime FechaEmisionFactura, 
                         System.DateTime FechaVencimientoFactura, 
@@ -609,11 +650,15 @@ namespace GestionFacturas.Modelos {
                         string CompradorCodigoPostal, 
                         string Comentarios, 
                         string ComentariosPie, 
-                        int FormaPago, 
-                        string FormaPagoDetalles) {
+                        string FormaPago, 
+                        string FormaPagoDetalles, 
+                        decimal BaseImponible, 
+                        decimal ImporteImpuestos, 
+                        decimal ImporteTotal) {
                 FacturasRow rowFacturasRow = ((FacturasRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
+                        RutaLogo,
                         NumeroFactura,
                         FechaEmisionFactura,
                         FechaVencimientoFactura,
@@ -632,7 +677,10 @@ namespace GestionFacturas.Modelos {
                         Comentarios,
                         ComentariosPie,
                         FormaPago,
-                        FormaPagoDetalles};
+                        FormaPagoDetalles,
+                        BaseImponible,
+                        ImporteImpuestos,
+                        ImporteTotal};
                 rowFacturasRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowFacturasRow);
                 return rowFacturasRow;
@@ -663,6 +711,7 @@ namespace GestionFacturas.Modelos {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnId = base.Columns["Id"];
+                this.columnRutaLogo = base.Columns["RutaLogo"];
                 this.columnNumeroFactura = base.Columns["NumeroFactura"];
                 this.columnFechaEmisionFactura = base.Columns["FechaEmisionFactura"];
                 this.columnFechaVencimientoFactura = base.Columns["FechaVencimientoFactura"];
@@ -682,6 +731,9 @@ namespace GestionFacturas.Modelos {
                 this.columnComentariosPie = base.Columns["ComentariosPie"];
                 this.columnFormaPago = base.Columns["FormaPago"];
                 this.columnFormaPagoDetalles = base.Columns["FormaPagoDetalles"];
+                this.columnBaseImponible = base.Columns["BaseImponible"];
+                this.columnImporteImpuestos = base.Columns["ImporteImpuestos"];
+                this.columnImporteTotal = base.Columns["ImporteTotal"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -689,6 +741,8 @@ namespace GestionFacturas.Modelos {
             private void InitClass() {
                 this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnId);
+                this.columnRutaLogo = new global::System.Data.DataColumn("RutaLogo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRutaLogo);
                 this.columnNumeroFactura = new global::System.Data.DataColumn("NumeroFactura", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNumeroFactura);
                 this.columnFechaEmisionFactura = new global::System.Data.DataColumn("FechaEmisionFactura", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -723,10 +777,16 @@ namespace GestionFacturas.Modelos {
                 base.Columns.Add(this.columnComentarios);
                 this.columnComentariosPie = new global::System.Data.DataColumn("ComentariosPie", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnComentariosPie);
-                this.columnFormaPago = new global::System.Data.DataColumn("FormaPago", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnFormaPago = new global::System.Data.DataColumn("FormaPago", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFormaPago);
                 this.columnFormaPagoDetalles = new global::System.Data.DataColumn("FormaPagoDetalles", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFormaPagoDetalles);
+                this.columnBaseImponible = new global::System.Data.DataColumn("BaseImponible", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBaseImponible);
+                this.columnImporteImpuestos = new global::System.Data.DataColumn("ImporteImpuestos", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnImporteImpuestos);
+                this.columnImporteTotal = new global::System.Data.DataColumn("ImporteTotal", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnImporteTotal);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -752,8 +812,10 @@ namespace GestionFacturas.Modelos {
                 this.columnCompradorCodigoPostal.MaxLength = 10;
                 this.columnComentarios.MaxLength = 250;
                 this.columnComentariosPie.MaxLength = 500;
-                this.columnFormaPago.AllowDBNull = false;
+                this.columnFormaPago.MaxLength = 50;
                 this.columnFormaPagoDetalles.MaxLength = 50;
+                this.columnImporteImpuestos.Caption = "BaseImponible";
+                this.columnImporteTotal.Caption = "BaseImponible";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1247,6 +1309,22 @@ namespace GestionFacturas.Modelos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string RutaLogo {
+                get {
+                    try {
+                        return ((string)(this[this.tableFacturas.RutaLogoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'RutaLogo\' in table \'Facturas\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFacturas.RutaLogoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string NumeroFactura {
                 get {
                     return ((string)(this[this.tableFacturas.NumeroFacturaColumn]));
@@ -1511,9 +1589,14 @@ namespace GestionFacturas.Modelos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int FormaPago {
+            public string FormaPago {
                 get {
-                    return ((int)(this[this.tableFacturas.FormaPagoColumn]));
+                    try {
+                        return ((string)(this[this.tableFacturas.FormaPagoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FormaPago\' in table \'Facturas\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableFacturas.FormaPagoColumn] = value;
@@ -1534,6 +1617,66 @@ namespace GestionFacturas.Modelos {
                 set {
                     this[this.tableFacturas.FormaPagoDetallesColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal BaseImponible {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableFacturas.BaseImponibleColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'BaseImponible\' in table \'Facturas\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFacturas.BaseImponibleColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal ImporteImpuestos {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableFacturas.ImporteImpuestosColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ImporteImpuestos\' in table \'Facturas\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFacturas.ImporteImpuestosColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal ImporteTotal {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableFacturas.ImporteTotalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ImporteTotal\' in table \'Facturas\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFacturas.ImporteTotalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRutaLogoNull() {
+                return this.IsNull(this.tableFacturas.RutaLogoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRutaLogoNull() {
+                this[this.tableFacturas.RutaLogoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1718,6 +1861,18 @@ namespace GestionFacturas.Modelos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFormaPagoNull() {
+                return this.IsNull(this.tableFacturas.FormaPagoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFormaPagoNull() {
+                this[this.tableFacturas.FormaPagoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFormaPagoDetallesNull() {
                 return this.IsNull(this.tableFacturas.FormaPagoDetallesColumn);
             }
@@ -1726,6 +1881,42 @@ namespace GestionFacturas.Modelos {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFormaPagoDetallesNull() {
                 this[this.tableFacturas.FormaPagoDetallesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBaseImponibleNull() {
+                return this.IsNull(this.tableFacturas.BaseImponibleColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBaseImponibleNull() {
+                this[this.tableFacturas.BaseImponibleColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsImporteImpuestosNull() {
+                return this.IsNull(this.tableFacturas.ImporteImpuestosColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetImporteImpuestosNull() {
+                this[this.tableFacturas.ImporteImpuestosColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsImporteTotalNull() {
+                return this.IsNull(this.tableFacturas.ImporteTotalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetImporteTotalNull() {
+                this[this.tableFacturas.ImporteTotalColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

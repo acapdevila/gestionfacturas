@@ -9,14 +9,14 @@ namespace GestionFacturas.Servicios
 {
     public static class InyectorFacturas
     {
-   
+
         public static void InyectarFactura(this EditorFactura editor, Factura factura)
         {
             editor.InjectFrom(factura);
 
             editor.PorcentajeIvaPorDefecto = 21;
 
-            editor.BorrarLineasFactura();           
+            editor.BorrarLineasFactura();
 
             foreach (var lineaFactura in factura.Lineas)
             {
@@ -29,7 +29,7 @@ namespace GestionFacturas.Servicios
         public static void InyectarFactura(this VisorFactura visor, Factura factura)
         {
             visor.InjectFrom(factura);
-            
+
             visor.BorrarLineasFactura();
 
             foreach (var lineaFactura in factura.Lineas)
@@ -40,12 +40,18 @@ namespace GestionFacturas.Servicios
             }
         }
 
-        public static void InyectarFactura(this DataSetFactura datasetFactura, Factura factura)
+        public static void InyectarFactura(this DataSetFactura datasetFactura, Factura factura, string urlRaizWeb)
         {
             var filaDatasetFactura = datasetFactura.Facturas.NewFacturasRow();
 
             filaDatasetFactura.InyectarFactura(factura);
-            
+
+            if (string.IsNullOrEmpty(factura.NombreArchivoLogo))
+                filaDatasetFactura.RutaLogo = string.Concat(urlRaizWeb, "Content/Logos/LogoGF.jpg");
+            else
+                filaDatasetFactura.RutaLogo = string.Concat(urlRaizWeb, "Uploads/Logos/", factura.NombreArchivoLogo);
+
+
             datasetFactura.Facturas.AddFacturasRow(filaDatasetFactura);
 
             foreach (var linea in factura.Lineas)
@@ -60,12 +66,14 @@ namespace GestionFacturas.Servicios
                 filaDatasetLineaFactura.PorcentajeImpuesto = linea.PorcentajeImpuesto;
 
                 datasetFactura.FacturasLineas.AddFacturasLineasRow(filaDatasetLineaFactura);
-            }           
+            }
         }
 
         public static void InyectarFactura(this DataSetFactura.FacturasRow fila, Factura factura)
         {            
             fila.Id = factura.Id;
+            fila.RutaLogo = "/Content/Logos/LogoGF.jpg";
+
             fila.NumeroFactura = factura.NumeroFactura;
             fila.FechaEmisionFactura = factura.FechaEmisionFactura;
 
@@ -88,8 +96,15 @@ namespace GestionFacturas.Servicios
             fila.CompradorProvincia = factura.CompradorProvincia;
             fila.CompradorCodigoPostal = factura.CompradorCodigoPostal;
 
-            fila.FormaPago = (int)factura.FormaPago;
+            fila.Comentarios = factura.Comentarios;
+            fila.ComentariosPie = factura.ComentariosPie;
+
+            fila.FormaPago = factura.FormaPago.ObtenerNombreAtributoDisplay();
             fila.FormaPagoDetalles = factura.FormaPagoDetalles;
+
+            fila.BaseImponible = factura.BaseImponible();
+            fila.ImporteImpuestos = factura.ImporteImpuestos();
+            fila.ImporteTotal = factura.ImporteTotal();
         }
     }
 }

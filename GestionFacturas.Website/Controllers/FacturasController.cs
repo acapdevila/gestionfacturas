@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 using System;
 using Microsoft.Reporting.WebForms;
+using GestionFacturas.Website.Helpers;
 
 namespace GestionFacturas.Website.Controllers
 {
@@ -154,7 +155,7 @@ namespace GestionFacturas.Website.Controllers
 
             if (facturaAImprimir == null) return HttpNotFound();
 
-            var informeLocal = GenerarInformeLocalFactura(facturaAImprimir, rutaPlantillaInforme: Server.MapPath("~/Informes/Factura.rdlc"));
+            var informeLocal = GenerarInformeLocalFactura(facturaAImprimir);
 
             string mimeType;
 
@@ -173,18 +174,33 @@ namespace GestionFacturas.Website.Controllers
             return File(renderedBytes, mimeType);
         }
 
-        public LocalReport GenerarInformeLocalFactura(Factura factura, string rutaPlantillaInforme)
+        public LocalReport GenerarInformeLocalFactura(Factura factura)
         {
-            var informeLocal = new LocalReport { ReportPath = rutaPlantillaInforme };
+            var rutaPlantillaInforme = ObtenerRutaPlantillaInforme(factura);
 
-            var datasetFactura = factura.ConvertirADataSet();
+            var informeLocal = new LocalReport {
+                ReportPath = rutaPlantillaInforme,
+                EnableExternalImages = true                
+            };
+
+            var urlRaizWeb = RutaServidor.ObtenerUrlRaizWeb();
+
+            var datasetFactura = factura.ConvertirADataSet(urlRaizWeb);
 
             informeLocal.DataSources.Add(new ReportDataSource("Facturas", datasetFactura.Tables[0]));
             informeLocal.DataSources.Add(new ReportDataSource("Lineas", datasetFactura.Tables[1]));
+            
 
             return informeLocal;
         }
 
+        private string ObtenerRutaPlantillaInforme(Factura factura)
+        {
+            if(string.IsNullOrEmpty(factura.NombreArchivoPlantillaInforme))
+            return Server.MapPath("~/Content/Informes/Factura.rdlc");
+
+            return Server.MapPath("~/Uploads/Informes/" + factura.NombreArchivoPlantillaInforme);
+        }
 
         protected override void Dispose(bool disposing)
         {

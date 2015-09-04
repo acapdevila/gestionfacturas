@@ -56,6 +56,8 @@ namespace GestionFacturas.Modelos
         public string Comentarios { get; set; }
         public string ComentariosPie { get; set; }
 
+        public string NombreArchivoLogo { get; set; }
+        public string NombreArchivoPlantillaInforme { get; set; }
 
         public decimal BaseImponible()
         {

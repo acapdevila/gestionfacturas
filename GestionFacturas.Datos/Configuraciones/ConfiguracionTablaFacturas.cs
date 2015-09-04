@@ -75,8 +75,14 @@ namespace GestionFacturas.Datos.Configuraciones
             .HasMaxLength(50);
 
             Property(m => m.CompradorCodigoPostal)
-           .HasMaxLength(10);                                
-                       
+           .HasMaxLength(10);
+
+            Property(m => m.NombreArchivoLogo)
+                  .HasMaxLength(50);
+
+            Property(m => m.NombreArchivoPlantillaInforme)
+                .HasMaxLength(50);
+
         }
     }
 

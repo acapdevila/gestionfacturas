@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConversorFacturas.cs" />
+    <Compile Include="ServicioEnumerable.cs" />
     <Compile Include="ServicioFechas.cs" />
     <Compile Include="InyectorFacturas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

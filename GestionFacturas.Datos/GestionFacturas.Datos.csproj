@@ -91,6 +91,10 @@
     <Compile Include="Migrations\201508301728593_Facturas_AumentarComentariosPie.Designer.cs">
       <DependentUpon>201508301728593_Facturas_AumentarComentariosPie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509041701258_Facturas_AñadirLogoYPlantillaInforme.cs" />
+    <Compile Include="Migrations\201509041701258_Facturas_AñadirLogoYPlantillaInforme.Designer.cs">
+      <DependentUpon>201509041701258_Facturas_AñadirLogoYPlantillaInforme.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -119,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508301728593_Facturas_AumentarComentariosPie.resx">
       <DependentUpon>201508301728593_Facturas_AumentarComentariosPie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509041701258_Facturas_AñadirLogoYPlantillaInforme.resx">
+      <DependentUpon>201509041701258_Facturas_AñadirLogoYPlantillaInforme.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

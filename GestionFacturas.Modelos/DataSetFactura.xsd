@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="FacturaDataSet" targetNamespace="http://tempuri.org/FacturaDataSet.xsd" xmlns:mstns="http://tempuri.org/FacturaDataSet.xsd" xmlns="http://tempuri.org/FacturaDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="DataSetFactura" targetNamespace="http://tempuri.org/DataSetFactura.xsd" xmlns:mstns="http://tempuri.org/DataSetFactura.xsd" xmlns="http://tempuri.org/DataSetFactura.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
@@ -11,13 +11,14 @@
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="FacturaDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FacturaDataSet" msprop:Generator_UserDSName="FacturaDataSet">
+  <xs:element name="DataSetFactura" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSetFactura" msprop:Generator_UserDSName="DataSetFactura">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Facturas" msprop:Generator_TableClassName="FacturasDataTable" msprop:Generator_TableVarName="tableFacturas" msprop:Generator_RowChangedName="FacturasRowChanged" msprop:Generator_TablePropName="Facturas" msprop:Generator_RowDeletingName="FacturasRowDeleting" msprop:Generator_RowChangingName="FacturasRowChanging" msprop:Generator_RowEvHandlerName="FacturasRowChangeEventHandler" msprop:Generator_RowDeletedName="FacturasRowDeleted" msprop:Generator_RowClassName="FacturasRow" msprop:Generator_UserTableName="Facturas" msprop:Generator_RowEvArgName="FacturasRowChangeEvent">
+        <xs:element name="Facturas" msprop:Generator_TableClassName="FacturasDataTable" msprop:Generator_TableVarName="tableFacturas" msprop:Generator_TablePropName="Facturas" msprop:Generator_RowDeletingName="FacturasRowDeleting" msprop:Generator_RowChangingName="FacturasRowChanging" msprop:Generator_RowEvHandlerName="FacturasRowChangeEventHandler" msprop:Generator_RowDeletedName="FacturasRowDeleted" msprop:Generator_UserTableName="Facturas" msprop:Generator_RowChangedName="FacturasRowChanged" msprop:Generator_RowEvArgName="FacturasRowChangeEvent" msprop:Generator_RowClassName="FacturasRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:int" />
+              <xs:element name="RutaLogo" msprop:Generator_ColumnVarNameInTable="columnRutaLogo" msprop:Generator_ColumnPropNameInRow="RutaLogo" msprop:Generator_ColumnPropNameInTable="RutaLogoColumn" msprop:Generator_UserColumnName="RutaLogo" type="xs:string" minOccurs="0" />
               <xs:element name="NumeroFactura" msprop:Generator_ColumnVarNameInTable="columnNumeroFactura" msprop:Generator_ColumnPropNameInRow="NumeroFactura" msprop:Generator_ColumnPropNameInTable="NumeroFacturaColumn" msprop:Generator_UserColumnName="NumeroFactura">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -125,7 +126,13 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="FormaPago" msprop:Generator_ColumnVarNameInTable="columnFormaPago" msprop:Generator_ColumnPropNameInRow="FormaPago" msprop:Generator_ColumnPropNameInTable="FormaPagoColumn" msprop:Generator_UserColumnName="FormaPago" type="xs:int" />
+              <xs:element name="FormaPago" msprop:Generator_ColumnVarNameInTable="columnFormaPago" msprop:Generator_ColumnPropNameInRow="FormaPago" msprop:Generator_ColumnPropNameInTable="FormaPagoColumn" msprop:Generator_UserColumnName="FormaPago" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
               <xs:element name="FormaPagoDetalles" msprop:Generator_ColumnVarNameInTable="columnFormaPagoDetalles" msprop:Generator_ColumnPropNameInRow="FormaPagoDetalles" msprop:Generator_ColumnPropNameInTable="FormaPagoDetallesColumn" msprop:Generator_UserColumnName="FormaPagoDetalles" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -133,10 +140,13 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="BaseImponible" msprop:Generator_ColumnVarNameInTable="columnBaseImponible" msprop:Generator_ColumnPropNameInRow="BaseImponible" msprop:Generator_ColumnPropNameInTable="BaseImponibleColumn" msprop:Generator_UserColumnName="BaseImponible" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ImporteImpuestos" msdata:Caption="BaseImponible" msprop:Generator_ColumnVarNameInTable="columnImporteImpuestos" msprop:Generator_ColumnPropNameInRow="ImporteImpuestos" msprop:Generator_ColumnPropNameInTable="ImporteImpuestosColumn" msprop:Generator_UserColumnName="ImporteImpuestos" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ImporteTotal" msdata:Caption="BaseImponible" msprop:Generator_ColumnVarNameInTable="columnImporteTotal" msprop:Generator_ColumnPropNameInRow="ImporteTotal" msprop:Generator_ColumnPropNameInTable="ImporteTotalColumn" msprop:Generator_UserColumnName="ImporteTotal" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="FacturasLineas" msprop:Generator_TableClassName="FacturasLineasDataTable" msprop:Generator_TableVarName="tableFacturasLineas" msprop:Generator_RowChangedName="FacturasLineasRowChanged" msprop:Generator_TablePropName="FacturasLineas" msprop:Generator_RowDeletingName="FacturasLineasRowDeleting" msprop:Generator_RowChangingName="FacturasLineasRowChanging" msprop:Generator_RowEvHandlerName="FacturasLineasRowChangeEventHandler" msprop:Generator_RowDeletedName="FacturasLineasRowDeleted" msprop:Generator_RowClassName="FacturasLineasRow" msprop:Generator_UserTableName="FacturasLineas" msprop:Generator_RowEvArgName="FacturasLineasRowChangeEvent">
+        <xs:element name="FacturasLineas" msprop:Generator_TableClassName="FacturasLineasDataTable" msprop:Generator_TableVarName="tableFacturasLineas" msprop:Generator_TablePropName="FacturasLineas" msprop:Generator_RowDeletingName="FacturasLineasRowDeleting" msprop:Generator_RowChangingName="FacturasLineasRowChanging" msprop:Generator_RowEvHandlerName="FacturasLineasRowChangeEventHandler" msprop:Generator_RowDeletedName="FacturasLineasRowDeleted" msprop:Generator_UserTableName="FacturasLineas" msprop:Generator_RowChangedName="FacturasLineasRowChanged" msprop:Generator_RowEvArgName="FacturasLineasRowChangeEvent" msprop:Generator_RowClassName="FacturasLineasRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:int" />
@@ -167,7 +177,7 @@
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="FK_dbo.FacturasLineas_dbo.Facturas_IdFactura" msdata:parent="Facturas" msdata:child="FacturasLineas" msdata:parentkey="Id" msdata:childkey="IdFactura" msprop:Generator_UserChildTable="FacturasLineas" msprop:Generator_ChildPropName="GetFacturasLineasRows" msprop:Generator_UserRelationName="FK_dbo.FacturasLineas_dbo.Facturas_IdFactura" msprop:Generator_RelationVarName="_relationFK_dbo_FacturasLineas_dbo_Facturas_IdFactura" msprop:Generator_UserParentTable="Facturas" msprop:Generator_ParentPropName="FacturasRow" />
+      <msdata:Relationship name="FK_dbo.FacturasLineas_dbo.Facturas_IdFactura" msdata:parent="Facturas" msdata:child="FacturasLineas" msdata:parentkey="Id" msdata:childkey="IdFactura" msprop:Generator_UserChildTable="FacturasLineas" msprop:Generator_ChildPropName="GetFacturasLineasRows" msprop:Generator_UserRelationName="FK_dbo.FacturasLineas_dbo.Facturas_IdFactura" msprop:Generator_ParentPropName="FacturasRow" msprop:Generator_RelationVarName="_relationFK_dbo_FacturasLineas_dbo_Facturas_IdFactura" msprop:Generator_UserParentTable="Facturas" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

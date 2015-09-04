@@ -33,3 +33,5 @@ GestionFacturas.Deploy.Demo/*
 *.Release.config
 /GestionFacturas.Website/Web.Debug.config
 /GestionFacturas.Website/Web.Release.config
+GestionFacturas.Website/Uploads/Informes/**
+GestionFacturas.Website/Uploads/Logos/**

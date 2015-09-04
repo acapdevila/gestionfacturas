@@ -23,12 +23,10 @@ namespace GestionFacturas.Website.Helpers
     }
 
 
-    public static class RouteServer
+    public static class RutaServidor
     {
-        public static string GetUrlWebRoot()
+        public static string ObtenerUrlRaizWeb()
         {
-           // return String.Format("{0}://{1}{2}", HttpContext.Current.Request.Url.Scheme, HttpContext.Current.Request.Headers["host"], HttpContext.Current.Request.ApplicationPath);
-
            return  string.Format("{0}://{1}{2}{3}", HttpContext.Current.Request.Url.Scheme, HttpContext.Current.Request.Url.Host,
                                          HttpContext.Current.Request.Url.Port == 80
                                           ? string.Empty
