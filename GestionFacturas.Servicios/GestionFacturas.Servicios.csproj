@@ -39,6 +39,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.76.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.76.0\lib\net40-client\ClosedXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -82,6 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServicioExcel.cs" />
     <Compile Include="ConversorFacturas.cs" />
     <Compile Include="ExtensionesEnumerables.cs" />
     <Compile Include="ServicioFechas.cs" />
@@ -89,7 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicioCrudFactura.cs" />
     <Compile Include="ServicioFactura.cs" />
-    <Compile Include="ServicioImpresion.cs" />
+    <Compile Include="ServicioPdf.cs" />
     <Compile Include="ExtensionesStrings.cs" />
   </ItemGroup>
   <ItemGroup>

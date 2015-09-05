@@ -136,7 +136,7 @@ namespace GestionFacturas.Modelos
 
         public IEnumerable<string> ListaDescripciones { get; set; }
 
-        public string ResumenDescripciones { get {
+        public string Conceptos { get {
                 return string.Join(", ", ListaDescripciones);
             } }
 

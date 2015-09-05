@@ -7,6 +7,16 @@ namespace GestionFacturas.Servicios
 {
     public static class ExtensionesStrings
     {
+        public static string TruncarConElipsis(this string value, int maxLength)
+        {
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
+        }
+
+        public static string Truncar(this string value, int maxLength)
+        {
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength);
+        }
+
         public static string ToStringComaSeparated(this IEnumerable<string> terms)
         {
             return ToStringSeparated(terms, ", ");

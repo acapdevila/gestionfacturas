@@ -1,4 +1,4 @@
-﻿@using GestionFacturas.Website.Helpers
+﻿@using GestionFacturas.Servicios
 @model GestionFacturas.Website.Viewmodels.Facturas.ListaGestionFacturasViewModel
     
 
@@ -12,7 +12,11 @@
         window.location = '@Url.Action("DescargarZip")?' + ParametrosBusquedaFormulario();
     }
 
-     function ParametrosBusquedaFormulario() {
+     function DescargarExcel() {
+            window.location = '@Url.Action("DescargarExcel")?' + ParametrosBusquedaFormulario();
+     }
+
+        function ParametrosBusquedaFormulario() {
             return $('#formularioBusqueda').serialize();
            
         }
@@ -25,6 +29,8 @@
     <div class="panel-heading">
         @Html.ActionLink("Crear nueva factura", "Crear", null, new { @class = "btn btn-primary" })
         @Html.ActionLink("Descargar Zip", "DescargarZip", null, new { @class = "btn btn-default", onclick="DescargarZip();return false;" })    
+        @Html.ActionLink("Descargar Excel", "DescargarExcel", null, new { @class = "btn btn-default", onclick = "DescargarExcel();return false;" })
+           
     </div>
 
     <div class="panel-body">
@@ -74,7 +80,7 @@
                         @Html.DisplayFor(modelItem => item.FechaEmisionFactura, "FechaCorta")
                     </td>
                     <td class="col-md-4 col-sm-4 col-lg-4">
-                       <span title="@item.ResumenDescripciones">@item.ResumenDescripciones.TruncarConElipsis(50)</span>
+                       <span title="@item.Conceptos">@item.Conceptos.TruncarConElipsis(50)</span>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EstadoFactura)

@@ -158,7 +158,7 @@ namespace GestionFacturas.Website.Controllers
 
             string mimeType;
 
-            byte[] renderedBytes = ServicioImpresion.GenerarPdf(informeLocal, out mimeType);
+            byte[] renderedBytes = ServicioPdf.GenerarPdfFactura(informeLocal, out mimeType);
 
             var cabecera = new System.Net.Mime.ContentDisposition
             {
@@ -196,7 +196,28 @@ namespace GestionFacturas.Website.Controllers
             return File(archivoZip, "application/zip");
 
         }
+
+        public async Task<ActionResult> DescargarExcel(FiltroBusquedaFactura filtroBusqueda)
+        {
+            if (!filtroBusqueda.TieneValores)
+            {
+                filtroBusqueda = FiltroBusquedaConValoresPorDefecto();
+            }
+
+            var listaGestionFacturas = await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda);
+
+            if (!listaGestionFacturas.Any())
+                return RedirectToAction("ListaGestionFacturas");
             
+            var workbook = ServicioExcel.GenerarExcelFactura(filtroBusqueda, listaGestionFacturas);
+
+            var nombreArchivoExcel = string.Format("Facturacion_desde_{0}_hasta_{1}",
+                 filtroBusqueda.FechaDesde.Value.ToString("dd-MM-yyyy"),
+                 filtroBusqueda.FechaHasta.Value.ToString("dd-MM-yyyy"));
+
+            return new ExcelResult(workbook, nombreArchivoExcel);
+        }
+
         private FiltroBusquedaFactura FiltroBusquedaConValoresPorDefecto()
         {
             return new FiltroBusquedaFactura
@@ -244,7 +265,7 @@ namespace GestionFacturas.Website.Controllers
                     var factura = await _servicioFactura.BuscarFacturaAsync(itemFactura.Id);
                     var informeLocal = GenerarInformeLocalFactura(factura);
                     string mimeType;
-                    byte[] renderedBytes = ServicioImpresion.GenerarPdf(informeLocal, out mimeType);
+                    byte[] renderedBytes = ServicioPdf.GenerarPdfFactura(informeLocal, out mimeType);
                     var nombrePdf = factura.Titulo.Replace(":", " ").Replace("·", "").Replace("€", "").Replace("/", "-").EliminarDiacriticos() + ".pdf";
                     zip.AddEntry(nombrePdf, renderedBytes);
                 }

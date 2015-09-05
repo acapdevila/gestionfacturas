@@ -24,9 +24,15 @@ namespace GestionFacturas.Tests.UI
         {
             // Arrange
             var controller = ObtenerControladorFacturas();
-           
+
+            var filtroBusqueda = new FiltroBusquedaFactura
+            {
+                 FechaDesde = new DateTime(2015,8,1),
+                 FechaHasta = new DateTime(2016, 1, 1)
+            };
+
             // Act
-            var result = controller.ListaGestionFacturas().Result;
+            var result = controller.ListaGestionFacturas(filtroBusqueda).Result;
 
             // Assert
             Assert.IsNotNull(result);
