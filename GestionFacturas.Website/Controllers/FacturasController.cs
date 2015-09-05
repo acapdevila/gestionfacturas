@@ -12,6 +12,8 @@ using GestionFacturas.Website.Helpers;
 using System.Linq;
 using System.IO;
 using Ionic.Zip;
+using GestionFacturas.Website.Viewmodels.Email;
+using Elmah;
 
 namespace GestionFacturas.Website.Controllers
 {
@@ -25,7 +27,7 @@ namespace GestionFacturas.Website.Controllers
             _servicioFactura = servicioFactura;
         }
 
-      
+
         public ActionResult Index()
         {
             return RedirectToAction("ListaGestionFacturas");
@@ -40,24 +42,22 @@ namespace GestionFacturas.Website.Controllers
             }
 
             var viewmodel = new ListaGestionFacturasViewModel {
-                    FiltroBusqueda = filtroBusqueda,
-                    ListaFacturas = await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda)
-            };            
-       
+                FiltroBusqueda = filtroBusqueda,
+                ListaFacturas = await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda)
+            };
+
             return View("ListaGestionFacturas", viewmodel);
         }
-
-   
-
+        
         public async Task<ActionResult> Detalles(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
+
             var viewmodel = new DetallesFacturaViewModel
             {
                 Factura = await _servicioFactura.BuscarVisorFacturaAsync(id)
             };
-            
+
             if (viewmodel.Factura == null) return HttpNotFound();
 
             return View(viewmodel);
@@ -71,9 +71,6 @@ namespace GestionFacturas.Website.Controllers
             return View(viewmodel);
         }
 
-        // POST: Facturas/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Crear(CrearFacturaViewModel viewmodel)
@@ -95,34 +92,32 @@ namespace GestionFacturas.Website.Controllers
             {
                 Factura = await _servicioFactura.BuscaEditorFacturaAsync(id)
             };
-            
+
             if (viewmodel.Factura == null) return HttpNotFound();
-            
+
             return View(viewmodel);
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Editar(EditarFacturaViewModel viewmodel)
         {
             if (!ModelState.IsValid) return View(viewmodel);
-            
+
             await _servicioFactura.ActualizarFacturaAsync(viewmodel.Factura);
             return RedirectToAction("Detalles", new { Id = viewmodel.Factura.Id });
         }
 
         public async Task<ActionResult> Eliminar(int? id)
         {
-            if (id == null)  return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             var viewmodel = new EliminarFacturaViewModel {
                 Factura = await _servicioFactura.BuscaEditorFacturaAsync(id.Value)
             };
-            
-            if (viewmodel.Factura == null)  return HttpNotFound();
-            
+
+            if (viewmodel.Factura == null) return HttpNotFound();
+
             return View(viewmodel);
         }
 
@@ -142,12 +137,12 @@ namespace GestionFacturas.Website.Controllers
         public ActionResult EliminarConfirmado(string numeroFacturaEliminada)
         {
             if (string.IsNullOrEmpty(numeroFacturaEliminada)) return HttpNotFound();
-            
+
             ViewBag.NumeroFacturaEliminada = WebUtility.UrlDecode(numeroFacturaEliminada);
 
             return View("EliminarConfirmado");
         }
-        
+
         public async Task<ActionResult> Imprimir(int id, string titulo)
         {
             var facturaAImprimir = await _servicioFactura.BuscarFacturaAsync(id);
@@ -158,19 +153,70 @@ namespace GestionFacturas.Website.Controllers
 
             string mimeType;
 
-            byte[] renderedBytes = ServicioPdf.GenerarPdfFactura(informeLocal, out mimeType);
+            byte[] pdfBytes = ServicioPdf.GenerarPdfFactura(informeLocal, out mimeType);
 
             var cabecera = new System.Net.Mime.ContentDisposition
             {
                 FileName = string.Format("{0}.pdf", titulo),
-                
+
                 // Si es verdadero el navegador trata de mostrar el archivo directamente
                 Inline = true,
             };
 
             Response.AppendHeader("Content-Disposition", cabecera.ToString());
-          
-            return File(renderedBytes, mimeType);
+
+            return File(pdfBytes, mimeType);
+        }
+
+        public async Task<ActionResult> EnviarPorEmail(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var factura = await _servicioFactura.BuscaEditorFacturaAsync(id);
+
+            if (factura == null) return HttpNotFound();
+
+            var viewmodel = new EnviarFacturaPorEmailViewModel
+            {
+                IdFactura = factura.Id,
+                NumeroFactura = factura.NumeroFactura,
+                EditorEmail = new EditorEmail
+                {
+                    Remitente = User.Identity.Name,
+                    Asunto = string.Format("{0}: Factura {1}", factura.CompradorNombreOEmpresa, factura.NumeroFactura),
+                    ContenidoHtml = string.Format("Hola,{0}{0}{0}{0}Gracias,{0}Equipo de {1}" , Environment.NewLine, factura.VendedorNombreOEmpresa)                     
+                }
+            };           
+                
+            return View(viewmodel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EnviarPorEmail(EnviarFacturaPorEmailViewModel viewmodel)
+        {
+            if (!ModelState.IsValid) return View(viewmodel);
+
+            var factura = await _servicioFactura.BuscarFacturaAsync(viewmodel.IdFactura);
+
+            if (factura == null) return HttpNotFound();
+
+            var mensaje = GenerarMensajeEmail(viewmodel.EditorEmail, factura);
+
+            await _servicioFactura.EnviarFacturaPorEmail(mensaje, factura);
+
+            var numeroFacturaCodificada = WebUtility.UrlEncode(factura.NumeroFactura);
+
+            return RedirectToAction("EnviarPorEmailConfirmado", new { numeroFacturaEnviada = numeroFacturaCodificada });
+
+        }
+
+        public ActionResult EnviarPorEmailConfirmado(string numeroFacturaEnviada)
+        {
+            if (string.IsNullOrEmpty(numeroFacturaEnviada)) return HttpNotFound();
+
+            ViewBag.NumeroFacturaEnviada = WebUtility.UrlDecode(numeroFacturaEnviada);
+
+            return View("EnviarPorEmailConfirmado");
         }
 
         public async Task<ActionResult> DescargarZip(FiltroBusquedaFactura filtroBusqueda)
@@ -227,7 +273,15 @@ namespace GestionFacturas.Website.Controllers
             };
         }
 
-        public LocalReport GenerarInformeLocalFactura(Factura factura)
+        private string ObtenerRutaPlantillaInforme(Factura factura)
+        {
+            if (string.IsNullOrEmpty(factura.NombreArchivoPlantillaInforme))
+                return Server.MapPath("~/Content/Informes/Factura.rdlc");
+
+            return Server.MapPath("~/Uploads/Informes/" + factura.NombreArchivoPlantillaInforme);
+        }
+
+        private LocalReport GenerarInformeLocalFactura(Factura factura)
         {
             var rutaPlantillaInforme = ObtenerRutaPlantillaInforme(factura);
 
@@ -245,13 +299,33 @@ namespace GestionFacturas.Website.Controllers
 
             return informeLocal;
         }
-
-        private string ObtenerRutaPlantillaInforme(Factura factura)
+        
+        private MensajeEmail GenerarMensajeEmail(EditorEmail editorEmail, Factura factura)
         {
-            if(string.IsNullOrEmpty(factura.NombreArchivoPlantillaInforme))
-            return Server.MapPath("~/Content/Informes/Factura.rdlc");
+            var informeLocal = GenerarInformeLocalFactura(factura);
 
-            return Server.MapPath("~/Uploads/Informes/" + factura.NombreArchivoPlantillaInforme);
+            string mimeType;
+
+            byte[] facturaPdf = ServicioPdf.GenerarPdfFactura(informeLocal, out mimeType);
+
+            var mensaje = new MensajeEmail
+            {
+                Asunto = editorEmail.Asunto,
+                Cuerpo = editorEmail.ContenidoHtml,
+                DireccionRemitente = editorEmail.Remitente,
+                NombreRemitente = factura.VendedorNombreOEmpresa,
+                DireccionesDestinatarios = new List<string> { editorEmail.Destinatario },
+                Adjuntos = new List<ArchivoAdjunto> {
+                                new ArchivoAdjunto
+                                {
+                                    Archivo = facturaPdf,
+                                    MimeType = mimeType,
+                                    Nombre = factura.Titulo
+                                }
+                    }
+            };
+
+            return mensaje;
         }
 
         private async Task<MemoryStream> GenerarZip(IEnumerable<LineaListaGestionFacturas> listaGestionFacturas)
@@ -273,8 +347,8 @@ namespace GestionFacturas.Website.Controllers
             }
 
             return archivoZip;
-        }
-        
+        }       
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

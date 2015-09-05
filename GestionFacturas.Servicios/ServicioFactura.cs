@@ -13,14 +13,16 @@ namespace GestionFacturas.Servicios
 {
     public class ServicioFactura : ServicioCrudFactura
     {
+        private ServicioEmail _servicioEmail;
+
         private int PorcentajeIvaPorDefecto
         {
             get { return 21; }
         }
 
-        public ServicioFactura(ContextoBaseDatos contexto) : base(contexto)
+        public ServicioFactura(ContextoBaseDatos contexto, ServicioEmail servicioEmail) : base(contexto)
         {
-          
+            _servicioEmail = servicioEmail;
         }
 
         public async Task<IEnumerable<LineaListaGestionFacturas>> ListaGestionFacturasAsync(FiltroBusquedaFactura filtroBusqueda)
@@ -111,6 +113,8 @@ namespace GestionFacturas.Servicios
             return editor;
         }
 
+
+
         private async Task<Factura> ObtenerUlitmaFacturaDeLaSerie(string serie)
         {
             var consulta = _contexto.Facturas.AsQueryable();
@@ -124,7 +128,15 @@ namespace GestionFacturas.Servicios
                          .OrderByDescending(m => m.FechaEmisionFactura)
                         .FirstOrDefaultAsync();
         }
+         
 
-  
+        public async Task EnviarFacturaPorEmail(MensajeEmail mensaje, Factura factura)
+        {
+            await _servicioEmail.EnviarMensaje(mensaje);
+            
+            factura.EstadoFactura = EstadoFacturaEnum.Enviada;
+            _contexto.SaveChanges();
+        }
+
     }
 }

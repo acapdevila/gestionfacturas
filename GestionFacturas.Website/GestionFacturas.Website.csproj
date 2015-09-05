@@ -284,6 +284,7 @@
     <Compile Include="Helpers\ListEditorHelper.cs" />
     <Compile Include="Helpers\RouteDataHelper.cs" />
     <Compile Include="Viewmodels\AccountViewModels.cs" />
+    <Compile Include="Viewmodels\Email\EmailViewModels.cs" />
     <Compile Include="Viewmodels\Facturas\FacturasViewModel.cs" />
     <Compile Include="Viewmodels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -351,6 +352,9 @@
     <Content Include="Views\Shared\_MenuAdmin.cshtml" />
     <Content Include="Views\Shared\_MenuPrincipal.cshtml" />
     <Content Include="Views\Facturas\EditorTemplates\FiltroBusquedaFactura.cshtml" />
+    <Content Include="Views\Facturas\EnviarPorEmail.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditorEmail.cshtml" />
+    <Content Include="Views\Facturas\EnviarPorEmailConfirmado.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

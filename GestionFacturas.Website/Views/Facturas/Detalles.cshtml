@@ -13,6 +13,8 @@
    
         @Html.ActionLink("Editar", "Editar", new { id = Model.Factura.Id }, new { @class = "btn btn-primary" })
 
+        @Html.ActionLink("Enviar", "EnviarPorEmail", new { id = Model.Factura.Id }, new { @class = "btn btn-primary" })
+
         @Html.ActionLink("Imprimir", "Imprimir", new { id = Model.Factura.Id, titulo = Model.Factura.Titulo }, new { @class = "btn btn-primary", Target = "_balnk" })    
        
         @Html.ActionLink("Lista facturas", "ListaGestionFacturas", null , new { @class = "btn btn-link" })

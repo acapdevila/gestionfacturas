@@ -74,6 +74,7 @@
     <Compile Include="Factura.cs" />
     <Compile Include="FiltroBusqueda.cs" />
     <Compile Include="FormaJuridica.cs" />
+    <Compile Include="Email.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Impuesto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

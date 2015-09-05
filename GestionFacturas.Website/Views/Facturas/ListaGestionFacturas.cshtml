@@ -98,8 +98,33 @@
                         @Html.DisplayFor(modelItem => item.CompradorNombreOEmpresa)
                     </td>
                     <td>
-                        @Html.ActionLink("Editar", "Editar", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
-                        @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id })
+                        <div class="btn-group">
+                            @Html.ActionLink("Editar", "Editar", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                           
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Enviar", "EnviarPorEmail", new { id = item.Id })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Imprimir", "Imprimir", new { id = item.Id , titulo= "Facrura " + item.NumeroFactura})
+                                </li>
+                               
+                                <li role="separator" class="divider"></li>
+                                <li> 
+                                        @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id })
+                                </li>
+                             </ul>
+                        </div>
+
+                 
+
+
+                        
+                       
                     </td>
                 </tr>
                 }

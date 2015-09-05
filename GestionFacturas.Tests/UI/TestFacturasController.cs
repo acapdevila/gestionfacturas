@@ -133,7 +133,7 @@ namespace GestionFacturas.Tests.UI
         private FacturasController ObtenerControladorFacturas()
         {
             _contexto = new ContextoBaseDatos();
-            return new FacturasController(new ServicioFactura(_contexto));
+            return new FacturasController(new ServicioFactura(_contexto, new ServicioEmail()));
         }
 
         private Factura ObtenerPrimeraFacturaConLineas()

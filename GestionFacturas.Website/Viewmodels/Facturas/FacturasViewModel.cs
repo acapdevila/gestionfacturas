@@ -1,4 +1,5 @@
 ﻿using GestionFacturas.Modelos;
+using GestionFacturas.Website.Viewmodels.Email;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,5 +36,12 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
     public class BuscadorFacturasViewModel
     {
         public FiltroBusquedaFactura FiltroBusqueda { get; set; }
+    }
+
+    public class EnviarFacturaPorEmailViewModel
+    {
+        public int IdFactura { get; set; }
+        public string NumeroFactura { get; set; }
+        public EditorEmail EditorEmail { get; set; }
     }
 }

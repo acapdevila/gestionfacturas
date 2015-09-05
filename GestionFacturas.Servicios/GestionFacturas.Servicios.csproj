@@ -90,6 +90,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionesEmail.cs" />
+    <Compile Include="ServicioEmail.cs" />
     <Compile Include="ServicioExcel.cs" />
     <Compile Include="ConversorFacturas.cs" />
     <Compile Include="ExtensionesEnumerables.cs" />

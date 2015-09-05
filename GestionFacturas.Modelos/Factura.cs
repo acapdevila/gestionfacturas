@@ -404,4 +404,5 @@ namespace GestionFacturas.Modelos
         public decimal ImporteBruto { get { return PrecioXCantidad + ((PrecioXCantidad * PorcentajeImpuesto) / 100); } }
      }
 
+
 }
