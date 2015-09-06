@@ -95,6 +95,10 @@
     <Compile Include="Migrations\201509041701258_Facturas_AñadirLogoYPlantillaInforme.Designer.cs">
       <DependentUpon>201509041701258_Facturas_AñadirLogoYPlantillaInforme.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509060816264_Facturas_EmailVendedorYComprador.cs" />
+    <Compile Include="Migrations\201509060816264_Facturas_EmailVendedorYComprador.Designer.cs">
+      <DependentUpon>201509060816264_Facturas_EmailVendedorYComprador.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -126,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509041701258_Facturas_AñadirLogoYPlantillaInforme.resx">
       <DependentUpon>201509041701258_Facturas_AñadirLogoYPlantillaInforme.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509060816264_Facturas_EmailVendedorYComprador.resx">
+      <DependentUpon>201509060816264_Facturas_EmailVendedorYComprador.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

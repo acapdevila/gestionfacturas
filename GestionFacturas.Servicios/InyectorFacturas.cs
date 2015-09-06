@@ -95,7 +95,7 @@ namespace GestionFacturas.Servicios
             fila.CompradorLocalidad = factura.CompradorLocalidad;
             fila.CompradorProvincia = factura.CompradorProvincia;
             fila.CompradorCodigoPostal = factura.CompradorCodigoPostal;
-
+         
             fila.Comentarios = factura.Comentarios;
             fila.ComentariosPie = factura.ComentariosPie;
 

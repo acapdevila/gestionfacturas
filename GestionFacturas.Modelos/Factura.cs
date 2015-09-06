@@ -40,6 +40,7 @@ namespace GestionFacturas.Modelos
         public string VendedorLocalidad { get; set; }
         public string VendedorProvincia { get; set; }
         public string VendedorCodigoPostal { get; set; }
+        public string VendedorEmail { get; set; }
 
         public int? IdComprador { get; set; }
         public string CompradorNumeroIdentificacionFiscal { get; set; }
@@ -48,6 +49,8 @@ namespace GestionFacturas.Modelos
         public string CompradorLocalidad { get; set; }
         public string CompradorProvincia { get; set; }
         public string CompradorCodigoPostal { get; set; }
+
+        public string CompradorEmail { get; set; }
 
         public virtual ICollection<LineaFactura> Lineas { get; set; }
         public virtual Usuario Usuario { get; set; }
@@ -217,6 +220,11 @@ namespace GestionFacturas.Modelos
         [StringLength(10)]
         public string VendedorCodigoPostal { get; set; }
 
+        [EmailAddress]
+        [Display(Name = "E-mail")]
+        [StringLength(50)]
+        public string VendedorEmail { get; set; }
+
         [Display(Name = "Número de referencia")]
         public int? IdComprador { get; set; }
 
@@ -244,7 +252,10 @@ namespace GestionFacturas.Modelos
         [StringLength(10)]
         public string CompradorCodigoPostal { get; set; }
 
-
+        [EmailAddress]
+        [Display(Name = "E-mail")]
+        [StringLength(50)]
+        public string CompradorEmail { get; set; }
 
 
 

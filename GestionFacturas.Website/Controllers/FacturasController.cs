@@ -182,9 +182,10 @@ namespace GestionFacturas.Website.Controllers
                 NumeroFactura = factura.NumeroFactura,
                 EditorEmail = new EditorEmail
                 {
-                    Remitente = User.Identity.Name,
-                    Asunto = string.Format("{0}: Factura {1}", factura.CompradorNombreOEmpresa, factura.NumeroFactura),
-                    ContenidoHtml = string.Format("Hola,{0}{0}{0}{0}Gracias,{0}Equipo de {1}" , Environment.NewLine, factura.VendedorNombreOEmpresa)                     
+                    Remitente = factura.VendedorEmail,
+                    Asunto = string.Format("{0} - Factura {1}", factura.VendedorNombreOEmpresa, factura.NumeroFactura),
+                    ContenidoHtml = string.Format("Hola,{0}{0}{0}{0}Gracias,{0}Equipo de {1}" , Environment.NewLine, factura.VendedorNombreOEmpresa),
+                    Destinatario = factura.CompradorEmail              
                 }
             };           
                 
