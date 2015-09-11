@@ -40,68 +40,71 @@
        }
     </div>
 
-            <table class="table table-striped">
-                <tr>
-                    <th>
-                        Factura
-                    </th>
-                    <th>
-                        Fecha
-                    </th>
-                    <th>
-                        Conceptos
-                    </th>
-                    <th>
-                        Estado
-                    </th>
-                    <th>
-                        BI
-                    </th>
-                    <th>
-                        IVA
-                    </th>
-                    <th>
-                        Total
-                    </th>
-                    <th>
-                        Cliente
-                    </th>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    Factura
+                </th>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                    Conceptos
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    BI
+                </th>
+                <th>
+                    IVA
+                </th>
+                <th>
+                    Total
+                </th>
+                <th>
+                    Cliente
+                </th>
 
-                    <th></th>
-                </tr>
+                <th></th>
+            </tr>
 
-                @foreach (var item in Model.ListaFacturas)
+            @foreach (var item in Model.ListaFacturas)
                 {
                 <tr>
-                    <td>
+                    <td class="text-nowrap">
                         @Html.ActionLink(item.NumeroFactura, "Detalles", new { id = item.Id })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FechaEmisionFactura, "FechaCorta")
                     </td>
                     <td class="col-md-4 col-sm-4 col-lg-4">
-                       <span title="@item.Conceptos">@item.Conceptos.TruncarConElipsis(50)</span>
+                        <span title="@item.Conceptos">@item.Conceptos.TruncarConElipsis(50)</span>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EstadoFactura)
                     </td>
-                    <td>
+                    <td class="text-nowrap">
                         @Html.DisplayFor(modelItem => item.BaseImponible, "Moneda")
                     </td>
-                    <td>
+                    <td class="text-nowrap">
                         @Html.DisplayFor(modelItem => item.Impuestos, "Moneda")
                     </td>
-                    <td>
+                    <td class="text-nowrap">
                         @Html.DisplayFor(modelItem => item.ImporteTotal, "Moneda")
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CompradorNombreOEmpresa)
                     </td>
-                    <td>
-                        <div class="btn-group">
-                            @Html.ActionLink("Editar", "Editar", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
-                           
-                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <td> 
+                        <div class="btn-group" style="white-space:nowrap">
+                            @Html.ActionLink("Editar", "Editar", new { id = item.Id },new { @class = "btn btn-primary btn-sm", style = "float:none; display:inline-block" })<button 
+                                   type="button" 
+                                    class="btn btn-primary btn-sm dropdown-toggle" 
+                                    style="float:none; display:inline-block"
+                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -112,23 +115,23 @@
                                 <li>
                                     @Html.ActionLink("Imprimir", "Imprimir", new { id = item.Id , titulo= "Facrura " + item.NumeroFactura})
                                 </li>
-                               
+
                                 <li role="separator" class="divider"></li>
-                                <li> 
-                                        @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id })
+                                <li>
+                                    @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id })
                                 </li>
-                             </ul>
+                            </ul>
                         </div>
 
-                 
 
 
-                        
-                       
+
+
+
                     </td>
                 </tr>
                 }
 
-            </table>
-    
+        </table>
+    </div>
 </div>
