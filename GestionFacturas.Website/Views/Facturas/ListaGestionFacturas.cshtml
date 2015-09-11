@@ -40,8 +40,7 @@
        }
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-striped">
+      <table class="table table-striped">
             <tr>
                 <th>
                     Factura
@@ -98,13 +97,10 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.CompradorNombreOEmpresa)
                     </td>
-                    <td> 
-                        <div class="btn-group" style="white-space:nowrap">
-                            @Html.ActionLink("Editar", "Editar", new { id = item.Id },new { @class = "btn btn-primary btn-sm", style = "float:none; display:inline-block" })<button 
-                                   type="button" 
-                                    class="btn btn-primary btn-sm dropdown-toggle" 
-                                    style="float:none; display:inline-block"
-                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <td style="min-width:95px"> 
+                        <div class="btn-group">
+                            @Html.ActionLink("Editar", "Editar", new { id = item.Id },new { @class = "btn btn-primary btn-sm"})
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="float:none; display:inline-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -122,16 +118,32 @@
                                 </li>
                             </ul>
                         </div>
-
-
-
-
-
-
                     </td>
                 </tr>
                 }
+            <tr>
+                <th colspan="3">
+                    
+                </th>
+               <th>
+                   Totales
+               </th>
+                <th class="text-nowrap">
+                    @Html.DisplayFor(m => m.TotalBaseImponible, "Moneda")                   
+                </th>
+                <th class="text-nowrap">
+                    @Html.DisplayFor(m => m.TotalImpuestos, "Moneda")
+                 
+                </th>
+                <th class="text-nowrap">
+                    @Html.DisplayFor(m => m.TotalImporte, "Moneda")
+                   
+                </th>
+                <th>
+                    
+                </th>
 
+                <th></th>
+            </tr>
         </table>
-    </div>
-</div>
+   </div>

@@ -12,6 +12,13 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
     {
         public FiltroBusquedaFactura FiltroBusqueda { get; set; }
         public IEnumerable<LineaListaGestionFacturas> ListaFacturas { get; set; }
+
+        public decimal TotalBaseImponible { get { return ListaFacturas.Sum(m => m.BaseImponible); } }
+        public decimal TotalImpuestos { get { return ListaFacturas.Sum(m => m.Impuestos); } }
+
+        public decimal TotalImporte { get { return ListaFacturas.Sum(m => m.ImporteTotal); } }
+
+
     }
 
     public class DetallesFacturaViewModel
