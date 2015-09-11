@@ -68,26 +68,47 @@ namespace GestionFacturas.Servicios
 
         public async Task<EditorFactura> ObtenerEditorFacturaParaCrearNuevaFactura(string serie)
         {
-            var numero = 1;
-            var formato = "{0}{1:1000}";
-
             var ultimaFacturaCreada = await ObtenerUlitmaFacturaDeLaSerie(serie);
 
-            if(ultimaFacturaCreada != null)
+            if (ultimaFacturaCreada == null)
             {
-                serie = ultimaFacturaCreada.SerieFactura;
-                numero = ultimaFacturaCreada.NumeracionFactura + 1;
-                formato = ultimaFacturaCreada.FormatoNumeroFactura;
-            }
+                return new EditorFactura
+                {
+                    SerieFactura = serie,
+                    NumeracionFactura = 1,
+                    FormatoNumeroFactura = "{0}{1:1000}",
+                    FechaEmisionFactura = DateTime.Today,
+                    PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+                    FormaPago = FormaPagoEnum.Transferencia,
+
+                    Lineas = new List<EditorLineaFactura> {
+                            new EditorLineaFactura {
+                                    Cantidad = 1,
+                                    PorcentajeImpuesto = PorcentajeIvaPorDefecto
+                            }
+                      }
+                };
+             }
 
             return new EditorFactura
             {
-                SerieFactura = serie,
-                NumeracionFactura = numero,
-                FormatoNumeroFactura = formato,
+                SerieFactura = ultimaFacturaCreada.SerieFactura,
+                NumeracionFactura = ultimaFacturaCreada.NumeracionFactura + 1,
+                FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
                 FechaEmisionFactura = DateTime.Today,
                 PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
-                FormaPago = FormaPagoEnum.Transferencia,
+                FormaPago = ultimaFacturaCreada.FormaPago,
+                FormaPagoDetalles = ultimaFacturaCreada.FormaPagoDetalles,
+                ComentariosPie = ultimaFacturaCreada.ComentariosPie,
+                EstadoFactura = EstadoFacturaEnum.Borrador,
+                IdVendedor = ultimaFacturaCreada.IdVendedor,
+                VendedorCodigoPostal = ultimaFacturaCreada.VendedorCodigoPostal,
+                VendedorDireccion = ultimaFacturaCreada.VendedorDireccion,
+                VendedorEmail = ultimaFacturaCreada.VendedorEmail,
+                VendedorLocalidad = ultimaFacturaCreada.VendedorLocalidad,
+                VendedorNombreOEmpresa = ultimaFacturaCreada.VendedorNombreOEmpresa,
+                VendedorNumeroIdentificacionFiscal = ultimaFacturaCreada.VendedorNumeroIdentificacionFiscal,
+                VendedorProvincia = ultimaFacturaCreada.VendedorProvincia,           
                 
                 Lineas = new List<EditorLineaFactura> {
                             new EditorLineaFactura {

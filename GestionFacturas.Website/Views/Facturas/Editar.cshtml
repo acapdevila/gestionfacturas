@@ -4,9 +4,24 @@
     ViewBag.Title = "Editar factura";
 }
 
+@section styles{
+    @Styles.Render("~/Content/themes/base/css")
+    }
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui") 
+
     <script src="~/Scripts/listEditor/listeditor.js"></script>
+    <script src="~/Scripts/autocompletar/autocompletarCliente.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("Factura_CompradorNombreOEmpresa").autocompletarCampoCliente('@Url.Action("AutocompletarPorNombre", "Clientes")');
+            $("Factura_IdComprador").autocompletarCampoCliente('@Url.Action("AutocompletarPorId", "Clientes")');
+            $("Factura_CompradorNumeroIdentificacionFiscal").autocompletarCampoCliente('@Url.Action("AutocompletarPorIdentificacionFiscal", "Clientes")');
+        });
+    </script>
 }
 
 

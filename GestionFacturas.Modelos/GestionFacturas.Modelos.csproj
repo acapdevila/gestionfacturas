@@ -71,8 +71,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Cliente.cs" />
     <Compile Include="Factura.cs" />
-    <Compile Include="FiltroBusqueda.cs" />
+    <Compile Include="FiltroBusquedaCliente.cs" />
+    <Compile Include="FiltroBusquedaFactura.cs" />
     <Compile Include="FormaJuridica.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="Usuario.cs" />
