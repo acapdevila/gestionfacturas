@@ -123,7 +123,17 @@
                         </table>
                     </div>
                 </div>
-                <div class="panel-heading">@Html.DisplayFor(m=>m.Comentarios)</div>
+                <div class="panel-heading">
+                    <p>
+                        @Html.DisplayFor(m => m.Comentarios)
+                    </p>
+                    @if (!string.IsNullOrEmpty(Model.ComentarioInterno))
+                    {
+                        <p>
+                           Nota: @Html.DisplayFor(m => m.ComentarioInterno)
+                        </p>
+                    }
+                </div>
             </div>
         </div>
     </div>

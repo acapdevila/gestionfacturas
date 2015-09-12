@@ -279,6 +279,7 @@
               <TextRun>
                 <Value>=Sum(Fields!ImporteTotal.Value, "Facturas")</Value>
                 <Style>
+                  <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Format>#,0.00'€'</Format>
                 </Style>
@@ -291,9 +292,9 @@
         </Paragraphs>
         <rd:DefaultName>Amount</rd:DefaultName>
         <Top>3.52792cm</Top>
-        <Left>12.83366cm</Left>
-        <Height>0.6cm</Height>
-        <Width>2.50453cm</Width>
+        <Left>11.91644cm</Left>
+        <Height>0.62646cm</Height>
+        <Width>3.42175cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -455,6 +456,7 @@
               <TextRun>
                 <Value>Total</Value>
                 <Style>
+                  <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -465,8 +467,8 @@
         <rd:DefaultName>Textbox5</rd:DefaultName>
         <Top>3.52792cm</Top>
         <Left>9.63483cm</Left>
-        <Height>0.6cm</Height>
-        <Width>3.19883cm</Width>
+        <Height>0.62646cm</Height>
+        <Width>2.28161cm</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
@@ -495,7 +497,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CommentInfo</rd:DefaultName>
-        <Top>4.71371cm</Top>
+        <Top>5.03121cm</Top>
         <Left>0.42251cm</Left>
         <Height>0.63528cm</Height>
         <Width>14.91568cm</Width>
@@ -548,7 +550,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CommentInfo</rd:DefaultName>
-        <Top>4.1632cm</Top>
+        <Top>4.4807cm</Top>
         <Left>0.39605cm</Left>
         <Height>0.55051cm</Height>
         <Width>14.94214cm</Width>
@@ -564,7 +566,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>2.1059in</Height>
+    <Height>2.2309in</Height>
     <Style />
   </Body>
   <Width>6.5in</Width>

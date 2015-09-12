@@ -6,7 +6,19 @@
     ViewBag.Title = "Lista de facturas";
 }
 
-@section scripts{    
+@section styles{
+    @Styles.Render("~/Content/themes/base/css")
+}
+
+
+
+
+@section ScriptsTop {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+}
+
+@section Scripts{    
     <script type="text/javascript">
     function DescargarZip() {
         window.location = '@Url.Action("DescargarZip")?' + ParametrosBusquedaFormulario();

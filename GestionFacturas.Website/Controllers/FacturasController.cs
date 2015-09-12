@@ -44,7 +44,7 @@ namespace GestionFacturas.Website.Controllers
 
             var viewmodel = new ListaGestionFacturasViewModel {
                 FiltroBusqueda = filtroBusqueda,
-                ListaFacturas = await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda)
+                ListaFacturas = (await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda)).OrderByDescending(m=>m.FechaEmisionFactura)
             };
 
             return View("ListaGestionFacturas", viewmodel);
@@ -202,7 +202,7 @@ namespace GestionFacturas.Website.Controllers
                 {
                     Remitente = factura.VendedorEmail,
                     Asunto = string.Format("{0} - Factura {1}", factura.VendedorNombreOEmpresa, factura.NumeroFactura),
-                    ContenidoHtml = string.Format("Hola,{0}{0}{0}{0}Gracias,{0}Equipo de {1}" , Environment.NewLine, factura.VendedorNombreOEmpresa),
+                    ContenidoHtml = string.Format("Hola,{0}{0}{0}{0}Gracias," , Environment.NewLine),
                     Destinatario = factura.CompradorEmail              
                 }
             };           

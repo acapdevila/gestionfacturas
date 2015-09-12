@@ -29,9 +29,9 @@ namespace GestionFacturas.Servicios
               new
               {
                   Fecha="FECHA",
-                  Dia="DIA",
-                  Mes = "MES",
-                  Año = "AÑO",
+                  //Dia="DIA",
+                  //Mes = "MES",
+                  //Año = "AÑO",
                   NumFactura = "Nº FACTURA",
                   Cliente = "NOMBRE",
                   Titulo ="CONCEPTO",
@@ -41,7 +41,7 @@ namespace GestionFacturas.Servicios
               }  
             };
 
-            worksheet.Range("A3:J3").Style
+            worksheet.Range("A3:G3").Style
                  .Font.SetFontSize(13)
                  .Font.SetBold(true)
                  .Font.SetFontColor(XLColor.White)
@@ -56,12 +56,12 @@ namespace GestionFacturas.Servicios
             {
 
                 worksheet.Cell(row, col).Value = factura.FechaEmisionFactura.ToShortDateString();
-                col++;
-                worksheet.Cell(row, col).Value = factura.FechaEmisionFactura.Day;
-                col++;
-                worksheet.Cell(row, col).Value = factura.FechaEmisionFactura.Month;
-                col++;
-                worksheet.Cell(row, col).Value = factura.FechaEmisionFactura.Year;
+                //col++;
+                //worksheet.Cell(row, col).Value = factura.FechaEmisionFactura.Day;
+                //col++;
+                //worksheet.Cell(row, col).Value = factura.FechaEmisionFactura.Month;
+                //col++;
+                //worksheet.Cell(row, col).Value = factura.FechaEmisionFactura.Year;
 
                 col++;
                 worksheet.Cell(row, col).Value = factura.NumeroFactura;
@@ -82,7 +82,7 @@ namespace GestionFacturas.Servicios
 
             worksheet.Columns().AdjustToContents().Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
-            worksheet.Column("G").Style
+            worksheet.Column("D").Style
                .Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
 
             return workbook;

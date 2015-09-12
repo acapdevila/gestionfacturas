@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace GestionFacturas.Datos.Configuraciones
 {
-
     public class ConfiguracionTablaFacturas : EntityTypeConfiguration<Factura>
     {
         public ConfiguracionTablaFacturas()
@@ -40,6 +39,9 @@ namespace GestionFacturas.Datos.Configuraciones
 
             Property(m => m.ComentariosPie)
                 .HasMaxLength(500);
+
+            Property(m => m.ComentarioInterno)
+                .HasMaxLength(250);
 
             Property(m => m.VendedorNumeroIdentificacionFiscal)
                 .HasMaxLength(50);

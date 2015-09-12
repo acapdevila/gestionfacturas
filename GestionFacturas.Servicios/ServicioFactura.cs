@@ -106,7 +106,7 @@ namespace GestionFacturas.Servicios
                 FormaPago = ultimaFacturaCreada.FormaPago,
                 FormaPagoDetalles = ultimaFacturaCreada.FormaPagoDetalles,
                 ComentariosPie = ultimaFacturaCreada.ComentariosPie,
-                EstadoFactura = EstadoFacturaEnum.Borrador,
+                EstadoFactura = EstadoFacturaEnum.Creada,
                 IdVendedor = ultimaFacturaCreada.IdVendedor,
                 VendedorCodigoPostal = ultimaFacturaCreada.VendedorCodigoPostal,
                 VendedorDireccion = ultimaFacturaCreada.VendedorDireccion,

@@ -99,6 +99,10 @@
     <Compile Include="Migrations\201509060816264_Facturas_EmailVendedorYComprador.Designer.cs">
       <DependentUpon>201509060816264_Facturas_EmailVendedorYComprador.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509121515558_Facturas_ComentarioInterno.cs" />
+    <Compile Include="Migrations\201509121515558_Facturas_ComentarioInterno.Designer.cs">
+      <DependentUpon>201509121515558_Facturas_ComentarioInterno.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -133,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509060816264_Facturas_EmailVendedorYComprador.resx">
       <DependentUpon>201509060816264_Facturas_EmailVendedorYComprador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509121515558_Facturas_ComentarioInterno.resx">
+      <DependentUpon>201509121515558_Facturas_ComentarioInterno.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

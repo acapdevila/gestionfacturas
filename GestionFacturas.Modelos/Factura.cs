@@ -58,6 +58,7 @@ namespace GestionFacturas.Modelos
         public EstadoFacturaEnum EstadoFactura { get; set; }
         public string Comentarios { get; set; }
         public string ComentariosPie { get; set; }
+        public string ComentarioInterno { get; set; }
 
         public string NombreArchivoLogo { get; set; }
         public string NombreArchivoPlantillaInforme { get; set; }
@@ -90,13 +91,11 @@ namespace GestionFacturas.Modelos
             return Lineas.Sum(m => m.PrecioXCantidad + (m.PrecioXCantidad * m.PorcentajeImpuesto / 100));
         }
     }
-     public enum EstadoFacturaEnum
+    public enum EstadoFacturaEnum
     {
-        Borrador = 0,
         Creada = 1,
         Enviada = 2,
-        Cobrada = 3,
-        Anulada = 4
+        Cobrada = 3
     }
 
     public enum FormaPagoEnum
@@ -278,6 +277,10 @@ namespace GestionFacturas.Modelos
         [StringLength(500)]
         public string ComentariosPie { get; set; }
 
+        [Display(Name = "Nota interna")]
+        [StringLength(250)]
+        public string ComentarioInterno { get; set; }
+
 
         public int PorcentajeIvaPorDefecto { get; set; }
 
@@ -337,7 +340,9 @@ namespace GestionFacturas.Modelos
         public EstadoFacturaEnum EstadoFactura { get; set; }
         public string Comentarios { get; set; }
         public string ComentariosPie { get; set; }
-        
+
+        public string ComentarioInterno { get; set; }
+
         public string Titulo { get; set; }
        
         public decimal BaseImponible

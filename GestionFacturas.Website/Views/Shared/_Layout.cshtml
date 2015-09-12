@@ -7,9 +7,11 @@
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 </head>
 
 <body>
+    @RenderSection("ScriptsTop", required: false)
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="@(Request.IsAuthenticated ? "container-fluid" : "container" )">
             <div class="navbar-header">
@@ -43,9 +45,9 @@
             </div>
         </div>
     </div>
-    @Scripts.Render("~/bundles/jquery")
+
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
 
  
 </body>
