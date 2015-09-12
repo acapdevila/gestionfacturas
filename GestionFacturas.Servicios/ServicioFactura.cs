@@ -144,15 +144,18 @@ namespace GestionFacturas.Servicios
 
         private async Task<Factura> ObtenerUlitmaFacturaDeLaSerie(string serie)
         {
-            var consulta = _contexto.Facturas.AsQueryable();
-
-            if (!string.IsNullOrEmpty(serie))
+            if (string.IsNullOrEmpty(serie))
             {
-                consulta = consulta.Where(m => m.SerieFactura == serie);
-            }                    
+               var factura = await _contexto.Facturas.Where(m=>m.SerieFactura != null && m.SerieFactura != "")
+                                .OrderByDescending(m=>m.FechaEmisionFactura)
+                                .FirstOrDefaultAsync();
+                serie = factura.SerieFactura;
+            }
+
+            var consulta = _contexto.Facturas.Where(m => m.SerieFactura == serie);
 
             return await consulta
-                         .OrderByDescending(m => m.FechaEmisionFactura)
+                         .OrderByDescending(m => m.NumeracionFactura)
                         .FirstOrDefaultAsync();
         }
          
