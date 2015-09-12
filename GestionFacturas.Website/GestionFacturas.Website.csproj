@@ -282,6 +282,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ExcelResult.cs" />
+    <Compile Include="Helpers\FileImageHelper.cs" />
     <Compile Include="Helpers\ListEditorHelper.cs" />
     <Compile Include="Helpers\RouteDataHelper.cs" />
     <Compile Include="Viewmodels\AccountViewModels.cs" />

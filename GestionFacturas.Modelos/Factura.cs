@@ -156,6 +156,8 @@ namespace GestionFacturas.Modelos
 
     public class EditorFactura
     {
+        public int DimensionMaximaLogo { get { return 300; } }
+
         public EditorFactura()
         {
             Lineas = new List<EditorLineaFactura>();
@@ -185,7 +187,11 @@ namespace GestionFacturas.Modelos
 
         [Display(Name = "Fecha vencimiento")]
         public DateTime? FechaVencimientoFactura { get; set; }
-
+        
+        [Display(Name = "Logo")]
+        [StringLength(50)]
+        public string NombreArchivoLogo { get; set; }
+        
         [Display(Name = "Forma de pago")]
         public FormaPagoEnum FormaPago { get; set; }
 

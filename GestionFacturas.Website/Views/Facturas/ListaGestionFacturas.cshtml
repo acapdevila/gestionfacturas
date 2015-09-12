@@ -28,18 +28,18 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         @Html.ActionLink("Crear nueva factura", "Crear", null, new { @class = "btn btn-primary" })
-        @Html.ActionLink("Descargar Zip", "DescargarZip", null, new { @class = "btn btn-default", onclick="DescargarZip();return false;" })    
+        @Html.ActionLink("Descargar Zip", "DescargarZip", null, new { @class = "btn btn-default", onclick = "DescargarZip();return false;" })
         @Html.ActionLink("Descargar Excel", "DescargarExcel", null, new { @class = "btn btn-default", onclick = "DescargarExcel();return false;" })
-           
+
     </div>
 
     <div class="panel-body">
-       @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline", Id = "formularioBusqueda" }))
+        @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline", Id = "formularioBusqueda" }))
        {
-           @Html.EditorFor(m => m.FiltroBusqueda, "FiltroBusquedaFactura")
+        @Html.EditorFor(m => m.FiltroBusqueda, "FiltroBusquedaFactura")
        }
     </div>
-
+</div>
       <table class="table table-striped">
             <tr>
                 <th>
@@ -146,4 +146,4 @@
                 <th></th>
             </tr>
         </table>
-   </div>
+  

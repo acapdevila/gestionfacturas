@@ -28,7 +28,7 @@
 
 <h2>Crear factura</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Crear", (string)ViewContext.RouteData.Values["controller"], FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 

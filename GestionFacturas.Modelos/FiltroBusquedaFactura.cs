@@ -15,13 +15,16 @@ namespace GestionFacturas.Modelos
         public DateTime? FechaDesde { get; set; }
 
         public DateTime? FechaHasta { get; set; }
-        
+
+        public string NombreArchivoLogo { get; set; }
+
         public bool TieneValores
         {
             get
             {
                 return !string.IsNullOrEmpty(NombreOEmpresaCliente) ||
-                    FechaDesde.HasValue || FechaHasta.HasValue;
+                    FechaDesde.HasValue || FechaHasta.HasValue ||
+                    !string.IsNullOrEmpty(NombreArchivoLogo);
             }
         }
     }

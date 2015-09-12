@@ -14,7 +14,7 @@ namespace GestionFacturas.Servicios
     public class ServicioFactura : ServicioCrudFactura
     {
         private ServicioEmail _servicioEmail;
-
+        
         private int PorcentajeIvaPorDefecto
         {
             get { return 21; }
@@ -39,6 +39,11 @@ namespace GestionFacturas.Servicios
                 if (filtroBusqueda.FechaDesde.HasValue && filtroBusqueda.FechaHasta.HasValue)
                 {
                     consulta = consulta.Where(m => m.FechaEmisionFactura >= filtroBusqueda.FechaDesde.Value && m.FechaEmisionFactura <= filtroBusqueda.FechaHasta.Value);
+                }
+
+                if (!string.IsNullOrEmpty(filtroBusqueda.NombreArchivoLogo))
+                {
+                    consulta = consulta.Where(m => m.NombreArchivoLogo.Contains(filtroBusqueda.NombreArchivoLogo));
                 }
             }
 
@@ -96,6 +101,7 @@ namespace GestionFacturas.Servicios
                 NumeracionFactura = ultimaFacturaCreada.NumeracionFactura + 1,
                 FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
                 FechaEmisionFactura = DateTime.Today,
+                NombreArchivoLogo = ultimaFacturaCreada.NombreArchivoLogo,
                 PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
                 FormaPago = ultimaFacturaCreada.FormaPago,
                 FormaPagoDetalles = ultimaFacturaCreada.FormaPagoDetalles,

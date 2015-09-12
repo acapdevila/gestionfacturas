@@ -81,6 +81,7 @@
                                     </div>
                                      </div>
                             </div>
+                         
                           
                         </div>
                     </div>
@@ -94,7 +95,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.FormaPago, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-8">
-                                    @Html.EnumDropDownListFor(model => model.FormaPago, htmlAttributes : new { @class = "form-control" })
+                                    @Html.EnumDropDownListFor(model => model.FormaPago, htmlAttributes: new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.FormaPago, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -190,7 +191,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.IdComprador, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-8">
-                                    @Html.TextBoxFor(model => model.IdComprador,htmlAttributes : new { @class = "form-control" } )
+                                    @Html.TextBoxFor(model => model.IdComprador, htmlAttributes: new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.IdComprador, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -271,7 +272,7 @@
                                  </tr>
                             </thead>
                             <tbody id="invoiceLinies">                                                           
-                                @Html.EditorFor(m=>m.Lineas)                                
+                                @Html.EditorFor(m => m.Lineas)                                
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -285,8 +286,7 @@
                     </div>
                 </div>
                 <div class="panel-heading">
-                
-                    <div class="form-group">
+                   <div class="form-group">
                         @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.TextAreaFor(model => model.Comentarios, new { @class = "form-control", rows = "3" })
@@ -297,10 +297,47 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.ComentariosPie, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.ComentariosPie, htmlAttributes : new { @class = "form-control", rows = "3" } )
+                            @Html.TextAreaFor(model => model.ComentariosPie, htmlAttributes: new { @class = "form-control", rows = "5" })
                             @Html.ValidationMessageFor(model => model.ComentariosPie, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="form-group">
+                       
+                         @Html.LabelFor(model => model.NombreArchivoLogo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <input type="hidden" name="NombreArchivoLogoOriginal" value="@Model.NombreArchivoLogo" />
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="btn btn-default btn-file input-group-addon">
+                                    Selecciona una imagen&hellip;  <input type="file" name="archivoLogoSeleccionado" id="archivoLogoSeleccionado" onchange="mostrarInfoarchivoLogoSeleccionado(this)"/>
+                                </span>
+                                @{
+                                    var idControl_NombreArchivoLogo = ViewData.TemplateInfo.GetFullHtmlFieldId("NombreArchivoLogo");
+                                 }
+                                
+                                    @Html.TextBoxFor(model => model.NombreArchivoLogo, htmlAttributes: new { @class = "form-control", @readonly="" })
+                                <button type="button" class="btn btn-danger input-group-addon" onclick="quitarArchivo('@idControl_NombreArchivoLogo')">Eliminar</button>
+                            </div>
+                                @Html.ValidationMessageFor(model => model.NombreArchivoLogo, "", new { @class = "text-danger" })
+                            </div>
+                        <script type="text/javascript">
+
+                            function quitarArchivo(id) {
+                                $('#' + id).val('');
+                                $('.btn-file :file').val('');
+                                return false;
+                            }
+
+                            function mostrarInfoarchivoLogoSeleccionado(input) {
+                                var $input = $(input);
+                                
+                                var numFiles = $input.get(0).files ? $input.get(0).files.length : 1;
+                                var label = $input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                                
+                                $('#@(idControl_NombreArchivoLogo)').val(label);
+                            }
+                        </script>
+                        </div>
+                    
                 
                 </div>
             </div>

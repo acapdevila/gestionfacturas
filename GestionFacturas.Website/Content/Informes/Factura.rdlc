@@ -281,7 +281,6 @@
                 <Style>
                   <FontWeight>Bold</FontWeight>
                   <Format>#,0.00'€'</Format>
-                  <Color>Magenta</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -291,7 +290,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Amount</rd:DefaultName>
-        <Top>4.16292cm</Top>
+        <Top>3.52792cm</Top>
         <Left>12.83366cm</Left>
         <Height>0.6cm</Height>
         <Width>2.50453cm</Width>
@@ -328,7 +327,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>TaxableAmount1</rd:DefaultName>
-        <Top>2.85708cm</Top>
+        <Top>2.22208cm</Top>
         <Left>12.83366cm</Left>
         <Height>0.6cm</Height>
         <Width>2.50453cm</Width>
@@ -365,7 +364,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>TaxAmount1</rd:DefaultName>
-        <Top>3.49236cm</Top>
+        <Top>2.85736cm</Top>
         <Left>12.83366cm</Left>
         <Height>0.6cm</Height>
         <Width>2.50453cm</Width>
@@ -399,7 +398,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>2.85708cm</Top>
+        <Top>2.22208cm</Top>
         <Left>9.63483cm</Left>
         <Height>0.6cm</Height>
         <Width>3.19883cm</Width>
@@ -432,7 +431,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>3.49236cm</Top>
+        <Top>2.85736cm</Top>
         <Left>9.63483cm</Left>
         <Height>0.6cm</Height>
         <Width>3.19883cm</Width>
@@ -457,7 +456,6 @@
                 <Value>Total</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
-                  <Color>Magenta</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -465,7 +463,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>4.16292cm</Top>
+        <Top>3.52792cm</Top>
         <Left>9.63483cm</Left>
         <Height>0.6cm</Height>
         <Width>3.19883cm</Width>
@@ -497,10 +495,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CommentInfo</rd:DefaultName>
-        <Top>2.85708cm</Top>
-        <Left>0.39605cm</Left>
-        <Height>1.83528cm</Height>
-        <Width>7.26459cm</Width>
+        <Top>4.71371cm</Top>
+        <Left>0.42251cm</Left>
+        <Height>0.63528cm</Height>
+        <Width>14.91568cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -550,7 +548,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CommentInfo</rd:DefaultName>
-        <Top>4.7982cm</Top>
+        <Top>4.1632cm</Top>
         <Left>0.39605cm</Left>
         <Height>0.55051cm</Height>
         <Width>14.94214cm</Width>
@@ -566,7 +564,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>2.10579in</Height>
+    <Height>2.1059in</Height>
     <Style />
   </Body>
   <Width>6.5in</Width>
@@ -586,7 +584,6 @@
                   <Value>="Fecha " + Format(First(Fields!FechaEmisionFactura.Value, "Facturas"), "dd/MM/yyyy")</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
-                    <Color>Magenta</Color>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -620,7 +617,6 @@
                   <Value>="Factura " + First(Fields!NumeroFactura.Value, "Facturas")</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
-                    <Color>Magenta</Color>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -938,7 +934,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.35479cm</Height>
+      <Height>1.44694cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>

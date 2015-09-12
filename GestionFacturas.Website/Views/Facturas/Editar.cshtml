@@ -27,7 +27,7 @@
 
 <h2>Editar factura @Model.Factura.NumeroFactura</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Editar", (string)ViewContext.RouteData.Values["controller"], FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
