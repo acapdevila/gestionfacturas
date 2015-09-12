@@ -319,16 +319,17 @@
                          @Html.LabelFor(model => model.NombreArchivoLogo, htmlAttributes: new { @class = "control-label col-md-2" })
                         <input type="hidden" name="NombreArchivoLogoOriginal" value="@Model.NombreArchivoLogo" />
                         <div class="col-md-10">
+                            @{
+                                var idControl_NombreArchivoLogo = ViewData.TemplateInfo.GetFullHtmlFieldId("NombreArchivoLogo");
+                            }
                             <div class="input-group">
                                 <span class="btn btn-default btn-file input-group-addon">
                                     Selecciona una imagen&hellip;  <input type="file" name="archivoLogoSeleccionado" id="archivoLogoSeleccionado" onchange="mostrarInfoarchivoLogoSeleccionado(this)"/>
+                                </span>                               
+                                   @Html.TextBoxFor(model => model.NombreArchivoLogo, htmlAttributes: new { @class = "form-control", @readonly="" })
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-danger" onclick="quitarArchivo('@idControl_NombreArchivoLogo')">Eliminar</button>
                                 </span>
-                                @{
-                                    var idControl_NombreArchivoLogo = ViewData.TemplateInfo.GetFullHtmlFieldId("NombreArchivoLogo");
-                                 }
-                                
-                                    @Html.TextBoxFor(model => model.NombreArchivoLogo, htmlAttributes: new { @class = "form-control", @readonly="" })
-                                <button type="button" class="btn btn-danger input-group-addon" onclick="quitarArchivo('@idControl_NombreArchivoLogo')">Eliminar</button>
                             </div>
                                 @Html.ValidationMessageFor(model => model.NombreArchivoLogo, "", new { @class = "text-danger" })
                             </div>
