@@ -372,8 +372,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="App_Data\Informes\Placeholder.txt" />
-    <Content Include="App_Data\Logos\Placeholder.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -472,7 +470,10 @@
       <Name>GestionFacturas.Servicios</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\Informes\" />
+    <Folder Include="App_Data\Logos\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
