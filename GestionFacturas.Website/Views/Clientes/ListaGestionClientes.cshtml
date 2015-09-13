@@ -1,0 +1,83 @@
+﻿@using GestionFacturas.Servicios
+@model GestionFacturas.Website.Viewmodels.Clientes.ListaGestionClientesViewModel
+    
+
+@{
+    ViewBag.Title = "Lista de clientes";
+}
+
+@section styles{
+    @Styles.Render("~/Content/themes/base/css")
+}
+
+
+@section ScriptsTop {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+}
+
+
+<h2>Clientes</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @Html.ActionLink("Crear nuevo cliente", "Crear", null, new { @class = "btn btn-primary" })
+    </div>
+
+    <div class="panel-body">
+        @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline", Id = "formularioBusqueda" }))
+       {
+        @Html.EditorFor(m => m.FiltroBusqueda, "FiltroBusquedaCliente")
+       }
+    </div>
+</div>
+      <table class="table table-striped">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nombre o Empresa
+                </th>
+                <th>
+                    E-mail
+                </th>
+                <th>
+                    Facturas
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.ListaClientes)
+                {
+                <tr>
+                    <td class="text-nowrap">
+                        @Html.DisplayFor(m => item.Id)
+                    </td>
+                    <td class="col-md-4 col-sm-4 col-lg-4">
+                        @Html.DisplayFor(modelItem => item.NombreOEmpresa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td class="text-nowrap">
+                        @Html.DisplayFor(modelItem => item.NumFacturas)
+                    </td>
+                    <td style="min-width:95px"> 
+                        <div class="btn-group">
+                            @Html.ActionLink("Editar", "Editar", new { id = item.Id },new { @class = "btn btn-primary btn-sm"})
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="float:none; display:inline-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id })
+                                </li>
+                             </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+       </table>
+  

@@ -3,17 +3,8 @@ using System.Net;
 using System.Web.Mvc;
 using GestionFacturas.Modelos;
 using GestionFacturas.Servicios;
-using GestionFacturas.Website.Viewmodels.Facturas;
-using System.Collections.Generic;
-using Microsoft.AspNet.Identity;
-using System;
-using Microsoft.Reporting.WebForms;
-using GestionFacturas.Website.Helpers;
 using System.Linq;
-using System.IO;
-using Ionic.Zip;
-using GestionFacturas.Website.Viewmodels.Email;
-using Elmah;
+using GestionFacturas.Website.Viewmodels.Clientes;
 
 namespace GestionFacturas.Website.Controllers
 {
@@ -22,11 +13,117 @@ namespace GestionFacturas.Website.Controllers
     {
         private readonly ServicioCliente _servicioCliente;
 
-        public ClientesController(ServicioCliente servicioFactura)
+        public ClientesController(ServicioCliente servicioCliente)
         {
-            _servicioCliente = servicioFactura;
+            _servicioCliente = servicioCliente;
         }
-        
+
+        public ActionResult Index()
+        {
+            return RedirectToAction("ListaGestionClientes");
+        }
+
+        [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
+        public async Task<ActionResult> ListaGestionClientes(FiltroBusquedaCliente filtroBusqueda)
+        {
+            if (!filtroBusqueda.TieneValores)
+            {
+                filtroBusqueda = FiltroBusquedaConValoresPorDefecto();
+            }
+
+            var viewmodel = new ListaGestionClientesViewModel
+            {
+                FiltroBusqueda = filtroBusqueda,
+                ListaClientes = (await _servicioCliente.ListaGestionClientesAsync(filtroBusqueda))
+                    .OrderBy(m => m.NombreOEmpresa)
+            };
+
+            return View("ListaGestionClientes", viewmodel);
+        }
+
+        public ActionResult Crear()
+        {
+            var viewmodel = new CrearClienteViewModel
+            {
+                Cliente = new EditorCliente()
+            };
+            return View(viewmodel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Crear(CrearClienteViewModel viewmodel)
+        {
+            if (!ModelState.IsValid) return View(viewmodel);
+
+            await _servicioCliente.CrearClienteAsync(viewmodel.Cliente);
+
+            return RedirectToAction("ListaGestionClientes", new { Id = viewmodel.Cliente.Id });
+
+        }
+
+        public async Task<ActionResult> Editar(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var viewmodel = new EditarClienteViewModel
+            {
+                Cliente = await _servicioCliente.BuscaEditorClienteAsync(id)
+            };
+
+            if (viewmodel.Cliente == null) return HttpNotFound();
+
+            return View(viewmodel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Editar(EditarClienteViewModel viewmodel)
+        {
+            if (!ModelState.IsValid) return View(viewmodel);
+
+            await _servicioCliente.ActualizarClienteAsync(viewmodel.Cliente);
+            return RedirectToAction("ListaGestionClientes", new { Id = viewmodel.Cliente.Id });
+        }
+
+        public async Task<ActionResult> Eliminar(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var viewmodel = new EliminarClienteViewModel
+            {
+                Cliente = await _servicioCliente.BuscaEditorClienteAsync(id.Value)
+            };
+
+            if (viewmodel.Cliente == null) return HttpNotFound();
+
+            return View(viewmodel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Eliminar(EliminarClienteViewModel viewmodel)
+        {
+            if (!ModelState.IsValid) return View(viewmodel);
+
+            await _servicioCliente.EliminarCliente(viewmodel.Cliente.Id);
+
+            var nombreOEmpresaCodificado = WebUtility.UrlEncode(viewmodel.Cliente.NombreOEmpresa);
+
+            return RedirectToAction("EliminarConfirmado", new { nombreOEmpresaEliminado = nombreOEmpresaCodificado });
+        }
+
+        public ActionResult EliminarConfirmado(string nombreOEmpresaEliminado)
+        {
+            if (string.IsNullOrEmpty(nombreOEmpresaEliminado)) return HttpNotFound();
+
+            ViewBag.NombreOEmpresaEliminado = WebUtility.UrlDecode(nombreOEmpresaEliminado);
+
+            return View("EliminarConfirmado");
+        }
+
+        #region Acciones de autocompletar
+
         public async Task<ActionResult> AutocompletarPorNombre(string term)
         {
             var filtroBusqueda = new FiltroBusquedaCliente { NombreOEmpresa = term };
@@ -45,6 +142,17 @@ namespace GestionFacturas.Website.Controllers
             var clientes = await _servicioCliente.ListaClientesAsync(filtroBusqueda, 1, 10);
             return Json(clientes, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Métodos Privados
+
+        private FiltroBusquedaCliente FiltroBusquedaConValoresPorDefecto()
+        {
+            return new FiltroBusquedaCliente();           
+        }
+
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

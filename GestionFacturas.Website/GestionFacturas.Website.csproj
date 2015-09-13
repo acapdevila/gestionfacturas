@@ -286,6 +286,7 @@
     <Compile Include="Helpers\ListEditorHelper.cs" />
     <Compile Include="Helpers\RouteDataHelper.cs" />
     <Compile Include="Viewmodels\AccountViewModels.cs" />
+    <Compile Include="Viewmodels\Clientes\ClientesViewModel.cs" />
     <Compile Include="Viewmodels\Email\EmailViewModels.cs" />
     <Compile Include="Viewmodels\Facturas\FacturasViewModel.cs" />
     <Compile Include="Viewmodels\ManageViewModels.cs" />
@@ -333,6 +334,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Evolutivos.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -396,6 +398,13 @@
     <Content Include="Views\Facturas\EnviarPorEmail.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditorEmail.cshtml" />
     <Content Include="Views\Facturas\EnviarPorEmailConfirmado.cshtml" />
+    <Content Include="Views\Clientes\Crear.cshtml" />
+    <Content Include="Views\Clientes\Editar.cshtml" />
+    <Content Include="Views\Clientes\EditorTemplates\EditorCliente.cshtml" />
+    <Content Include="Views\Clientes\EditorTemplates\FiltroBusquedaCliente.cshtml" />
+    <Content Include="Views\Clientes\Eliminar.cshtml" />
+    <Content Include="Views\Clientes\EliminarConfirmado.cshtml" />
+    <Content Include="Views\Clientes\ListaGestionClientes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

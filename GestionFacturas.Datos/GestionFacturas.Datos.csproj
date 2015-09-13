@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuraciones\ConfiguracionTablaClientes.cs" />
     <Compile Include="Configuraciones\ConfiguracionTablaFacturas.cs" />
     <Compile Include="Configuraciones\ConfiguracionTablaUsuarios.cs" />
     <Compile Include="ContextoBaseDatos.cs" />
@@ -102,6 +103,10 @@
     <Compile Include="Migrations\201509121515558_Facturas_ComentarioInterno.cs" />
     <Compile Include="Migrations\201509121515558_Facturas_ComentarioInterno.Designer.cs">
       <DependentUpon>201509121515558_Facturas_ComentarioInterno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509131430395_Clientes.cs" />
+    <Compile Include="Migrations\201509131430395_Clientes.Designer.cs">
+      <DependentUpon>201509131430395_Clientes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509121515558_Facturas_ComentarioInterno.resx">
       <DependentUpon>201509121515558_Facturas_ComentarioInterno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509131430395_Clientes.resx">
+      <DependentUpon>201509131430395_Clientes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

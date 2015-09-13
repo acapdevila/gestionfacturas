@@ -8,6 +8,9 @@
         <li class="@(currentController == "Facturas" ? activeClass : string.Empty)">
             @Html.ActionLink("Facturas", "Index", "Facturas")
         </li>
+        <li class="@(currentController == "Clientes" ? activeClass : string.Empty)">
+            @Html.ActionLink("Clientes", "Index", "Clientes")
+        </li>
         <li class="@(currentController == "Manage" ? activeClass : string.Empty)">
             @Html.ActionLink("Mis datos", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Mis datos" })
         </li>

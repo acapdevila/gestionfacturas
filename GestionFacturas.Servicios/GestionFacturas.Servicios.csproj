@@ -91,6 +91,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionesEmail.cs" />
+    <Compile Include="InyectorClientes.cs" />
+    <Compile Include="ServicioCrudCliente.cs" />
     <Compile Include="ServicioEmail.cs" />
     <Compile Include="ServicioExcel.cs" />
     <Compile Include="ConversorFacturas.cs" />

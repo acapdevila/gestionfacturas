@@ -1,0 +1,17 @@
+﻿@model GestionFacturas.Modelos.FiltroBusquedaCliente
+
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.NombreOEmpresa, new { @class = "form-control", placeholder = "Nombre cliente" })
+    </div>
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.IdentificacionFiscal, new { @class = "form-control", placeholder = "NIF" })
+    </div>
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.Id, new { @class = "form-control", placeholder = "Referencia" })
+    </div>
+    <button type="submit" class="btn btn-default">Buscar</button>
+
+
+
+
+      

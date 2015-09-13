@@ -11,15 +11,51 @@ using Microsoft.Reporting.WebForms;
 
 namespace GestionFacturas.Servicios
 {
-    public class ServicioCliente
+    public class ServicioCliente : ServicioCrudCliente
     {
-        protected readonly ContextoBaseDatos _contexto;
 
-        public ServicioCliente(ContextoBaseDatos contexto)
+        public ServicioCliente(ContextoBaseDatos contexto) : base(contexto)
         {
-            _contexto = contexto;
+
         }
 
+        public async Task<IEnumerable<LineaListaGestionClientes>> ListaGestionClientesAsync(FiltroBusquedaCliente filtroBusqueda)
+        {
+            var consulta = _contexto.Clientes.AsQueryable();
+
+            if (filtroBusqueda.TieneValores)
+            {
+                if (!string.IsNullOrEmpty(filtroBusqueda.NombreOEmpresa))
+                {
+                    consulta = consulta.Where(m => m.NombreOEmpresa.Contains(filtroBusqueda.NombreOEmpresa));
+                }
+                if (!string.IsNullOrEmpty(filtroBusqueda.IdentificacionFiscal))
+                {
+                    consulta = consulta.Where(m => m.NumeroIdentificacionFiscal.Contains(filtroBusqueda.IdentificacionFiscal));
+                }
+
+                if (filtroBusqueda.Id.HasValue)
+                {
+                    consulta = consulta.Where(m => m.Id== filtroBusqueda.Id.Value);
+                }
+
+            }
+
+            var consultaClientes = consulta
+                .Select(m => new LineaListaGestionClientes
+                {
+                    Id = m.Id,
+                    NombreOEmpresa = m.NombreOEmpresa,
+                    NumeroIdentificacionFiscal = m.NumeroIdentificacionFiscal,
+                    Email = m.Email,
+                    NumFacturas = m.Facturas.Count                   
+                });
+
+            var facturas = await consultaClientes.ToListAsync();
+
+            return facturas;
+        }
+        
         public async Task<IEnumerable<Cliente>> ListaClientesAsync(FiltroBusquedaCliente filtroBusqueda, int indicePagina, int registrosPorPagina)
         {
             var numPagina = indicePagina - 1;
@@ -63,9 +99,13 @@ namespace GestionFacturas.Servicios
             return clientes;
         }
 
-        public void Dispose()
+
+        public async Task<EditorCliente> BuscaEditorClienteAsync(int? idCliente)
         {
-            _contexto.Dispose();
+            var cliente = await BuscarClienteAsync(idCliente);
+            var editor = new EditorCliente();
+            editor.InyectarCliente(cliente);
+            return editor;
         }
     }
 }

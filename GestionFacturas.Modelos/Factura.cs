@@ -90,6 +90,8 @@ namespace GestionFacturas.Modelos
 
             return Lineas.Sum(m => m.PrecioXCantidad + (m.PrecioXCantidad * m.PorcentajeImpuesto / 100));
         }
+
+        public virtual Cliente Comprador { get; set; }
     }
     public enum EstadoFacturaEnum
     {

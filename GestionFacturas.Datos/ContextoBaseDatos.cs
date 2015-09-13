@@ -18,12 +18,14 @@ namespace GestionFacturas.Datos
         public DbSet<Factura> Facturas { get; set; }
         public DbSet<LineaFactura> LineasFacturas { get; set; }
 
+        public DbSet<Cliente> Clientes { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new ConfiguracionTablaUsuarios());
             modelBuilder.Configurations.Add(new ConfiguracionTablaFacturas());
             modelBuilder.Configurations.Add(new ConfiguracionTablaLineasFacturas());
-
+            modelBuilder.Configurations.Add(new ConfiguracionTablaClientes());
 
             base.OnModelCreating(modelBuilder);
         }
