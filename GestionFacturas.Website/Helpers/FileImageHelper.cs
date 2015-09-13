@@ -170,7 +170,7 @@ namespace GestionFacturas.Website.Helpers
 
     public abstract class CarpetaUploads
     {
-        private const string Raiz = "/Uploads/";
+        private const string Raiz = "/App_Data/";
         
 
         public const string Logos = Raiz + "Logos/";

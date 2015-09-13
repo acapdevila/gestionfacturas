@@ -322,7 +322,7 @@ namespace GestionFacturas.Website.Controllers
             if (string.IsNullOrEmpty(factura.NombreArchivoPlantillaInforme))
                 return Server.MapPath("~/Content/Informes/Factura.rdlc");
 
-            return Server.MapPath("~/Uploads/Informes/" + factura.NombreArchivoPlantillaInforme);
+            return Server.MapPath("~/App_Data/Informes/" + factura.NombreArchivoPlantillaInforme);
         }
 
         private LocalReport GenerarInformeLocalFactura(Factura factura)

@@ -49,7 +49,7 @@ namespace GestionFacturas.Servicios
             if (string.IsNullOrEmpty(factura.NombreArchivoLogo))
                 filaDatasetFactura.RutaLogo = string.Concat(urlRaizWeb, "Content/Logos/LogoGF.jpg");
             else
-                filaDatasetFactura.RutaLogo = string.Concat(urlRaizWeb, "Uploads/Logos/", factura.NombreArchivoLogo);
+                filaDatasetFactura.RutaLogo = string.Concat(urlRaizWeb, "App_Data/Logos/", factura.NombreArchivoLogo);
 
 
             datasetFactura.Facturas.AddFacturasRow(filaDatasetFactura);
