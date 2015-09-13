@@ -2,6 +2,7 @@
 using GestionFacturas.Website.Viewmodels.Email;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Webdiyer.WebControls.Mvc;
@@ -56,17 +57,38 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
     public class CrearFacturaViewModel
     {
         public EditorFactura Factura { get; set; }
-        public HttpPostedFileBase ArchivoSeleccionado { get; set; }
+        public HttpPostedFileBase ArchivoLogoSeleccionado { get; set; }
 
-        public bool HayUnArchivoSeleccionado {
+        public bool HayUnArchivoLogoSeleccionado
+        {
             get
             {
-                return ArchivoSeleccionado != null &&
-                       ArchivoSeleccionado.ContentLength > 0 &&
+                return ArchivoLogoSeleccionado != null &&
+                       ArchivoLogoSeleccionado.ContentLength > 0 &&
                        !string.IsNullOrEmpty(Factura.NombreArchivoLogo);
             }
         }
     }
+    public class ImportarFacturasViewModel
+    {
+        public EditorFactura Factura { get; set; }
+
+        [Required]
+        public HttpPostedFileBase ArchivoExcelSeleccionado { get; set; }
+
+        public HttpPostedFileBase ArchivoLogoSeleccionado { get; set; }
+
+        public bool HayUnArchivoLogoSeleccionado
+        {
+            get
+            {
+                return ArchivoLogoSeleccionado != null &&
+                       ArchivoLogoSeleccionado.ContentLength > 0 &&
+                       !string.IsNullOrEmpty(Factura.NombreArchivoLogo);
+            }
+        }
+    }
+    
 
     public class EliminarFacturaViewModel
     {

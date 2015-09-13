@@ -78,7 +78,7 @@ namespace GestionFacturas.Website.Controllers
         {
             if (!ModelState.IsValid) return View(viewmodel);
 
-            if (viewmodel.HayUnArchivoSeleccionado)
+            if (viewmodel.HayUnArchivoLogoSeleccionado)
             {
                 var nombreArchivoSubido = SubirArchivoLogo(viewmodel.Factura.DimensionMaximaLogo);
                 viewmodel.Factura.NombreArchivoLogo = nombreArchivoSubido;
@@ -207,6 +207,15 @@ namespace GestionFacturas.Website.Controllers
                 }
             };           
                 
+            return View(viewmodel);
+        }
+
+        public async Task<ActionResult> Importar()
+        {
+            var viewmodel = new ImportarFacturasViewModel
+            {
+                Factura = await _servicioFactura.ObtenerEditorFacturaParaCrearNuevaFactura(string.Empty)
+            };
             return View(viewmodel);
         }
 

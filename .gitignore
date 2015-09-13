@@ -35,3 +35,4 @@ GestionFacturas.Deploy.Demo/*
 /GestionFacturas.Website/Web.Release.config
 GestionFacturas.Website/Uploads/Informes/**
 GestionFacturas.Website/Uploads/Logos/**
+/Migracion/**
