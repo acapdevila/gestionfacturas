@@ -27,7 +27,14 @@ namespace GestionFacturas.Website.Viewmodels.Clientes
     }
     public class ImportarClientesViewModel
     {
-        public EditorCliente Cliente { get; set; }     
+        public EditorColumnasExcelCliente LetrasColumnasCliente { get; set; }
+
+       
+        public HttpPostedFileBase NombreArchivoExcel { get; set; }
+
+        [Required]
+        [Display(Name = "Excel")]
+        public HttpPostedFileBase ArchivoExcelSeleccionado { get; set; }
     }
     
 

@@ -88,4 +88,40 @@ namespace GestionFacturas.Modelos
         public string ComentarioInterno { get; set; }
     }
 
+    public class EditorColumnasExcelCliente
+    {
+        [Required]
+        [Display(Name = "NIF")]
+        public string LetraColumnaNumeroIdentificacionFiscal { get; set; }
+
+        [Required]
+        [Display(Name = "Nombre o Empresa")]
+        public string LetraColumnaNombreOEmpresa { get; set; }
+
+        [Display(Name = "Nombre comercial")]
+        public string LetraColumnaNombreComercial { get; set; }
+
+        [Display(Name = "Dirección")]
+        public string LetraColumnaDireccion { get; set; }
+
+        [Display(Name = "Municipio")]
+        public string LetraColumnaLocalidad { get; set; }
+
+        [Display(Name = "Provincia")]
+        public string LetraColumnaProvincia { get; set; }
+
+
+        [Display(Name = "Código postal")]
+        public string LetraColumnaCodigoPostal { get; set; }
+
+        [Display(Name = "E-mail")]
+        public string LetraColumnaEmail { get; set; }
+
+        [Display(Name = "Persona de contacto")]
+        public string LetraColumnaPersonaContacto { get; set; }
+
+        [Display(Name = "Nota interna")]
+        public string LetraColumnaComentarioInterno { get; set; }
+    }
+
 }

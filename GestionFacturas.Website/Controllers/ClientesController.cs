@@ -5,6 +5,8 @@ using GestionFacturas.Modelos;
 using GestionFacturas.Servicios;
 using System.Linq;
 using GestionFacturas.Website.Viewmodels.Clientes;
+using System.IO;
+using System.Collections.Generic;
 
 namespace GestionFacturas.Website.Controllers
 {
@@ -122,6 +124,26 @@ namespace GestionFacturas.Website.Controllers
             return View("EliminarConfirmado");
         }
 
+        public ActionResult Importar()
+        {
+            var viewmodel = new ImportarClientesViewModel {
+                LetrasColumnasCliente = new EditorColumnasExcelCliente()
+            };
+            return View(viewmodel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Importar(ImportarClientesViewModel viewmodel)
+        {
+            if (!ModelState.IsValid) return View(viewmodel);
+            
+            await _servicioCliente.ImportarClientesDeExcel(viewmodel.ArchivoExcelSeleccionado.InputStream, viewmodel.LetrasColumnasCliente);
+
+            return RedirectToAction("ListaGestionClientes");
+
+        }
+
         #region Acciones de autocompletar
 
         public async Task<ActionResult> AutocompletarPorNombre(string term)
@@ -151,6 +173,8 @@ namespace GestionFacturas.Website.Controllers
         {
             return new FiltroBusquedaCliente();           
         }
+
+        
 
         #endregion
 

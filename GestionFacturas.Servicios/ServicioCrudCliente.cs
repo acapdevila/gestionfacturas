@@ -35,7 +35,22 @@ namespace GestionFacturas.Servicios
             editor.InyectarCliente(Cliente);
 
             return cambios;
-        }     
+        }
+
+        public async Task<int> CrearClientesAsync(List<EditorCliente> editores)
+        {
+            foreach (var editor in editores)
+            {
+                Cliente = new Cliente();
+
+                ModificarCliente(editor);
+
+                _contexto.Clientes.Add(Cliente);
+            }
+            var cambios =   await GuardarCambiosAsync();
+
+            return cambios;
+        }
 
         public async Task<int> ActualizarClienteAsync(EditorCliente editor)
         {

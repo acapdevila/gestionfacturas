@@ -405,6 +405,8 @@
     <Content Include="Views\Clientes\Eliminar.cshtml" />
     <Content Include="Views\Clientes\EliminarConfirmado.cshtml" />
     <Content Include="Views\Clientes\ListaGestionClientes.cshtml" />
+    <Content Include="Views\Clientes\Importar.cshtml" />
+    <Content Include="Views\Clientes\EditorTemplates\EditorColumnasExcelCliente.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
