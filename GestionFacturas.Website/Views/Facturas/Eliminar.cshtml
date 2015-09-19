@@ -4,9 +4,15 @@
     ViewBag.Title = "Eliminar factura";
 }
 
+@section ScriptsTop {
+   @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+ 
+}
+
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/listEditor/listeditor.js"></script>
+   
 }
 
 <h2>Eliminar factura @Model.Factura.NumeroFactura</h2>

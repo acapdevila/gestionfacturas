@@ -35,7 +35,22 @@ namespace GestionFacturas.Servicios
             editor.InyectarFactura(Factura);
 
             return cambios;
-        }     
+        }
+
+        public async Task<int> CrearFacturasAsync(List<EditorFactura> editores)
+        {
+            foreach (var editor in editores)
+            {
+                Factura = new Factura();
+
+                ModificarFactura(editor);
+
+                _contexto.Facturas.Add(Factura);
+            }
+            var cambios = await GuardarCambiosAsync();
+
+            return cambios;
+        }
 
         public async Task<int> ActualizarFacturaAsync(EditorFactura editor)
         {

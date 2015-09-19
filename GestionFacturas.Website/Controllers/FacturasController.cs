@@ -210,14 +210,30 @@ namespace GestionFacturas.Website.Controllers
             return View(viewmodel);
         }
 
-        public async Task<ActionResult> Importar()
+        public ActionResult Importar()
         {
             var viewmodel = new ImportarFacturasViewModel
             {
-                Factura = await _servicioFactura.ObtenerEditorFacturaParaCrearNuevaFactura(string.Empty)
+                SelectorColumnasExcel = new SelectorColumnasExcelFactura {
+                                             
+                }
             };
             return View(viewmodel);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Importar(ImportarFacturasViewModel viewmodel)
+        {
+            if (!ModelState.IsValid) return View(viewmodel);
+
+            viewmodel.SelectorColumnasExcel.IdUsuario = User.Identity.GetUserId();
+
+            await _servicioFactura.ImportarFacturasDeExcel(viewmodel.ArchivoExcelSeleccionado.InputStream, viewmodel.SelectorColumnasExcel);
+
+            return RedirectToAction("ListaGestionFacturas");
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> EnviarPorEmail(EnviarFacturaPorEmailViewModel viewmodel)

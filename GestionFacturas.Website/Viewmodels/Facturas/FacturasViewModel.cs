@@ -71,9 +71,12 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
     }
     public class ImportarFacturasViewModel
     {
-        public EditorFactura Factura { get; set; }
+        public SelectorColumnasExcelFactura SelectorColumnasExcel { get; set; }
+
+        public HttpPostedFileBase NombreArchivoExcel { get; set; }
 
         [Required]
+        [Display(Name = "Excel")]
         public HttpPostedFileBase ArchivoExcelSeleccionado { get; set; }
 
         public HttpPostedFileBase ArchivoLogoSeleccionado { get; set; }
@@ -84,11 +87,13 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
             {
                 return ArchivoLogoSeleccionado != null &&
                        ArchivoLogoSeleccionado.ContentLength > 0 &&
-                       !string.IsNullOrEmpty(Factura.NombreArchivoLogo);
+                       !string.IsNullOrEmpty(SelectorColumnasExcel.NombreArchivoLogo);
             }
         }
     }
-    
+
+
+
 
     public class EliminarFacturaViewModel
     {

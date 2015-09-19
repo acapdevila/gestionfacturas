@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace GestionFacturas.Servicios
 {
@@ -84,5 +86,13 @@ namespace GestionFacturas.Servicios
             a[0] = char.ToUpper(a[0]);
             return new string(a);
         }
+
+        public static bool EsLetraMayuscula(this string texto)
+        {
+           return  !string.IsNullOrEmpty(texto) && Regex.IsMatch(texto, @"^[A-Z]$");
+        }  
+        
+
+
     }
 }

@@ -50,6 +50,7 @@ namespace GestionFacturas.Servicios
                     NombreOEmpresa = m.NombreOEmpresa,
                     NumeroIdentificacionFiscal = m.NumeroIdentificacionFiscal,
                     Email = m.Email,
+                    NombreComercial = m.NombreComercial,
                     NumFacturas = m.Facturas.Count                   
                 });
 
@@ -141,7 +142,7 @@ namespace GestionFacturas.Servicios
             return editor;
         }
 
-        public async Task ImportarClientesDeExcel(Stream stream, EditorColumnasExcelCliente columnas)
+        public async Task ImportarClientesDeExcel(Stream stream, SelectorColumnasExcelCliente columnas)
         {
             var clientesExistentes = await _contexto.Clientes.ToListAsync();
 
@@ -152,7 +153,7 @@ namespace GestionFacturas.Servicios
             await CrearClientesAsync(clientesAImportar);
         }
 
-        private List<EditorCliente> ObtenerClientesDeExcel(Stream stream, EditorColumnasExcelCliente columnas)
+        private List<EditorCliente> ObtenerClientesDeExcel(Stream stream, SelectorColumnasExcelCliente columnas)
         {
             var workbook = new XLWorkbook(stream);
             var worksheet = workbook.Worksheets.First();

@@ -45,9 +45,13 @@ namespace GestionFacturas.Modelos
 
          public string NombreOEmpresa { get; set; }
 
+        public string NombreComercial { get; set; }
+
         public string Email { get; set; }
 
         public int NumFacturas { get; set; }
+
+        public string Nombre { get { return NombreComercial ?? NombreOEmpresa; } }
 
     }
 
@@ -88,7 +92,7 @@ namespace GestionFacturas.Modelos
         public string ComentarioInterno { get; set; }
     }
 
-    public class EditorColumnasExcelCliente
+    public class SelectorColumnasExcelCliente
     {
         [Required]
         [Display(Name = "NIF")]

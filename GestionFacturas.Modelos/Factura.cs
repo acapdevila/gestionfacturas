@@ -428,5 +428,140 @@ namespace GestionFacturas.Modelos
         public decimal ImporteBruto { get { return PrecioXCantidad + ((PrecioXCantidad * PorcentajeImpuesto) / 100); } }
      }
 
+    public class SelectorColumnasExcelFactura
+    {
+        public SelectorColumnasExcelFactura()
+        {
+           
+        }
+
+        public string IdUsuario { get; set; }
+
+        [Required]
+        [Display(Name = "Serie")]
+        public string SerieFactura { get; set; }
+
+        [Required]
+        [Display(Name = "Nº Factura")]
+        [StringLength(1)]
+        public string NumeroFactura { get; set; }
+
+        [Required]
+        [Display(Name = "Formato")]
+        [StringLength(50)]
+        public string FormatoNumeroFactura { get; set; }
+
+        [Required]
+        [Display(Name = "Fecha emisión")]
+        public string FechaEmisionFactura { get; set; }
+
+        [Display(Name = "Fecha vencimiento")]
+        public string FechaVencimientoFactura { get; set; }
+
+        [Display(Name = "Logo")]
+        [StringLength(50)]
+        public string NombreArchivoLogo { get; set; }
+
+        [Display(Name = "Forma de pago")]
+        public string FormaPago { get; set; }
+
+        [Display(Name = "Detalles forma pago")]
+        [StringLength(50)]
+        public string FormaPagoDetalles { get; set; }
+
+        [Display(Name = "Número de referencia")]
+        public string IdVendedor { get; set; }
+
+        [Display(Name = "Identificación fiscal")]
+        [StringLength(50)]
+        public string VendedorNumeroIdentificacionFiscal { get; set; }
+
+        [Display(Name = "Nombre o empresa")]
+        [StringLength(50)]
+        public string VendedorNombreOEmpresa { get; set; }
+
+        [Display(Name = "Dirección")]
+        [StringLength(50)]
+        public string VendedorDireccion { get; set; }
+
+        [Display(Name = "Municipio")]
+        [StringLength(50)]
+        public string VendedorLocalidad { get; set; }
+
+        [Display(Name = "Provincia")]
+        [StringLength(50)]
+        public string VendedorProvincia { get; set; }
+
+        [Display(Name = "Código postal")]
+        [StringLength(10)]
+        public string VendedorCodigoPostal { get; set; }
+
+        [Display(Name = "E-mail")]
+        [StringLength(50)]
+        public string VendedorEmail { get; set; }
+
+        [Display(Name = "Número de referencia")]
+        public string IdComprador { get; set; }
+
+        [Display(Name = "Identificación fiscal")]
+        [StringLength(50)]
+        public string CompradorNumeroIdentificacionFiscal { get; set; }
+
+        [Display(Name = "Nombre o empresa")]
+        [StringLength(50)]
+        public string CompradorNombreOEmpresa { get; set; }
+
+        [Display(Name = "Dirección")]
+        [StringLength(50)]
+        public string CompradorDireccion { get; set; }
+
+        [Display(Name = "Municipio")]
+        [StringLength(50)]
+        public string CompradorLocalidad { get; set; }
+
+        [Display(Name = "Provincia")]
+        [StringLength(50)]
+        public string CompradorProvincia { get; set; }
+
+        [Display(Name = "Código postal")]
+        [StringLength(10)]
+        public string CompradorCodigoPostal { get; set; }
+        
+        [Display(Name = "E-mail")]
+        [StringLength(50)]
+        public string CompradorEmail { get; set; }
+        
+        [Display(Name = "Estado")]
+        public string EstadoFactura { get; set; }
+
+        [StringLength(250)]
+        public string Comentarios { get; set; }
+
+        [Display(Name = "Pie")]
+        [StringLength(500)]
+        public string ComentariosPie { get; set; }
+
+        [Display(Name = "Nota interna")]
+        [StringLength(250)]
+        public string ComentarioInterno { get; set; }
+
+        [Required]
+        [StringLength(1)]
+        [Display(Name = "Concepto")]
+        public string Descripcion { get; set; }
+
+        [Required]
+        [Display(Name = "Cantidad")]
+        public string Cantidad { get; set; }
+
+        [Required]
+        [Display(Name = "Precio unitario")]
+        [StringLength(1)]
+        public string PrecioUnitario { get; set; }
+
+        [Required]
+        [Display(Name = "% IVA")]
+        public string PorcentajeImpuesto { get; set; }
+    }
 
 }

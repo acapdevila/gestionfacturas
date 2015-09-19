@@ -1,12 +1,11 @@
-﻿@model GestionFacturas.Website.Viewmodels.Clientes.ImportarClientesViewModel
+﻿@model GestionFacturas.Website.Viewmodels.Facturas.ImportarFacturasViewModel
 
 @{
-    ViewBag.Title = "Importar clientes";
+    ViewBag.Title = "Importar facturas";
 }
 @section styles{
     @Styles.Render("~/Content/themes/base/css")
 }
-
 
 
 @section ScriptsTop {
@@ -14,7 +13,7 @@
     @Scripts.Render("~/bundles/jqueryui")
     }
 
-<h2>Importar Clientes</h2>
+<h2>Importar Facturas</h2>
 
 @using (Html.BeginForm("Importar", (string)ViewContext.RouteData.Values["controller"], FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -23,7 +22,8 @@
     <div class="well">
         <ol>
             <li>Seleccionar un archvivo Excel. La primera fila debe contener los nombres de las columnas</li>
-            <li>Indica en cada uno de los campos del cliente la columna del Excel que con la que se corresponde (utilizar letras)</li>
+            <li>Indica en cada uno de los campos de la factura la columna del Excel que con la que se corresponde (utilizar letras)</li>
+            <li>Si se introducen valores que no corresponden con las columnas del Excel se tomaran como valores por defecto de la factura</li>
         </ol>
     </div>
     <div class="row">
@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    @Html.EditorFor(m => m.SelectorColumnasCliente, "SelectorColumnasExcelCliente")
+    @Html.EditorFor(m => m.SelectorColumnasExcel, "SelectorColumnasExcelFactura")
 
     <p>
         <div class="col-md-12">

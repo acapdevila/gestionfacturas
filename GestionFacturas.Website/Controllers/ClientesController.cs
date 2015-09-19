@@ -127,7 +127,7 @@ namespace GestionFacturas.Website.Controllers
         public ActionResult Importar()
         {
             var viewmodel = new ImportarClientesViewModel {
-                LetrasColumnasCliente = new EditorColumnasExcelCliente()
+                SelectorColumnasCliente = new SelectorColumnasExcelCliente()
             };
             return View(viewmodel);
         }
@@ -138,7 +138,7 @@ namespace GestionFacturas.Website.Controllers
         {
             if (!ModelState.IsValid) return View(viewmodel);
             
-            await _servicioCliente.ImportarClientesDeExcel(viewmodel.ArchivoExcelSeleccionado.InputStream, viewmodel.LetrasColumnasCliente);
+            await _servicioCliente.ImportarClientesDeExcel(viewmodel.ArchivoExcelSeleccionado.InputStream, viewmodel.SelectorColumnasCliente);
 
             return RedirectToAction("ListaGestionClientes");
 
