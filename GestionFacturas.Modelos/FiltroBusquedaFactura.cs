@@ -18,13 +18,16 @@ namespace GestionFacturas.Modelos
 
         public string NombreArchivoLogo { get; set; }
 
+        public string Comando { get; set; }
+
         public bool TieneValores
         {
             get
             {
                 return !string.IsNullOrEmpty(NombreOEmpresaCliente) ||
                     FechaDesde.HasValue || FechaHasta.HasValue ||
-                    !string.IsNullOrEmpty(NombreArchivoLogo);
+                    !string.IsNullOrEmpty(NombreArchivoLogo) ||
+                    !string.IsNullOrEmpty(Comando);
             }
         }
     }

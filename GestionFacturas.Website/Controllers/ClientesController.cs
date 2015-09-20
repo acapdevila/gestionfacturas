@@ -30,7 +30,7 @@ namespace GestionFacturas.Website.Controllers
         {
             if (!filtroBusqueda.TieneValores)
             {
-                filtroBusqueda = FiltroBusquedaConValoresPorDefecto();
+                filtroBusqueda = RecuperarFiltroBusqueda();
             }
 
             var viewmodel = new ListaGestionClientesViewModel
@@ -39,6 +39,8 @@ namespace GestionFacturas.Website.Controllers
                 ListaClientes = (await _servicioCliente.ListaGestionClientesAsync(filtroBusqueda))
                     .OrderBy(m => m.NombreOEmpresa)
             };
+
+            GuardarFiltroBusqueda(filtroBusqueda);
 
             return View("ListaGestionClientes", viewmodel);
         }
@@ -169,12 +171,25 @@ namespace GestionFacturas.Website.Controllers
 
         #region Métodos Privados
 
-        private FiltroBusquedaCliente FiltroBusquedaConValoresPorDefecto()
+        private FiltroBusquedaCliente RecuperarFiltroBusqueda()
         {
-            return new FiltroBusquedaCliente();           
+            var filtro = Session["FiltroBusquedaClientes"];
+
+            if (filtro != null)
+                return (FiltroBusquedaCliente)filtro;
+
+            return FiltroBusquedaConValoresPorDefecto();
         }
 
-        
+        private void GuardarFiltroBusqueda(FiltroBusquedaCliente filtro)
+        {
+            Session["FiltroBusquedaClientes"] = filtro;
+        }
+
+        private FiltroBusquedaCliente FiltroBusquedaConValoresPorDefecto()
+        {
+            return new FiltroBusquedaCliente();
+        }
 
         #endregion
 

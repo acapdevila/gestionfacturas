@@ -16,12 +16,17 @@ namespace GestionFacturas.Modelos
 
         public string IdentificacionFiscal { get; set; }
 
+        public string Comando { get; set; }
+
 
         public bool TieneValores
         {
             get
             {
-                return !string.IsNullOrEmpty(NombreOEmpresa) || Id.HasValue || !string.IsNullOrEmpty(IdentificacionFiscal);
+                return  !string.IsNullOrEmpty(NombreOEmpresa) || 
+                        Id.HasValue || 
+                        !string.IsNullOrEmpty(IdentificacionFiscal) || 
+                        !string.IsNullOrEmpty(Comando);
             }
         }
     }

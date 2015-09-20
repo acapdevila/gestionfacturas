@@ -22,7 +22,6 @@ namespace GestionFacturas.Website.Controllers
     {
         private readonly ServicioFactura _servicioFactura;
 
-        
         public FacturasController(ServicioFactura servicioFactura)
         {
             _servicioFactura = servicioFactura;
@@ -37,15 +36,17 @@ namespace GestionFacturas.Website.Controllers
         [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
         public async Task<ActionResult> ListaGestionFacturas(FiltroBusquedaFactura filtroBusqueda)
         {
-            if (!filtroBusqueda.TieneValores)
+            if (!filtroBusqueda.TieneValores && Request.HttpMethod == "GET")
             {
-                filtroBusqueda = FiltroBusquedaConValoresPorDefecto();
+                filtroBusqueda = RecuperarFiltroBusqueda();
             }
 
             var viewmodel = new ListaGestionFacturasViewModel {
                 FiltroBusqueda = filtroBusqueda,
                 ListaFacturas = (await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda)).OrderByDescending(m=>m.FechaEmisionFactura)
             };
+
+            GuardarFiltroBusqueda(filtroBusqueda);
 
             return View("ListaGestionFacturas", viewmodel);
         }
@@ -315,6 +316,21 @@ namespace GestionFacturas.Website.Controllers
                 FechaDesde = ServicioFechas.PrimerDiaMesActual(),
                 FechaHasta = ServicioFechas.UltimoDiaMesActual()
             };
+        }
+
+        private FiltroBusquedaFactura RecuperarFiltroBusqueda()
+        {
+            var filtro = Session["FiltroBusquedaFacturas"];
+
+            if (filtro != null)
+                return (FiltroBusquedaFactura)filtro;
+
+            return FiltroBusquedaConValoresPorDefecto();
+        }
+
+        private void GuardarFiltroBusqueda(FiltroBusquedaFactura filtro)
+        {
+            Session["FiltroBusquedaFacturas"] = filtro;
         }
 
         private async Task EliminarArchivoLogoSiNoEsUtilizadoPorOtrasFacturas(string nombreArchivo)

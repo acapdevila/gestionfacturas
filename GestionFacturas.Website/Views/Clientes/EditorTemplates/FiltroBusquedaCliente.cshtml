@@ -1,5 +1,9 @@
 ﻿@model GestionFacturas.Modelos.FiltroBusquedaCliente
 
+@{
+    string modelComando = string.Concat(ViewData.TemplateInfo.HtmlFieldPrefix, ".", "Comando");
+ }
+
     <div class="form-group">
         @Html.TextBoxFor(m => m.NombreOEmpresa, new { @class = "form-control", placeholder = "Nombre cliente" })
     </div>
@@ -9,9 +13,33 @@
     <div class="form-group">
         @Html.TextBoxFor(m => m.Id, new { @class = "form-control", placeholder = "Referencia" })
     </div>
-    <button type="submit" class="btn btn-default">Buscar</button>
+   
+    <input type="submit" class="btn btn-info" name="@modelComando" value="Buscar"/>
+    <input id="botonMostrarTodos" type="submit" name="@modelComando" class="btn btn-default" value="Todos" />
+    
 
+<script type="text/javascript">
+    
+    function limpiarControlesFormulario() {
+        jQuery(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
+        jQuery(':checkbox, :radio').prop('checked', false);
+    }
 
+    function enviarFormulario() {
+        jQuery("#botonMostrarTodos").closest('form').get(0).submit();
+    }
+
+    jQuery(document).ready(function () {
+
+        jQuery("#botonMostrarTodos").click(function () {
+
+            limpiarControlesFormulario();
+           // enviarFormulario();
+
+        });
+
+    });
+</script>
 
 
       
