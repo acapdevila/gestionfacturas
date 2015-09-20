@@ -36,7 +36,7 @@ namespace GestionFacturas.Website.Controllers
         [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
         public async Task<ActionResult> ListaGestionFacturas(FiltroBusquedaFactura filtroBusqueda)
         {
-            if (!filtroBusqueda.TieneValores && Request.HttpMethod == "GET")
+            if (!filtroBusqueda.TieneValores)
             {
                 filtroBusqueda = RecuperarFiltroBusqueda();
             }
