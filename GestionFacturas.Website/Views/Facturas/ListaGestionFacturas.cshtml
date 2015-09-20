@@ -107,7 +107,15 @@
                         @Html.DisplayFor(modelItem => item.ImporteTotal, "Moneda")
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CompradorNombreOEmpresa)
+                       @if (item.IdComprador.HasValue)
+                       {
+                            @Html.ActionLink(item.CompradorNombre, "Editar","Clientes", new { id= item.IdComprador.Value }, null)
+                       }
+                       else
+                       {
+                            @Html.DisplayFor(modelItem => item.CompradorNombre)
+                       }
+                       
                     </td>
                     <td style="min-width:95px"> 
                         <div class="btn-group">

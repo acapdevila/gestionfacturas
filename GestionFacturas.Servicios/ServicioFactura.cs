@@ -35,7 +35,9 @@ namespace GestionFacturas.Servicios
             {
                 if (!string.IsNullOrEmpty(filtroBusqueda.NombreOEmpresaCliente))
                 {
-                    consulta = consulta.Where(m => m.CompradorNombreOEmpresa.Contains(filtroBusqueda.NombreOEmpresaCliente));
+                    consulta = consulta.Where(m =>
+                                m.CompradorNombreOEmpresa.Contains(filtroBusqueda.NombreOEmpresaCliente) ||
+                                m.Comprador.NombreComercial.Contains(filtroBusqueda.NombreOEmpresaCliente));
                 }
 
                 if (filtroBusqueda.FechaDesde.HasValue && filtroBusqueda.FechaHasta.HasValue)
@@ -65,7 +67,8 @@ namespace GestionFacturas.Servicios
                     Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
                     ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0,
                     CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
-                    ListaDescripciones = m.Lineas.Select(l=>l.Descripcion)
+                    ListaDescripciones = m.Lineas.Select(l=>l.Descripcion),
+                    CompradorNombreComercial = m.Comprador.NombreComercial
                 });
 
             var facturas = await consultaFacturas.ToListAsync();

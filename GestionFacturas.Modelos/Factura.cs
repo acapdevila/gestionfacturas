@@ -147,6 +147,10 @@ namespace GestionFacturas.Modelos
         public int? IdComprador { get; set; }
         public string CompradorNombreOEmpresa { get; set; }
 
+        public string CompradorNombreComercial { get; set; }
+
+        public string CompradorNombre { get { return CompradorNombreComercial ?? CompradorNombreOEmpresa; } }
+
         public decimal BaseImponible { get; set; }
         public decimal Impuestos { get; set; }
         public decimal ImporteTotal { get; set; }
