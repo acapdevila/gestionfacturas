@@ -148,7 +148,7 @@ namespace GestionFacturas.Servicios
 
             var clientesExcel = ObtenerClientesDeExcel(stream, columnas);
 
-            var clientesAImportar = ObtenerClientesAImportar(clientesExistentes, clientesExcel);
+            var clientesAImportar = QuitarClientesDuplicados(clientesExistentes, clientesExcel);
 
             await CrearClientesAsync(clientesAImportar);
         }
@@ -188,13 +188,13 @@ namespace GestionFacturas.Servicios
             return clientes.Distinct().ToList();
         }
 
-        private List<EditorCliente> ObtenerClientesAImportar(List<Cliente> clientesExistentes, List<EditorCliente> clientesExcel)
+        private List<EditorCliente> QuitarClientesDuplicados(List<Cliente> clientesExistentes, List<EditorCliente> clientesExcel)
         {
             var clientesAImportar = new List<EditorCliente>();
 
             foreach (var clienteExcel in clientesExcel)
             {
-                var clienteExistente = clientesExistentes.FirstOrDefault(m => m.NombreComercial == clienteExcel.NombreOEmpresa);
+                var clienteExistente = clientesExistentes.FirstOrDefault(m => m.NumeroIdentificacionFiscal == clienteExcel.NumeroIdentificacionFiscal);
 
                 if (clienteExistente == null)
                     clientesAImportar.Add(clienteExcel);
