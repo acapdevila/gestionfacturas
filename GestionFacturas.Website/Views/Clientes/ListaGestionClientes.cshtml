@@ -74,7 +74,7 @@
                         <span title="@item.Direccion">@item.Direccion.TruncarConElipsis(20)</span>
                     </th>
                     <td class="text-nowrap">
-                        @if (item.NumFacturas > 1)
+                        @if (item.NumFacturas > 0)
                         {
                             @Html.ActionLink(item.NumFacturas.ToString(), "ListaGestionFacturas", "Facturas",new { IdCliente = item.Id  }, null)
                         }
