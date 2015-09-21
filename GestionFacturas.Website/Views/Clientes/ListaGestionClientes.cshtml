@@ -47,6 +47,9 @@
                     E-mail
                 </th>
                 <th>
+                    Dirección
+                </th>
+                <th>
                     Facturas
                 </th>
                 <th></th>
@@ -67,8 +70,18 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
+                    <th>
+                        <span title="@item.Direccion">@item.Direccion.TruncarConElipsis(20)</span>
+                    </th>
                     <td class="text-nowrap">
-                        @Html.DisplayFor(modelItem => item.NumFacturas)
+                        @if (item.NumFacturas > 1)
+                        {
+                            @Html.ActionLink(item.NumFacturas.ToString(), "ListaGestionFacturas", "Facturas",new { IdCliente = item.Id  }, null)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m=>item.NumFacturas)
+                        }
                     </td>
                     <td style="min-width:95px"> 
                         <div class="btn-group">

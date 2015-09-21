@@ -50,6 +50,7 @@ namespace GestionFacturas.Servicios
                     NombreOEmpresa = m.NombreOEmpresa,
                     NumeroIdentificacionFiscal = m.NumeroIdentificacionFiscal,
                     Email = m.Email,
+                    Direccion = m.Direccion,
                     NombreComercial = m.NombreComercial,
                     NumFacturas = m.Facturas.Count                   
                 });

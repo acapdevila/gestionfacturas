@@ -53,6 +53,8 @@ namespace GestionFacturas.Modelos
 
         public string Nombre { get { return NombreComercial ?? NombreOEmpresa; } }
 
+        public string Direccion { get; set; }
+
     }
 
     public class EditorCliente

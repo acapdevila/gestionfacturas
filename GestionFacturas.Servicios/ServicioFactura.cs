@@ -45,6 +45,11 @@ namespace GestionFacturas.Servicios
                     consulta = consulta.Where(m => m.FechaEmisionFactura >= filtroBusqueda.FechaDesde.Value && m.FechaEmisionFactura <= filtroBusqueda.FechaHasta.Value);
                 }
 
+                if (filtroBusqueda.IdCliente.HasValue)
+                {
+                    consulta = consulta.Where(m => m.IdComprador == filtroBusqueda.IdCliente.Value);
+                }
+
                 if (!string.IsNullOrEmpty(filtroBusqueda.NombreArchivoLogo))
                 {
                     consulta = consulta.Where(m => m.NombreArchivoLogo.Contains(filtroBusqueda.NombreArchivoLogo));

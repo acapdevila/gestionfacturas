@@ -9,7 +9,9 @@ namespace GestionFacturas.Modelos
 {
     [Serializable]
     public  class FiltroBusquedaFactura
-    {   
+    {
+        public int? IdCliente { get; set; }
+
         public string NombreOEmpresaCliente { get; set; }
 
         public DateTime? FechaDesde { get; set; }
@@ -27,7 +29,8 @@ namespace GestionFacturas.Modelos
                 return !string.IsNullOrEmpty(NombreOEmpresaCliente) ||
                     FechaDesde.HasValue || FechaHasta.HasValue ||
                     !string.IsNullOrEmpty(NombreArchivoLogo) ||
-                    !string.IsNullOrEmpty(Comando);
+                    !string.IsNullOrEmpty(Comando) || 
+                    IdCliente.HasValue;
             }
         }
     }

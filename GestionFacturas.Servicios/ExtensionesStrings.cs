@@ -11,6 +11,8 @@ namespace GestionFacturas.Servicios
     {
         public static string TruncarConElipsis(this string value, int maxLength)
         {
+            if (value == null) return string.Empty;
+
             return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
         }
 
