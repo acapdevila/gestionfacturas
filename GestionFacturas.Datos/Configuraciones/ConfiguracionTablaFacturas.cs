@@ -38,7 +38,7 @@ namespace GestionFacturas.Datos.Configuraciones
                 .HasMaxLength(250);
 
             Property(m => m.ComentariosPie)
-                .HasMaxLength(500);
+                .HasMaxLength(800);
 
             Property(m => m.ComentarioInterno)
                 .HasMaxLength(250);

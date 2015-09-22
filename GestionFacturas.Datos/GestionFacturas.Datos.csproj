@@ -108,6 +108,10 @@
     <Compile Include="Migrations\201509131430395_Clientes.Designer.cs">
       <DependentUpon>201509131430395_Clientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509222041109_Facturas_Pie_800Caracteres.cs" />
+    <Compile Include="Migrations\201509222041109_Facturas_Pie_800Caracteres.Designer.cs">
+      <DependentUpon>201509222041109_Facturas_Pie_800Caracteres.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -148,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509131430395_Clientes.resx">
       <DependentUpon>201509131430395_Clientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509222041109_Facturas_Pie_800Caracteres.resx">
+      <DependentUpon>201509222041109_Facturas_Pie_800Caracteres.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

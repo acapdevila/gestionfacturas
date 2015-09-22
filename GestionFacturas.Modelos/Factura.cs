@@ -280,7 +280,7 @@ namespace GestionFacturas.Modelos
         public string Comentarios { get; set; }
 
         [Display(Name = "Pie")]
-        [StringLength(500)]
+        [StringLength(800)]
         public string ComentariosPie { get; set; }
 
         [Display(Name = "Nota interna")]
@@ -542,7 +542,7 @@ namespace GestionFacturas.Modelos
         public string Comentarios { get; set; }
 
         [Display(Name = "Pie")]
-        [StringLength(500)]
+        [StringLength(800)]
         public string ComentariosPie { get; set; }
 
         [Display(Name = "Nota interna")]

@@ -811,7 +811,7 @@ namespace GestionFacturas.Modelos {
                 this.columnCompradorProvincia.MaxLength = 50;
                 this.columnCompradorCodigoPostal.MaxLength = 10;
                 this.columnComentarios.MaxLength = 250;
-                this.columnComentariosPie.MaxLength = 500;
+                this.columnComentariosPie.MaxLength = 800;
                 this.columnFormaPago.MaxLength = 50;
                 this.columnFormaPagoDetalles.MaxLength = 50;
                 this.columnImporteImpuestos.Caption = "BaseImponible";

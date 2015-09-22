@@ -566,7 +566,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>2.2309in</Height>
+    <Height>2.2934in</Height>
     <Style />
   </Body>
   <Width>6.5in</Width>
@@ -936,7 +936,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1.44694cm</Height>
+      <Height>0.77639cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -962,39 +962,6 @@
           <Left>0.39605cm</Left>
           <Height>0.6cm</Height>
           <Width>14.91568cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox23">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!VendedorNombreOEmpresa.Value, "Facturas") + " " + First(Fields!VendedorNumeroIdentificacionFiscal.Value, "Facturas") + ". " + First(Fields!VendedorDireccion.Value, "Facturas") + ", " + First(Fields!VendedorCodigoPostal.Value, "Facturas") + " " + First(Fields!VendedorLocalidad.Value, "Facturas") + "."</Value>
-                  <Style>
-                    <FontSize>7pt</FontSize>
-                    <Color>DimGray</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox19</rd:DefaultName>
-          <Top>0.84694cm</Top>
-          <Left>0.39605cm</Left>
-          <Height>0.6cm</Height>
-          <Width>14.91568cm</Width>
-          <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
