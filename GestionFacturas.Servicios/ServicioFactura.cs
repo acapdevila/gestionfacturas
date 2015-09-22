@@ -178,11 +178,17 @@ namespace GestionFacturas.Servicios
             _contexto.SaveChanges();
         }
         
-        public async Task ImportarFacturasDeExcel(Stream stream, SelectorColumnasExcelFactura columnas)
+        public async Task ImportarFacturasDeExcel(Stream stream, SelectorColumnasExcelFactura columnas, bool soloImportarFacturasDeClientesExistentes)
         {
             var editoresFacturas = ObtenerFacturasDeExcel(stream, columnas);
 
             var clientesExistentes = await _contexto.Clientes.ToListAsync();
+
+            if (soloImportarFacturasDeClientesExistentes)
+            {
+                var idsClientes = clientesExistentes.Select(m => m.NumeroIdentificacionFiscal).ToList();
+                editoresFacturas = editoresFacturas.Where(m => idsClientes.Contains(m.CompradorNumeroIdentificacionFiscal)).ToList();
+            }
 
             CompletarDatosCompradores(editoresFacturas, clientesExistentes);
             

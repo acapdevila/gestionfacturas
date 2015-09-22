@@ -216,8 +216,9 @@ namespace GestionFacturas.Website.Controllers
             var viewmodel = new ImportarFacturasViewModel
             {
                 SelectorColumnasExcel = new SelectorColumnasExcelFactura {
-                                             
-                }
+                                          
+                },
+                SoloImportarFacturasDeClientesExistentes = true
             };
             return View(viewmodel);
         }
@@ -230,7 +231,9 @@ namespace GestionFacturas.Website.Controllers
 
             viewmodel.SelectorColumnasExcel.IdUsuario = User.Identity.GetUserId();
 
-            await _servicioFactura.ImportarFacturasDeExcel(viewmodel.ArchivoExcelSeleccionado.InputStream, viewmodel.SelectorColumnasExcel);
+            await _servicioFactura.ImportarFacturasDeExcel(viewmodel.ArchivoExcelSeleccionado.InputStream, 
+                                                           viewmodel.SelectorColumnasExcel, 
+                                                           viewmodel.SoloImportarFacturasDeClientesExistentes);
 
             return RedirectToAction("ListaGestionFacturas");
         }

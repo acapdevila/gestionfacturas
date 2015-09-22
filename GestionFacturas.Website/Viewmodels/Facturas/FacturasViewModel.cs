@@ -73,6 +73,9 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
     {
         public SelectorColumnasExcelFactura SelectorColumnasExcel { get; set; }
 
+        [Display(Name = "Sólo migrar las facturas con clientes existentes")]
+        public bool SoloImportarFacturasDeClientesExistentes { get; set; }
+        
         public HttpPostedFileBase NombreArchivoExcel { get; set; }
 
         [Required]
