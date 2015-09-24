@@ -5,13 +5,16 @@
  }
 
     <div class="form-group">
-        @Html.TextBoxFor(m => m.NombreOEmpresa, new { @class = "form-control", placeholder = "Nombre cliente" })
+        @Html.TextBoxFor(m => m.NombreOEmpresa, new { @class = "form-control", placeholder = "Nombre o empresa" })
     </div>
     <div class="form-group">
         @Html.TextBoxFor(m => m.IdentificacionFiscal, new { @class = "form-control", placeholder = "NIF" })
     </div>
     <div class="form-group">
         @Html.TextBoxFor(m => m.Id, new { @class = "form-control", placeholder = "Referencia" })
+    </div>
+    <div class="form-group">
+        @Html.EnumDropDownListFor(m => m.OrdenarPorEnum, htmlAttributes: new { @class = "form-control" },optionLabel: "Ordenar por")
     </div>
    
     <input type="submit" class="btn btn-info" name="@modelComando" value="Buscar"/>
@@ -21,7 +24,7 @@
 <script type="text/javascript">
     
     function limpiarControlesFormulario() {
-        jQuery(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
+        jQuery(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio, select').val('');
         jQuery(':checkbox, :radio').prop('checked', false);
     }
 

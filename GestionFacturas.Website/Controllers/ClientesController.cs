@@ -64,7 +64,7 @@ namespace GestionFacturas.Website.Controllers
 
             await _servicioCliente.CrearClienteAsync(viewmodel.Cliente);
 
-            return RedirectToAction("ListaGestionClientes", new { Id = viewmodel.Cliente.Id });
+            return RedirectToAction("ListaGestionClientes");
 
         }
 
@@ -89,7 +89,7 @@ namespace GestionFacturas.Website.Controllers
             if (!ModelState.IsValid) return View(viewmodel);
 
             await _servicioCliente.ActualizarClienteAsync(viewmodel.Cliente);
-            return RedirectToAction("ListaGestionClientes", new { Id = viewmodel.Cliente.Id });
+            return RedirectToAction("ListaGestionClientes");
         }
 
         public async Task<ActionResult> Eliminar(int? id)

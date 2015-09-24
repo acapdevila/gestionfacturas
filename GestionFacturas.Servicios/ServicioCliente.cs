@@ -29,24 +29,12 @@ namespace GestionFacturas.Servicios
 
             if (filtroBusqueda.TieneFiltrosBusqueda)
             {
-                if (!string.IsNullOrEmpty(filtroBusqueda.NombreOEmpresa))
-                {
-                    consulta = consulta.Where(m => m.NombreOEmpresa.Contains(filtroBusqueda.NombreOEmpresa));
-                }
-                if (!string.IsNullOrEmpty(filtroBusqueda.IdentificacionFiscal))
-                {
-                    consulta = consulta.Where(m => m.NumeroIdentificacionFiscal.Contains(filtroBusqueda.IdentificacionFiscal));
-                }
-
-                if (filtroBusqueda.Id.HasValue)
-                {
-                    consulta = consulta.Where(m => m.Id== filtroBusqueda.Id.Value);
-                }
-
+                consulta = consulta.Where_FiltroBusqueda(filtroBusqueda);              
             }
 
-            var consultaClientes = consulta
-                .OrderBy(m=>m.NombreOEmpresa)
+            var consultaOrdenada = consulta.OrderBy_OrdenarPor(filtroBusqueda.OrdenarPorEnum);
+                       
+            var consultaClientes = consultaOrdenada
                 .Select(m => new LineaListaGestionClientes
                 {
                     Id = m.Id,

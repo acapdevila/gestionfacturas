@@ -30,6 +30,9 @@ namespace GestionFacturas.Modelos
         public int LineasPorPagina { get { return 25; } }
 
 
+        public OrdenClientesEnum OrdenarPorEnum { get; set; }
+
+
         public bool TieneFiltrosBusqueda
         {
             get
@@ -47,6 +50,21 @@ namespace GestionFacturas.Modelos
             {
                 return IndicePagina > 0;
             }
-        }
+        }       
     }
+
+    public enum OrdenClientesEnum
+    {
+        [Display(Name = @"Alfabético")]
+        Alfabetico = 0,
+        [Display(Name = @"Mayor facturación")]
+        MayorFacturacion = 1,
+        [Display(Name = @"Menor facturación")]
+        MenorFacturacion = 2,
+        [Display(Name = @"Mayor número de facturas")]
+        MasFacturas = 3,
+        [Display(Name = @"Menor número de facturas")]
+        MenosFacturas = 5        
+    }
+
 }

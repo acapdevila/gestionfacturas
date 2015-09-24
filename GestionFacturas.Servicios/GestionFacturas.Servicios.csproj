@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionesEmail.cs" />
+    <Compile Include="ExtensionesClientes.cs" />
     <Compile Include="InyectorClientes.cs" />
     <Compile Include="ServicioCrudCliente.cs" />
     <Compile Include="ServicioEmail.cs" />
