@@ -6,13 +6,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>9.23878cm</Width>
+              <Width>10.29711cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.19883cm</Width>
+              <Width>3.30466cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.50453cm</Width>
+              <Width>2.61036cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -261,9 +261,9 @@
         </TablixRowHierarchy>
         <DataSetName>Lineas</DataSetName>
         <Top>0.40982cm</Top>
-        <Left>0.39605cm</Left>
+        <Left>0.07855cm</Left>
         <Height>1.61453cm</Height>
-        <Width>14.94214cm</Width>
+        <Width>16.21213cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -292,7 +292,7 @@
         </Paragraphs>
         <rd:DefaultName>Amount</rd:DefaultName>
         <Top>3.52792cm</Top>
-        <Left>11.91644cm</Left>
+        <Left>12.86894cm</Left>
         <Height>0.62646cm</Height>
         <Width>3.42175cm</Width>
         <ZIndex>1</ZIndex>
@@ -329,7 +329,7 @@
         </Paragraphs>
         <rd:DefaultName>TaxableAmount1</rd:DefaultName>
         <Top>2.22208cm</Top>
-        <Left>12.83366cm</Left>
+        <Left>13.78616cm</Left>
         <Height>0.6cm</Height>
         <Width>2.50453cm</Width>
         <ZIndex>2</ZIndex>
@@ -366,7 +366,7 @@
         </Paragraphs>
         <rd:DefaultName>TaxAmount1</rd:DefaultName>
         <Top>2.85736cm</Top>
-        <Left>12.83366cm</Left>
+        <Left>13.78616cm</Left>
         <Height>0.6cm</Height>
         <Width>2.50453cm</Width>
         <ZIndex>3</ZIndex>
@@ -400,7 +400,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
         <Top>2.22208cm</Top>
-        <Left>9.63483cm</Left>
+        <Left>10.58733cm</Left>
         <Height>0.6cm</Height>
         <Width>3.19883cm</Width>
         <ZIndex>4</ZIndex>
@@ -433,7 +433,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
         <Top>2.85736cm</Top>
-        <Left>9.63483cm</Left>
+        <Left>10.58733cm</Left>
         <Height>0.6cm</Height>
         <Width>3.19883cm</Width>
         <ZIndex>5</ZIndex>
@@ -466,7 +466,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
         <Top>3.52792cm</Top>
-        <Left>9.63483cm</Left>
+        <Left>10.58733cm</Left>
         <Height>0.62646cm</Height>
         <Width>2.28161cm</Width>
         <ZIndex>6</ZIndex>
@@ -498,9 +498,9 @@
         </Paragraphs>
         <rd:DefaultName>CommentInfo</rd:DefaultName>
         <Top>5.03121cm</Top>
-        <Left>0.42251cm</Left>
+        <Left>0.07855cm</Left>
         <Height>0.63528cm</Height>
-        <Width>14.91568cm</Width>
+        <Width>16.21214cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -551,9 +551,9 @@
         </Paragraphs>
         <rd:DefaultName>CommentInfo</rd:DefaultName>
         <Top>4.4807cm</Top>
-        <Left>0.39605cm</Left>
+        <Left>0.07855cm</Left>
         <Height>0.55051cm</Height>
-        <Width>14.94214cm</Width>
+        <Width>16.21214cm</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -596,7 +596,7 @@
           </Paragraphs>
           <rd:DefaultName>DateInvoice</rd:DefaultName>
           <Top>0.391cm</Top>
-          <Left>11.01256cm</Left>
+          <Left>11.96506cm</Left>
           <Height>0.6cm</Height>
           <Width>4.32563cm</Width>
           <Style>
@@ -629,7 +629,7 @@
           </Paragraphs>
           <rd:DefaultName>Number</rd:DefaultName>
           <Top>0.991cm</Top>
-          <Left>11.01256cm</Left>
+          <Left>11.96506cm</Left>
           <Height>0.6cm</Height>
           <Width>4.32563cm</Width>
           <ZIndex>1</ZIndex>
@@ -664,7 +664,7 @@
           </Paragraphs>
           <rd:DefaultName>Name</rd:DefaultName>
           <Top>2.55799cm</Top>
-          <Left>8.0736cm</Left>
+          <Left>9.0261cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
           <ZIndex>2</ZIndex>
@@ -699,7 +699,7 @@
           </Paragraphs>
           <rd:DefaultName>TaxId</rd:DefaultName>
           <Top>3.19327cm</Top>
-          <Left>8.0736cm</Left>
+          <Left>9.0261cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
           <ZIndex>3</ZIndex>
@@ -720,7 +720,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=First(Fields!VendedorDireccion.Value, "Facturas")</Value>
+                  <Value>=First(Fields!CompradorDireccion.Value, "Facturas")</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                     <Color>DimGray</Color>
@@ -734,7 +734,7 @@
           </Paragraphs>
           <rd:DefaultName>InvoiceAddress</rd:DefaultName>
           <Top>3.79327cm</Top>
-          <Left>8.0736cm</Left>
+          <Left>9.0261cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
           <ZIndex>4</ZIndex>
@@ -769,7 +769,7 @@
           </Paragraphs>
           <rd:DefaultName>ZipCode</rd:DefaultName>
           <Top>4.39327cm</Top>
-          <Left>8.0736cm</Left>
+          <Left>9.0261cm</Left>
           <Height>0.54708cm</Height>
           <Width>7.26459cm</Width>
           <ZIndex>5</ZIndex>
@@ -802,7 +802,7 @@
           </Paragraphs>
           <rd:DefaultName>Name</rd:DefaultName>
           <Top>2.55799cm</Top>
-          <Left>0.39605cm</Left>
+          <Left>0.07855cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
           <ZIndex>6</ZIndex>
@@ -835,7 +835,7 @@
           </Paragraphs>
           <rd:DefaultName>TaxId</rd:DefaultName>
           <Top>3.19327cm</Top>
-          <Left>0.39605cm</Left>
+          <Left>0.07855cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
           <ZIndex>7</ZIndex>
@@ -868,7 +868,7 @@
           </Paragraphs>
           <rd:DefaultName>InvoiceAddress</rd:DefaultName>
           <Top>3.79327cm</Top>
-          <Left>0.39605cm</Left>
+          <Left>0.07855cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
           <ZIndex>8</ZIndex>
@@ -901,7 +901,7 @@
           </Paragraphs>
           <rd:DefaultName>ZipCode</rd:DefaultName>
           <Top>4.34035cm</Top>
-          <Left>0.39605cm</Left>
+          <Left>0.07855cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
           <ZIndex>9</ZIndex>
@@ -936,12 +936,13 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.77639cm</Height>
+      <Height>1.76417cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="Textbox22">
           <CanGrow>true</CanGrow>
+          <CanShrink>true</CanShrink>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
@@ -958,10 +959,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox19</rd:DefaultName>
-          <Top>0.17639cm</Top>
-          <Left>0.39605cm</Left>
-          <Height>0.6cm</Height>
-          <Width>14.91568cm</Width>
+          <Top>0.14111cm</Top>
+          <Left>0.07855cm</Left>
+          <Height>1.62306cm</Height>
+          <Width>16.21213cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
