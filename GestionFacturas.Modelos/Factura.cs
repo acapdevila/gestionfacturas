@@ -97,7 +97,8 @@ namespace GestionFacturas.Modelos
     {
         Creada = 1,
         Enviada = 2,
-        Cobrada = 3
+        Cobrada = 3,
+        Transferida = 4
     }
 
     public enum FormaPagoEnum
