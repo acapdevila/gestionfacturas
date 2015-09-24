@@ -328,7 +328,7 @@
                                 </span>                               
                                    @Html.TextBoxFor(model => model.NombreArchivoLogo, htmlAttributes: new { @class = "form-control", @readonly="" })
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-danger" onclick="quitarArchivo('@idControl_NombreArchivoLogo')">Eliminar</button>
+                                    <button type="button" class="btn btn-danger" onclick="quitarArchivo('@idControl_NombreArchivoLogo')">Quitar</button>
                                 </span>
                             </div>
                                 @Html.ValidationMessageFor(model => model.NombreArchivoLogo, "", new { @class = "text-danger" })
