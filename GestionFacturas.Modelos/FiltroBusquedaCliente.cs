@@ -10,7 +10,6 @@ namespace GestionFacturas.Modelos
     [Serializable]
     public  class FiltroBusquedaCliente
     {
-
         public int? Id { get; set; }
         public string NombreOEmpresa { get; set; }
 
@@ -19,7 +18,19 @@ namespace GestionFacturas.Modelos
         public string Comando { get; set; }
 
 
-        public bool TieneValores
+        private int _indicePagina;
+
+        public int IndicePagina
+        {
+            get { return _indicePagina <= 0 ? 1: _indicePagina; }
+            set { _indicePagina = value; }
+        }
+        
+
+        public int LineasPorPagina { get { return 25; } }
+
+
+        public bool TieneFiltrosBusqueda
         {
             get
             {
@@ -27,6 +38,14 @@ namespace GestionFacturas.Modelos
                         Id.HasValue || 
                         !string.IsNullOrEmpty(IdentificacionFiscal) || 
                         !string.IsNullOrEmpty(Comando);
+            }
+        }
+
+        public bool EsPaginacion
+        {
+            get
+            {
+                return IndicePagina > 0;
             }
         }
     }

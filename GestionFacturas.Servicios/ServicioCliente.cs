@@ -10,6 +10,8 @@ using Omu.ValueInjecter;
 using Microsoft.Reporting.WebForms;
 using System.IO;
 using ClosedXML.Excel;
+using PagedList;
+using PagedList.EntityFramework;
 
 namespace GestionFacturas.Servicios
 {
@@ -21,11 +23,11 @@ namespace GestionFacturas.Servicios
 
         }
 
-        public async Task<IEnumerable<LineaListaGestionClientes>> ListaGestionClientesAsync(FiltroBusquedaCliente filtroBusqueda)
+        public async Task<IPagedList<LineaListaGestionClientes>> ListaGestionClientesAsync(FiltroBusquedaCliente filtroBusqueda)
         {
             var consulta = _contexto.Clientes.AsQueryable();
 
-            if (filtroBusqueda.TieneValores)
+            if (filtroBusqueda.TieneFiltrosBusqueda)
             {
                 if (!string.IsNullOrEmpty(filtroBusqueda.NombreOEmpresa))
                 {
@@ -44,6 +46,7 @@ namespace GestionFacturas.Servicios
             }
 
             var consultaClientes = consulta
+                .OrderBy(m=>m.NombreOEmpresa)
                 .Select(m => new LineaListaGestionClientes
                 {
                     Id = m.Id,
@@ -55,9 +58,10 @@ namespace GestionFacturas.Servicios
                     NumFacturas = m.Facturas.Count                   
                 });
 
-            var facturas = await consultaClientes.ToListAsync();
-
-            return facturas;
+           
+            var clientes = await consultaClientes.ToPagedListAsync(filtroBusqueda.IndicePagina, filtroBusqueda.LineasPorPagina);           
+                        
+            return clientes;
         }
 
         public async Task<IEnumerable<Cliente>> ListaClientesAsync(FiltroBusquedaCliente filtroBusqueda, int indicePagina, int registrosPorPagina)
@@ -67,7 +71,7 @@ namespace GestionFacturas.Servicios
 
             var consulta = _contexto.Clientes.AsQueryable();
 
-            if (filtroBusqueda.TieneValores)
+            if (filtroBusqueda.TieneFiltrosBusqueda)
             {
                 if (!string.IsNullOrEmpty(filtroBusqueda.NombreOEmpresa))
                 {
@@ -98,7 +102,7 @@ namespace GestionFacturas.Servicios
 
             var consulta = _contexto.Facturas.Where(m=>m.IdComprador != null);
 
-            if (filtroBusqueda.TieneValores)
+            if (filtroBusqueda.TieneFiltrosBusqueda)
             {
                 if (!string.IsNullOrEmpty(filtroBusqueda.NombreOEmpresa))
                 {

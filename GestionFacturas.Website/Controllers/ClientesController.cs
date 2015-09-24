@@ -26,18 +26,20 @@ namespace GestionFacturas.Website.Controllers
         }
 
         [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
-        public async Task<ActionResult> ListaGestionClientes(FiltroBusquedaCliente filtroBusqueda)
+        public async Task<ActionResult> ListaGestionClientes(FiltroBusquedaCliente filtroBusqueda, int? pagina)
         {
-            if (!filtroBusqueda.TieneValores)
+            if (!filtroBusqueda.TieneFiltrosBusqueda)
             {
                 filtroBusqueda = RecuperarFiltroBusqueda();
+
+                if (pagina.HasValue)
+                    filtroBusqueda.IndicePagina = pagina.Value;
             }
 
             var viewmodel = new ListaGestionClientesViewModel
             {
                 FiltroBusqueda = filtroBusqueda,
-                ListaClientes = (await _servicioCliente.ListaGestionClientesAsync(filtroBusqueda))
-                    .OrderBy(m => m.NombreOEmpresa)
+                ListaClientes = await _servicioCliente.ListaGestionClientesAsync(filtroBusqueda)                    
             };
 
             GuardarFiltroBusqueda(filtroBusqueda);

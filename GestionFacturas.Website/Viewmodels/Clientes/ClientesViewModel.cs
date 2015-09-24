@@ -1,18 +1,18 @@
 ﻿using GestionFacturas.Modelos;
 using GestionFacturas.Website.Viewmodels.Email;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using Webdiyer.WebControls.Mvc;
 
 namespace GestionFacturas.Website.Viewmodels.Clientes
 {
     public class ListaGestionClientesViewModel
     {
         public FiltroBusquedaCliente FiltroBusqueda { get; set; }
-        public IEnumerable<LineaListaGestionClientes> ListaClientes { get; set; }  
+        public IPagedList<LineaListaGestionClientes> ListaClientes { get; set; }  
 
     }
     
