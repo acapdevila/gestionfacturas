@@ -41,19 +41,19 @@ namespace GestionFacturas.Servicios
                     consultaOrdenada = consulta.OrderBy(m => m.NombreComercial ?? m.NombreOEmpresa);
                     break;
                 case OrdenClientesEnum.MayorFacturacion:
-                    consultaOrdenada = consulta.OrderBy(m => m.Facturas.Sum(f=>f.Lineas.Sum(l=> l.Cantidad * l.PrecioUnitario)))
+                    consultaOrdenada = consulta.OrderByDescending(m => m.Facturas.Sum(f=>f.Lineas.Sum(l=> l.Cantidad * l.PrecioUnitario)))
                                     .ThenBy(m => m.NombreComercial ?? m.NombreOEmpresa);
                     break;
                 case OrdenClientesEnum.MenorFacturacion:
-                    consultaOrdenada = consulta.OrderByDescending(m => m.Facturas.Sum(f => f.Lineas.Sum(l => l.Cantidad * l.PrecioUnitario)))
+                    consultaOrdenada = consulta.OrderBy(m => m.Facturas.Sum(f => f.Lineas.Sum(l => l.Cantidad * l.PrecioUnitario)))
                                      .ThenBy(m => m.NombreComercial ?? m.NombreOEmpresa);
                     break;
                 case OrdenClientesEnum.MasFacturas:
-                    consultaOrdenada = consulta.OrderBy(m => m.Facturas.Count)
+                    consultaOrdenada = consulta.OrderByDescending(m => m.Facturas.Count)
                         .ThenBy(m => m.NombreComercial ?? m.NombreOEmpresa);
                     break;
                 case OrdenClientesEnum.MenosFacturas:
-                    consultaOrdenada = consulta.OrderByDescending(m => m.Facturas.Count)
+                    consultaOrdenada = consulta.OrderBy(m => m.Facturas.Count)
                         .ThenBy(m => m.NombreComercial ?? m.NombreOEmpresa);
                     break;
                 default:
