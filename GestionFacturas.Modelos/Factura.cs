@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
@@ -299,6 +300,18 @@ namespace GestionFacturas.Modelos
                 Lineas.Remove(linea);
             }
         }
+
+        public void AsignarDatosCliente(Cliente cliente)
+        {
+            IdComprador = cliente.Id;
+            CompradorCodigoPostal = cliente.CodigoPostal;
+            CompradorDireccion = cliente.Direccion;
+            CompradorEmail = cliente.Email;
+            CompradorLocalidad = cliente.Localidad;
+            CompradorNombreOEmpresa = cliente.NombreOEmpresa;
+            CompradorNumeroIdentificacionFiscal = cliente.NumeroIdentificacionFiscal;
+            CompradorProvincia = cliente.Provincia;
+        }
     }
 
     public class VisorFactura
@@ -569,4 +582,12 @@ namespace GestionFacturas.Modelos
         public string PorcentajeImpuesto { get; set; }
     }
 
+
+    public class TotalesFacturas
+    {        
+        public decimal TotalBaseImponible { get; set; }
+        public decimal TotalImpuestos { get; set; }
+        public decimal TotalImporte { get; set; }
+    }
+   
 }

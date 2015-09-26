@@ -130,4 +130,5 @@ namespace GestionFacturas.Modelos
         public string LetraColumnaComentarioInterno { get; set; }
     }
 
+    
 }

@@ -10,6 +10,8 @@ using Omu.ValueInjecter;
 using Microsoft.Reporting.WebForms;
 using System.IO;
 using ClosedXML.Excel;
+using PagedList.EntityFramework;
+using PagedList;
 
 namespace GestionFacturas.Servicios
 {
@@ -27,36 +29,13 @@ namespace GestionFacturas.Servicios
             _servicioEmail = servicioEmail;
         }
 
-        public async Task<IEnumerable<LineaListaGestionFacturas>> ListaGestionFacturasAsync(FiltroBusquedaFactura filtroBusqueda)
+        public async Task<IPagedList<LineaListaGestionFacturas>> ListaGestionFacturasAsync(FiltroBusquedaFactura filtroBusqueda)
         {
-            var consulta = _contexto.Facturas.AsQueryable();
+            var consulta = CrearConsultaFacturasFiltrada(filtroBusqueda);
 
-            if (filtroBusqueda.TieneValores)
-            {
-                if (!string.IsNullOrEmpty(filtroBusqueda.NombreOEmpresaCliente))
-                {
-                    consulta = consulta.Where(m =>
-                                m.CompradorNombreOEmpresa.Contains(filtroBusqueda.NombreOEmpresaCliente) ||
-                                m.Comprador.NombreComercial.Contains(filtroBusqueda.NombreOEmpresaCliente));
-                }
+            var consultaOrdenada = consulta.OrderBy_OrdenarPor(filtroBusqueda.OrdenarPorEnum);
 
-                if (filtroBusqueda.FechaDesde.HasValue && filtroBusqueda.FechaHasta.HasValue)
-                {
-                    consulta = consulta.Where(m => m.FechaEmisionFactura >= filtroBusqueda.FechaDesde.Value && m.FechaEmisionFactura <= filtroBusqueda.FechaHasta.Value);
-                }
-
-                if (filtroBusqueda.IdCliente.HasValue)
-                {
-                    consulta = consulta.Where(m => m.IdComprador == filtroBusqueda.IdCliente.Value);
-                }
-
-                if (!string.IsNullOrEmpty(filtroBusqueda.NombreArchivoLogo))
-                {
-                    consulta = consulta.Where(m => m.NombreArchivoLogo.Contains(filtroBusqueda.NombreArchivoLogo));
-                }
-            }
-
-            var consultaFacturas = consulta
+            var consultaLineasFacturas = consultaOrdenada
                 .Select(m => new LineaListaGestionFacturas
                 {
                     Id = m.Id,
@@ -72,22 +51,47 @@ namespace GestionFacturas.Servicios
                     Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
                     ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0,
                     CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
-                    ListaDescripciones = m.Lineas.Select(l=>l.Descripcion),
+                    ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
                     CompradorNombreComercial = m.Comprador.NombreComercial
                 });
 
-            var facturas = await consultaFacturas.ToListAsync();
+            var facturas = await consultaLineasFacturas.ToPagedListAsync(filtroBusqueda.IndicePagina, filtroBusqueda.LineasPorPagina);
 
             return facturas;
         }
 
-        public async Task<EditorFactura> ObtenerEditorFacturaParaCrearNuevaFactura(string serie)
+        public async Task<TotalesFacturas> ObtenerTotalesAsync(FiltroBusquedaFactura filtroBusqueda)
         {
+           var consultaFacturas = CrearConsultaFacturasFiltrada(filtroBusqueda);
+
+           var totales = await consultaFacturas.Select(m=> new
+            {
+                Id = 1,
+                BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
+                Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
+                ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0
+            })
+            .GroupBy(m=> m.Id)
+            .Select(g=> new TotalesFacturas {
+                TotalBaseImponible = g.Sum(t=>t.BaseImponible),
+                TotalImporte = g.Sum(t => t.ImporteTotal),
+                TotalImpuestos = g.Sum(t => t.Impuestos),
+            }).FirstOrDefaultAsync();
+
+            if (totales == null) totales = new TotalesFacturas();               
+            
+            return totales;
+        }
+
+        public async Task<EditorFactura> ObtenerEditorFacturaParaCrearNuevaFactura(string serie, int? idCliente)
+        {
+            EditorFactura editor;
+
             var ultimaFacturaCreada = await ObtenerUlitmaFacturaDeLaSerie(serie);
 
             if (ultimaFacturaCreada == null)
             {
-                return new EditorFactura
+                editor = new EditorFactura
                 {
                     SerieFactura = serie,
                     NumeracionFactura = 1,
@@ -95,6 +99,7 @@ namespace GestionFacturas.Servicios
                     FechaEmisionFactura = DateTime.Today,
                     PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
                     FormaPago = FormaPagoEnum.Transferencia,
+                    EstadoFactura = EstadoFacturaEnum.Creada,
 
                     Lineas = new List<EditorLineaFactura> {
                             new EditorLineaFactura {
@@ -103,36 +108,46 @@ namespace GestionFacturas.Servicios
                             }
                       }
                 };
-             }
-
-            return new EditorFactura
+            }
+            else
             {
-                SerieFactura = ultimaFacturaCreada.SerieFactura,
-                NumeracionFactura = ultimaFacturaCreada.NumeracionFactura + 1,
-                FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
-                FechaEmisionFactura = DateTime.Today,
-                NombreArchivoLogo = ultimaFacturaCreada.NombreArchivoLogo,
-                PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
-                FormaPago = ultimaFacturaCreada.FormaPago,
-                FormaPagoDetalles = ultimaFacturaCreada.FormaPagoDetalles,
-                ComentariosPie = ultimaFacturaCreada.ComentariosPie,
-                EstadoFactura = EstadoFacturaEnum.Creada,
-                IdVendedor = ultimaFacturaCreada.IdVendedor,
-                VendedorCodigoPostal = ultimaFacturaCreada.VendedorCodigoPostal,
-                VendedorDireccion = ultimaFacturaCreada.VendedorDireccion,
-                VendedorEmail = ultimaFacturaCreada.VendedorEmail,
-                VendedorLocalidad = ultimaFacturaCreada.VendedorLocalidad,
-                VendedorNombreOEmpresa = ultimaFacturaCreada.VendedorNombreOEmpresa,
-                VendedorNumeroIdentificacionFiscal = ultimaFacturaCreada.VendedorNumeroIdentificacionFiscal,
-                VendedorProvincia = ultimaFacturaCreada.VendedorProvincia,           
-                
-                Lineas = new List<EditorLineaFactura> {
+                editor = new EditorFactura
+                {
+                    SerieFactura = ultimaFacturaCreada.SerieFactura,
+                    NumeracionFactura = ultimaFacturaCreada.NumeracionFactura + 1,
+                    FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
+                    FechaEmisionFactura = DateTime.Today,
+                    NombreArchivoLogo = ultimaFacturaCreada.NombreArchivoLogo,
+                    PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+                    FormaPago = ultimaFacturaCreada.FormaPago,
+                    FormaPagoDetalles = ultimaFacturaCreada.FormaPagoDetalles,
+                    ComentariosPie = ultimaFacturaCreada.ComentariosPie,
+                    EstadoFactura = EstadoFacturaEnum.Creada,
+                    IdVendedor = ultimaFacturaCreada.IdVendedor,
+                    VendedorCodigoPostal = ultimaFacturaCreada.VendedorCodigoPostal,
+                    VendedorDireccion = ultimaFacturaCreada.VendedorDireccion,
+                    VendedorEmail = ultimaFacturaCreada.VendedorEmail,
+                    VendedorLocalidad = ultimaFacturaCreada.VendedorLocalidad,
+                    VendedorNombreOEmpresa = ultimaFacturaCreada.VendedorNombreOEmpresa,
+                    VendedorNumeroIdentificacionFiscal = ultimaFacturaCreada.VendedorNumeroIdentificacionFiscal,
+                    VendedorProvincia = ultimaFacturaCreada.VendedorProvincia,
+
+                    Lineas = new List<EditorLineaFactura> {
                             new EditorLineaFactura {
                                     Cantidad = 1,
                                     PorcentajeImpuesto = PorcentajeIvaPorDefecto
                             }
                       }
-            };
+                };
+            }
+
+            if (idCliente.HasValue)
+            {
+                var cliente = _contexto.Clientes.Find(idCliente.Value);
+                editor.AsignarDatosCliente(cliente); 
+            }
+
+            return editor;
         }
         public async Task<VisorFactura> BuscarVisorFacturaAsync(int? idFactura)
         {
@@ -151,6 +166,17 @@ namespace GestionFacturas.Servicios
         }
 
 
+        private IQueryable<Factura> CrearConsultaFacturasFiltrada(FiltroBusquedaFactura filtroBusqueda)
+        {
+            var consulta = _contexto.Facturas.AsQueryable();
+
+            if (filtroBusqueda.TieneValores)
+            {
+                consulta = consulta.Where_FiltroBusqueda(filtroBusqueda);
+            }
+            
+            return consulta;
+        }
 
         private async Task<Factura> ObtenerUlitmaFacturaDeLaSerie(string serie)
         {
@@ -159,6 +185,9 @@ namespace GestionFacturas.Servicios
                var factura = await _contexto.Facturas.Where(m=>m.SerieFactura != null && m.SerieFactura != "")
                                 .OrderByDescending(m=>m.FechaEmisionFactura)
                                 .FirstOrDefaultAsync();
+
+                if (factura == null) return null;
+
                 serie = factura.SerieFactura;
             }
 

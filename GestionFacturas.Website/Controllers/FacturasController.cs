@@ -34,16 +34,20 @@ namespace GestionFacturas.Website.Controllers
         }
 
         [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
-        public async Task<ActionResult> ListaGestionFacturas(FiltroBusquedaFactura filtroBusqueda)
+        public async Task<ActionResult> ListaGestionFacturas(FiltroBusquedaFactura filtroBusqueda, int? pagina)
         {
             if (!filtroBusqueda.TieneValores)
             {
                 filtroBusqueda = RecuperarFiltroBusqueda();
+
+                if (pagina.HasValue)
+                    filtroBusqueda.IndicePagina = pagina.Value;
             }
 
             var viewmodel = new ListaGestionFacturasViewModel {
                 FiltroBusqueda = filtroBusqueda,
-                ListaFacturas = (await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda)).OrderByDescending(m=>m.FechaEmisionFactura)
+                ListaFacturas = await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda),
+                Totales = await _servicioFactura.ObtenerTotalesAsync(filtroBusqueda)
             };
 
             GuardarFiltroBusqueda(filtroBusqueda);
@@ -65,11 +69,12 @@ namespace GestionFacturas.Website.Controllers
             return View(viewmodel);
         }
 
-        public async Task<ActionResult> Crear()
+        public async Task<ActionResult> Crear(int? idCliente)
         {
             var viewmodel = new CrearFacturaViewModel {
-                Factura = await _servicioFactura.ObtenerEditorFacturaParaCrearNuevaFactura(string.Empty)
+                Factura = await _servicioFactura.ObtenerEditorFacturaParaCrearNuevaFactura(serie: string.Empty, idCliente: idCliente)
             };
+            
             return View(viewmodel);
         }
 

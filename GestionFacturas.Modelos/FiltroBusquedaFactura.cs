@@ -18,9 +18,26 @@ namespace GestionFacturas.Modelos
 
         public DateTime? FechaHasta { get; set; }
 
+        public string SerieFactura { get; set; }
+
+        public string Conceptos { get; set; }
+
         public string NombreArchivoLogo { get; set; }
 
         public string Comando { get; set; }
+
+        private int _indicePagina;
+
+        public int IndicePagina
+        {
+            get { return _indicePagina <= 0 ? 1 : _indicePagina; }
+            set { _indicePagina = value; }
+        }
+
+        public int LineasPorPagina { get { return 25; } }
+
+
+        public OrdenFacturasEnum OrdenarPorEnum { get; set; }
 
         public bool TieneValores
         {
@@ -33,5 +50,17 @@ namespace GestionFacturas.Modelos
                     IdCliente.HasValue;
             }
         }
+    }
+    public enum OrdenFacturasEnum
+    {
+        [Display(Name = @"Número")]
+        NumeroDesc = 0,
+        [Display(Name = @"Número (antiguas)")]
+        NumeroAsc = 1,
+        [Display(Name = @"Fecha")]
+        FechaDesc = 2,
+        [Display(Name = @"Fecha (antiguas)")]
+        FechaAsc = 3,
+
     }
 }

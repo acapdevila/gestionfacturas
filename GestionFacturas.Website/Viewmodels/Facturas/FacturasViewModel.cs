@@ -1,5 +1,6 @@
 ﻿using GestionFacturas.Modelos;
 using GestionFacturas.Website.Viewmodels.Email;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,12 +12,9 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
     public class ListaGestionFacturasViewModel
     {
         public FiltroBusquedaFactura FiltroBusqueda { get; set; }
-        public IEnumerable<LineaListaGestionFacturas> ListaFacturas { get; set; }
+        public IPagedList<LineaListaGestionFacturas> ListaFacturas { get; set; }
 
-        public decimal TotalBaseImponible { get { return ListaFacturas.Sum(m => m.BaseImponible); } }
-        public decimal TotalImpuestos { get { return ListaFacturas.Sum(m => m.Impuestos); } }
-
-        public decimal TotalImporte { get { return ListaFacturas.Sum(m => m.ImporteTotal); } }
+        public TotalesFacturas Totales { get; set; }
 
 
     }

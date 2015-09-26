@@ -1,4 +1,6 @@
 ﻿@using GestionFacturas.Servicios
+@using PagedList.Mvc
+@using GestionFacturas.Website.Helpers
 @model GestionFacturas.Website.Viewmodels.Facturas.ListaGestionFacturasViewModel
     
 
@@ -149,14 +151,14 @@
                    Totales
                </th>
                 <th class="text-nowrap">
-                    @Html.DisplayFor(m => m.TotalBaseImponible, "Moneda")                   
+                    @Html.DisplayFor(m => m.Totales.TotalBaseImponible, "Moneda")                   
                 </th>
                 <th class="text-nowrap">
-                    @Html.DisplayFor(m => m.TotalImpuestos, "Moneda")
+                    @Html.DisplayFor(m => m.Totales.TotalImpuestos, "Moneda")
                  
                 </th>
                 <th class="text-nowrap">
-                    @Html.DisplayFor(m => m.TotalImporte, "Moneda")
+                    @Html.DisplayFor(m => m.Totales.TotalImporte, "Moneda")
                    
                 </th>
                 <th>
@@ -165,5 +167,12 @@
 
                 <th></th>
             </tr>
+          <tr>
+              <td colspan="9">
+                  @Html.TotalesListaPaginada(Model.ListaFacturas, " {0} - {1} facturas mostradas de {2}")
+                  @Html.PagedListPager(Model.ListaFacturas, pagina => Url.Action("ListaGestionFacturas", new { pagina }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+              </td>
+
+          </tr>
         </table>
   
