@@ -36,12 +36,7 @@ namespace GestionFacturas.Servicios
             {
                 consulta = consulta.Where(m => m.IdComprador == filtroBusqueda.IdCliente.Value);
             }
-
-            if (!string.IsNullOrEmpty(filtroBusqueda.NombreArchivoLogo))
-            {
-                consulta = consulta.Where(m => m.NombreArchivoLogo.Contains(filtroBusqueda.NombreArchivoLogo));
-            }
-
+            
             if (!string.IsNullOrEmpty(filtroBusqueda.Conceptos))
             {
                 consulta = consulta.Where(m => m.Lineas.Any(l => l.Descripcion.Contains(filtroBusqueda.Conceptos)));    

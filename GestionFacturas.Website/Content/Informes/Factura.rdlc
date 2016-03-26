@@ -572,7 +572,7 @@
   <Width>6.5in</Width>
   <Page>
     <PageHeader>
-      <Height>5.33723cm</Height>
+      <Height>6.0516cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -595,7 +595,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>DateInvoice</rd:DefaultName>
-          <Top>0.391cm</Top>
+          <Top>1.3435cm</Top>
           <Left>11.96506cm</Left>
           <Height>0.6cm</Height>
           <Width>4.32563cm</Width>
@@ -628,7 +628,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Number</rd:DefaultName>
-          <Top>0.991cm</Top>
+          <Top>1.9435cm</Top>
           <Left>11.96506cm</Left>
           <Height>0.6cm</Height>
           <Width>4.32563cm</Width>
@@ -663,7 +663,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Name</rd:DefaultName>
-          <Top>2.55799cm</Top>
+          <Top>3.51049cm</Top>
           <Left>9.0261cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
@@ -698,7 +698,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>TaxId</rd:DefaultName>
-          <Top>3.19327cm</Top>
+          <Top>4.14577cm</Top>
           <Left>9.0261cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
@@ -733,7 +733,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>InvoiceAddress</rd:DefaultName>
-          <Top>3.79327cm</Top>
+          <Top>4.74577cm</Top>
           <Left>9.0261cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
@@ -768,7 +768,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>ZipCode</rd:DefaultName>
-          <Top>4.39327cm</Top>
+          <Top>5.34577cm</Top>
           <Left>9.0261cm</Left>
           <Height>0.54708cm</Height>
           <Width>7.26459cm</Width>
@@ -801,7 +801,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Name</rd:DefaultName>
-          <Top>2.55799cm</Top>
+          <Top>3.51049cm</Top>
           <Left>0.07855cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
@@ -834,7 +834,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>TaxId</rd:DefaultName>
-          <Top>3.19327cm</Top>
+          <Top>4.14577cm</Top>
           <Left>0.07855cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
@@ -867,7 +867,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>InvoiceAddress</rd:DefaultName>
-          <Top>3.79327cm</Top>
+          <Top>4.74577cm</Top>
           <Left>0.07855cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
@@ -900,7 +900,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>ZipCode</rd:DefaultName>
-          <Top>4.34035cm</Top>
+          <Top>5.29285cm</Top>
           <Left>0.07855cm</Left>
           <Height>0.6cm</Height>
           <Width>7.26459cm</Width>
@@ -919,6 +919,7 @@
           <Source>External</Source>
           <Value>=First(Fields!RutaLogo.Value, "Facturas")</Value>
           <Sizing>FitProportional</Sizing>
+          <Top>0.9525cm</Top>
           <Height>1.96142cm</Height>
           <Width>7.66064cm</Width>
           <ZIndex>10</ZIndex>

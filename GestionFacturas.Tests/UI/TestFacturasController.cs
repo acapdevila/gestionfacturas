@@ -32,7 +32,7 @@ namespace GestionFacturas.Tests.UI
             };
 
             // Act
-            var result = controller.ListaGestionFacturas(filtroBusqueda).Result;
+            var result = controller.ListaGestionFacturas(filtroBusqueda, 1).Result;
 
             // Assert
             Assert.IsNotNull(result);
@@ -85,7 +85,7 @@ namespace GestionFacturas.Tests.UI
             var controller = ObtenerControladorFacturas();
          
             // Act
-            var result = controller.Crear().Result;
+            var result = controller.Crear(1).Result;
 
             // Assert
             Assert.IsNotNull(result);

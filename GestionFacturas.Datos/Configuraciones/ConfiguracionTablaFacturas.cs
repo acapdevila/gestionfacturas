@@ -84,10 +84,7 @@ namespace GestionFacturas.Datos.Configuraciones
 
             Property(m => m.CompradorEmail)
          .HasMaxLength(50);
-
-            Property(m => m.NombreArchivoLogo)
-                  .HasMaxLength(50);
-
+            
             Property(m => m.NombreArchivoPlantillaInforme)
                 .HasMaxLength(50);
 

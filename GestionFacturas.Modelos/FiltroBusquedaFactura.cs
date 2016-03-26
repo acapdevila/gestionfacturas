@@ -21,9 +21,7 @@ namespace GestionFacturas.Modelos
         public string SerieFactura { get; set; }
 
         public string Conceptos { get; set; }
-
-        public string NombreArchivoLogo { get; set; }
-
+        
         public string Comando { get; set; }
 
         private int _indicePagina;
@@ -45,7 +43,6 @@ namespace GestionFacturas.Modelos
             {
                 return !string.IsNullOrEmpty(NombreOEmpresaCliente) ||
                     FechaDesde.HasValue || FechaHasta.HasValue ||
-                    !string.IsNullOrEmpty(NombreArchivoLogo) ||
                     !string.IsNullOrEmpty(Comando) || 
                     IdCliente.HasValue;
             }

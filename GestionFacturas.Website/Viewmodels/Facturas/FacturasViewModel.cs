@@ -27,44 +27,10 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
     public class EditarFacturaViewModel
     {
         public EditorFactura Factura { get; set; }
-        public HttpPostedFileBase ArchivoLogoSeleccionado { get; set; }
-        public string NombreArchivoLogoOriginal { get; set; }
-        public bool HayUnArchivoLogoSeleccionado
-        {
-            get
-            {
-                return ArchivoLogoSeleccionado != null &&
-                       ArchivoLogoSeleccionado.ContentLength > 0 &&
-                       !string.IsNullOrEmpty(Factura.NombreArchivoLogo);
-            }
-        }
-
-        public bool HaCambiadoElLogo
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(NombreArchivoLogoOriginal) &&
-                    NombreArchivoLogoOriginal != Factura.NombreArchivoLogo;
-            }
-        }
-
-       
-
     }
     public class CrearFacturaViewModel
     {
         public EditorFactura Factura { get; set; }
-        public HttpPostedFileBase ArchivoLogoSeleccionado { get; set; }
-
-        public bool HayUnArchivoLogoSeleccionado
-        {
-            get
-            {
-                return ArchivoLogoSeleccionado != null &&
-                       ArchivoLogoSeleccionado.ContentLength > 0 &&
-                       !string.IsNullOrEmpty(Factura.NombreArchivoLogo);
-            }
-        }
     }
     public class ImportarFacturasViewModel
     {
@@ -78,18 +44,8 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
         [Required]
         [Display(Name = "Excel")]
         public HttpPostedFileBase ArchivoExcelSeleccionado { get; set; }
-
-        public HttpPostedFileBase ArchivoLogoSeleccionado { get; set; }
-
-        public bool HayUnArchivoLogoSeleccionado
-        {
-            get
-            {
-                return ArchivoLogoSeleccionado != null &&
-                       ArchivoLogoSeleccionado.ContentLength > 0 &&
-                       !string.IsNullOrEmpty(SelectorColumnasExcel.NombreArchivoLogo);
-            }
-        }
+        
+     
     }
 
 

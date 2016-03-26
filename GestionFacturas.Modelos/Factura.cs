@@ -60,8 +60,7 @@ namespace GestionFacturas.Modelos
         public string Comentarios { get; set; }
         public string ComentariosPie { get; set; }
         public string ComentarioInterno { get; set; }
-
-        public string NombreArchivoLogo { get; set; }
+        
         public string NombreArchivoPlantillaInforme { get; set; }
 
         public string Titulo
@@ -163,8 +162,6 @@ namespace GestionFacturas.Modelos
 
     public class EditorFactura
     {
-        public int DimensionMaximaLogo { get { return 300; } }
-
         public EditorFactura()
         {
             Lineas = new List<EditorLineaFactura>();
@@ -195,9 +192,9 @@ namespace GestionFacturas.Modelos
         [Display(Name = "Fecha vencimiento")]
         public DateTime? FechaVencimientoFactura { get; set; }
         
-        [Display(Name = "Logo")]
+        [Display(Name = "Plantilla")]
         [StringLength(50)]
-        public string NombreArchivoLogo { get; set; }
+        public string NombreArchivoPlantillaInforme { get; set; }
         
         [Display(Name = "Forma de pago")]
         public FormaPagoEnum FormaPago { get; set; }
@@ -475,10 +472,6 @@ namespace GestionFacturas.Modelos
 
         [Display(Name = "Fecha vencimiento")]
         public string FechaVencimientoFactura { get; set; }
-
-        [Display(Name = "Logo")]
-        [StringLength(50)]
-        public string NombreArchivoLogo { get; set; }
 
         [Display(Name = "Forma de pago")]
         public string FormaPago { get; set; }

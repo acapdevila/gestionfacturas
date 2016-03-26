@@ -84,12 +84,6 @@ namespace GestionFacturas.Website.Controllers
         {
             if (!ModelState.IsValid) return View(viewmodel);
 
-            if (viewmodel.HayUnArchivoLogoSeleccionado)
-            {
-                var nombreArchivoSubido = SubirArchivoLogo(viewmodel.Factura.DimensionMaximaLogo);
-                viewmodel.Factura.NombreArchivoLogo = nombreArchivoSubido;
-            }
-
             viewmodel.Factura.IdUsuario = User.Identity.GetUserId();
 
             await _servicioFactura.CrearFacturaAsync(viewmodel.Factura);
@@ -116,15 +110,7 @@ namespace GestionFacturas.Website.Controllers
         public async Task<ActionResult> Editar(EditarFacturaViewModel viewmodel)
         {
             if (!ModelState.IsValid) return View(viewmodel);
-            
-            if (viewmodel.HaCambiadoElLogo)
-                    await EliminarArchivoLogoSiNoEsUtilizadoPorOtrasFacturas(viewmodel.NombreArchivoLogoOriginal);               
-            
-            if (viewmodel.HayUnArchivoLogoSeleccionado)
-            {
-                var nombreArchivoSubido = SubirArchivoLogo(viewmodel.Factura.DimensionMaximaLogo);
-                viewmodel.Factura.NombreArchivoLogo = nombreArchivoSubido;                             
-            }            
+               
 
             await _servicioFactura.ActualizarFacturaAsync(viewmodel.Factura);
             return RedirectToAction("Detalles", new { Id = viewmodel.Factura.Id });
@@ -148,9 +134,7 @@ namespace GestionFacturas.Website.Controllers
         public async Task<ActionResult> Eliminar(EliminarFacturaViewModel viewmodel)
         {
             if (!ModelState.IsValid) return View(viewmodel);
-
-            await EliminarArchivoLogoSiNoEsUtilizadoPorOtrasFacturas(viewmodel.NombreArchivoLogoOriginal);
-
+            
             await _servicioFactura.EliminarFactura(viewmodel.Factura.Id);
 
             var numeroFacturaCodificada = WebUtility.UrlEncode(viewmodel.Factura.NumeroFactura);
@@ -339,22 +323,6 @@ namespace GestionFacturas.Website.Controllers
         private void GuardarFiltroBusqueda(FiltroBusquedaFactura filtro)
         {
             Session["FiltroBusquedaFacturas"] = filtro;
-        }
-
-        private async Task EliminarArchivoLogoSiNoEsUtilizadoPorOtrasFacturas(string nombreArchivo)
-        {
-            var facturasConElMismoLogo = await _servicioFactura.ListaGestionFacturasAsync(new FiltroBusquedaFactura { NombreArchivoLogo = nombreArchivo });
-
-            if (facturasConElMismoLogo.Count() <= 1)
-            {
-                FileImageHelper.EliminarImagen(CarpetaUploads.Logos, nombreArchivo);
-            }
-
-        }
-
-        private string SubirArchivoLogo(int dimensionMaxima)
-        {
-            return FileImageHelper.GuardarImagen(dimensionMaxima, CarpetaUploads.Logos);
         }
 
         private string ObtenerRutaPlantillaInforme(Factura factura)

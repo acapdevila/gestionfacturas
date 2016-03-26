@@ -112,6 +112,10 @@
     <Compile Include="Migrations\201509222041109_Facturas_Pie_800Caracteres.Designer.cs">
       <DependentUpon>201509222041109_Facturas_Pie_800Caracteres.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603261202561_Factura_QuitarCampoLogo.cs" />
+    <Compile Include="Migrations\201603261202561_Factura_QuitarCampoLogo.Designer.cs">
+      <DependentUpon>201603261202561_Factura_QuitarCampoLogo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -155,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509222041109_Facturas_Pie_800Caracteres.resx">
       <DependentUpon>201509222041109_Facturas_Pie_800Caracteres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603261202561_Factura_QuitarCampoLogo.resx">
+      <DependentUpon>201603261202561_Factura_QuitarCampoLogo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

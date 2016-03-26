@@ -36,3 +36,5 @@ GestionFacturas.Deploy.Demo/*
 GestionFacturas.Website/Uploads/Informes/**
 GestionFacturas.Website/Uploads/Logos/**
 /Migracion/**
+GestionFacturas.Website/Properties/PublishProfiles/**
+GestionFacturas.Website/Properties/PublishProfiles/gestionfacturasbuclenet.pubxml

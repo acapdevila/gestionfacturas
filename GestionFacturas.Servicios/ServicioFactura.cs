@@ -117,7 +117,7 @@ namespace GestionFacturas.Servicios
                     NumeracionFactura = ultimaFacturaCreada.NumeracionFactura + 1,
                     FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
                     FechaEmisionFactura = DateTime.Today,
-                    NombreArchivoLogo = ultimaFacturaCreada.NombreArchivoLogo,
+                    NombreArchivoPlantillaInforme = ultimaFacturaCreada.NombreArchivoPlantillaInforme,
                     PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
                     FormaPago = ultimaFacturaCreada.FormaPago,
                     FormaPagoDetalles = ultimaFacturaCreada.FormaPagoDetalles,
@@ -283,7 +283,6 @@ namespace GestionFacturas.Servicios
                     Comentarios = columnas.Comentarios.EsLetraMayuscula() ? rowUsed.Cell(columnas.Comentarios).GetString() : columnas.Comentarios,
                     ComentarioInterno = columnas.ComentarioInterno.EsLetraMayuscula() ? rowUsed.Cell(columnas.ComentarioInterno).GetString() : columnas.ComentarioInterno,
                     ComentariosPie = columnas.ComentariosPie.EsLetraMayuscula() ? rowUsed.Cell(columnas.ComentariosPie).GetString() : columnas.ComentariosPie,
-                    NombreArchivoLogo = columnas.NombreArchivoLogo.EsLetraMayuscula() ? rowUsed.Cell(columnas.NombreArchivoLogo).GetString() : columnas.NombreArchivoLogo
                 };
 
 
