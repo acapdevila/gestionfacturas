@@ -71,11 +71,18 @@ namespace GestionFacturas.Servicios
                 worksheet.Cell(row, col).Value = factura.Conceptos.TruncarConElipsis(70);
                 worksheet.Cell(row, col).Comment.AddText(factura.Conceptos);
                 col++;
-                worksheet.Cell(row, col).Value = factura.BaseImponible.ToString("C");
+                worksheet.Cell(row, col).DataType = XLCellValues.Number;
+                worksheet.Cell(row, col).Value = factura.BaseImponible;
+                worksheet.Cell(row, col).Style.NumberFormat.SetFormat("#,##0.00 €");
+
                 col++;
-                worksheet.Cell(row, col).Value = factura.Impuestos.ToString("C");
+                worksheet.Cell(row, col).DataType = XLCellValues.Number;
+                worksheet.Cell(row, col).Value = factura.Impuestos;
+                worksheet.Cell(row, col).Style.NumberFormat.SetFormat("#,##0.00 €");
                 col++;
-                worksheet.Cell(row, col).Value = factura.ImporteTotal.ToString("C");
+                worksheet.Cell(row, col).DataType = XLCellValues.Number;
+                worksheet.Cell(row, col).Value = factura.ImporteTotal;
+                worksheet.Cell(row, col).Style.NumberFormat.SetFormat("#,##0.00 €");
                 row++;
                 col = 1;
             }
