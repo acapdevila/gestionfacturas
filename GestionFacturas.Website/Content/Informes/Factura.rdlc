@@ -497,7 +497,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CommentInfo</rd:DefaultName>
-        <Top>5.03121cm</Top>
+        <Top>5.66621cm</Top>
         <Left>0.07855cm</Left>
         <Height>0.63528cm</Height>
         <Width>16.21214cm</Width>
@@ -565,8 +565,42 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox1">
+        <CanGrow>true</CanGrow>
+        <CanShrink>true</CanShrink>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="Fecha vencimiento" + Format(First(Fields!FechaVencimientoFactura.Value, "Facturas"), "dd/MM/yyyy")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox1</rd:DefaultName>
+        <Top>5.06621cm</Top>
+        <Left>0.07855cm</Left>
+        <Height>0.6cm</Height>
+        <Width>16.21213cm</Width>
+        <ZIndex>9</ZIndex>
+        <Visibility>
+          <Hidden>=  iif( IsNothing( First(Fields!FechaVencimientoFactura.Value, "Facturas")), false, true)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>2.2934in</Height>
+    <Height>2.53298in</Height>
     <Style />
   </Body>
   <Width>6.5in</Width>
@@ -916,12 +950,12 @@
           </Style>
         </Textbox>
         <Image Name="Logo">
-          <Source>External</Source>
-          <Value>=First(Fields!RutaLogo.Value, "Facturas")</Value>
+          <Source>Embedded</Source>
+          <Value>LogoGF</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.9525cm</Top>
           <Height>1.96142cm</Height>
-          <Width>7.66064cm</Width>
+          <Width>3.45376cm</Width>
           <ZIndex>10</ZIndex>
           <Style>
             <Border>
@@ -937,7 +971,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1.76417cm</Height>
+      <Height>2.58438cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -962,7 +996,7 @@
           <rd:DefaultName>Textbox19</rd:DefaultName>
           <Top>0.14111cm</Top>
           <Left>0.07855cm</Left>
-          <Height>1.62306cm</Height>
+          <Height>2.44327cm</Height>
           <Width>16.21213cm</Width>
           <Style>
             <Border>
@@ -1148,6 +1182,16 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <EmbeddedImages>
+    <EmbeddedImage Name="LogoGF">
+      <MIMEType>image/jpeg</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>24d5b4c7-e6a1-4ed8-bf2f-4819b78b8a2b</rd:ReportID>
 </Report>

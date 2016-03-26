@@ -27,7 +27,8 @@ function completarDatosCliente(ui) {
     $("#Factura_IdComprador").val(ui.item.Id);
     $("#Factura_CompradorNombreOEmpresa").val(ui.item.NombreOEmpresa);
     $("#Factura_CompradorNumeroIdentificacionFiscal").val(ui.item.NumeroIdentificacionFiscal);
-    $("#Factura_CompradorDireccion").val(ui.item.Direccion);
+    $("#Factura_CompradorDireccion1").val(ui.item.Direccion1);
+    $("#Factura_CompradorDireccion2").val(ui.item.Direccion2);
     $("#Factura_CompradorLocalidad").val(ui.item.Localidad);
     $("#Factura_CompradorProvincia").val(ui.item.Provincia);
     $("#Factura_CompradorCodigoPostal").val(ui.item.CodigoPostal);

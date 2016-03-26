@@ -262,7 +262,7 @@ namespace GestionFacturas.Servicios
 
                     IdComprador = columnas.IdComprador.EsLetraMayuscula() ?  rowUsed.Cell(columnas.IdComprador).GetValue<int>() : string.IsNullOrEmpty(columnas.IdComprador) ? (int?)null : Convert.ToInt32(columnas.IdComprador),
                     CompradorCodigoPostal = columnas.CompradorCodigoPostal.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorCodigoPostal).GetString() : columnas.CompradorCodigoPostal,
-                    CompradorDireccion = columnas.CompradorDireccion.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorDireccion).GetString() : columnas.CompradorDireccion,
+                    CompradorDireccion1 = columnas.CompradorDireccion.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorDireccion).GetString() : columnas.CompradorDireccion,
                     CompradorEmail = columnas.CompradorEmail.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorEmail).GetString() : columnas.CompradorEmail,
                     CompradorLocalidad = columnas.CompradorLocalidad.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorLocalidad).GetString() : columnas.CompradorLocalidad,
                     CompradorNombreOEmpresa = columnas.CompradorNombreOEmpresa.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorNombreOEmpresa).GetString() : columnas.CompradorNombreOEmpresa,
@@ -308,8 +308,11 @@ namespace GestionFacturas.Servicios
                     if (string.IsNullOrEmpty(editor.CompradorNombreOEmpresa))
                         editor.CompradorNombreOEmpresa = clienteExistente.NombreOEmpresa;
 
-                    if (string.IsNullOrEmpty(editor.CompradorDireccion))
-                        editor.CompradorDireccion = clienteExistente.Direccion;
+                    if (string.IsNullOrEmpty(editor.CompradorDireccion1))
+                        editor.CompradorDireccion1 = clienteExistente.Direccion1;
+
+                    if (string.IsNullOrEmpty(editor.CompradorDireccion2))
+                        editor.CompradorDireccion2 = clienteExistente.Direccion2;
 
                     if (string.IsNullOrEmpty(editor.CompradorLocalidad))
                         editor.CompradorLocalidad = clienteExistente.Localidad;

@@ -47,6 +47,13 @@ namespace GestionFacturas.Modelos
         public string CompradorNumeroIdentificacionFiscal { get; set; }
         public string CompradorNombreOEmpresa { get; set; }
         public string CompradorDireccion { get; set; }
+
+        private string[] LineasCompradorDireccion => CompradorDireccion.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+
+        public string CompradorDireccion1 => LineasCompradorDireccion.FirstOrDefault();
+
+        public string CompradorDireccion2 => LineasCompradorDireccion.Length > 1 ? LineasCompradorDireccion[1] : string.Empty;
+
         public string CompradorLocalidad { get; set; }
         public string CompradorProvincia { get; set; }
         public string CompradorCodigoPostal { get; set; }
@@ -117,7 +124,7 @@ namespace GestionFacturas.Modelos
         public int Id { get; set; }
         public int IdFactura { get; set; }
         public string Descripcion { get; set; }
-        public int Cantidad { get; set; }
+        public decimal Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public decimal PrecioXCantidad { get { return PrecioUnitario * Cantidad; } }
         public int PorcentajeImpuesto { get; set; }
@@ -246,9 +253,17 @@ namespace GestionFacturas.Modelos
         [StringLength(50)]
         public string CompradorNombreOEmpresa { get; set; }
 
-        [Display(Name = "Dirección")]
-        [StringLength(50)]
-        public string CompradorDireccion { get; set; }
+        public string CompradorDireccion {
+            get { return CompradorDireccion1 + (string.IsNullOrEmpty(CompradorDireccion2) ? string.Empty : Environment.NewLine + CompradorDireccion2);  }
+        }
+
+        [Display(Name = "Dirección 1")]
+        [StringLength(64)]
+        public string CompradorDireccion1 { get; set; }
+
+        [Display(Name = "Dirección 2")]
+        [StringLength(64)]
+        public string CompradorDireccion2 { get; set; }
 
         [Display(Name = "Municipio")]
         [StringLength(50)]
@@ -302,7 +317,8 @@ namespace GestionFacturas.Modelos
         {
             IdComprador = cliente.Id;
             CompradorCodigoPostal = cliente.CodigoPostal;
-            CompradorDireccion = cliente.Direccion;
+            CompradorDireccion1 = cliente.Direccion1;
+            CompradorDireccion2 = cliente.Direccion2;
             CompradorEmail = cliente.Email;
             CompradorLocalidad = cliente.Localidad;
             CompradorNombreOEmpresa = cliente.NombreOEmpresa;
@@ -420,7 +436,7 @@ namespace GestionFacturas.Modelos
         public string Descripcion { get; set; }
 
         [Display(Name = "Cantidad")]
-        public int Cantidad { get; set; }
+        public decimal Cantidad { get; set; }
 
         [Display(Name = "Precio unitario")]
         public decimal PrecioUnitario { get; set; }
@@ -436,7 +452,7 @@ namespace GestionFacturas.Modelos
         public int Id { get; set; }
         public int IdFactura { get; set; }
         public string Descripcion { get; set; }
-        public int Cantidad { get; set; }
+        public decimal Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public decimal PrecioXCantidad { get { return PrecioUnitario * Cantidad; } }
         public int PorcentajeImpuesto { get; set; }

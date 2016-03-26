@@ -116,6 +116,14 @@
     <Compile Include="Migrations\201603261202561_Factura_QuitarCampoLogo.Designer.cs">
       <DependentUpon>201603261202561_Factura_QuitarCampoLogo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603261420356_LineaFactura_CantidadDecimal.cs" />
+    <Compile Include="Migrations\201603261420356_LineaFactura_CantidadDecimal.Designer.cs">
+      <DependentUpon>201603261420356_LineaFactura_CantidadDecimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603261449074_Cliente_LongitudDireccion.cs" />
+    <Compile Include="Migrations\201603261449074_Cliente_LongitudDireccion.Designer.cs">
+      <DependentUpon>201603261449074_Cliente_LongitudDireccion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,6 +170,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603261202561_Factura_QuitarCampoLogo.resx">
       <DependentUpon>201603261202561_Factura_QuitarCampoLogo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603261420356_LineaFactura_CantidadDecimal.resx">
+      <DependentUpon>201603261420356_LineaFactura_CantidadDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603261449074_Cliente_LongitudDireccion.resx">
+      <DependentUpon>201603261449074_Cliente_LongitudDireccion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

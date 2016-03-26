@@ -165,7 +165,7 @@ namespace GestionFacturas.Servicios
                     NombreComercial = string.IsNullOrEmpty(columnas.LetraColumnaNombreComercial)  ? null : rowUsed.Cell(columnas.LetraColumnaNombreComercial).GetString(),
                     PersonaContacto = string.IsNullOrEmpty(columnas.LetraColumnaPersonaContacto) ? null : rowUsed.Cell(columnas.LetraColumnaPersonaContacto).GetString(),
                     Email = string.IsNullOrEmpty(columnas.LetraColumnaEmail) ? null : rowUsed.Cell(columnas.LetraColumnaEmail).GetString(),
-                    Direccion = string.IsNullOrEmpty(columnas.LetraColumnaDireccion) ? null : rowUsed.Cell(columnas.LetraColumnaDireccion).GetString(),
+                    Direccion1 = string.IsNullOrEmpty(columnas.LetraColumnaDireccion) ? null : rowUsed.Cell(columnas.LetraColumnaDireccion).GetString(),
                     Localidad = string.IsNullOrEmpty(columnas.LetraColumnaLocalidad) ? null : rowUsed.Cell(columnas.LetraColumnaLocalidad).GetString(),
                     Provincia = string.IsNullOrEmpty(columnas.LetraColumnaProvincia) ? null : rowUsed.Cell(columnas.LetraColumnaProvincia).GetString(),
                     CodigoPostal = string.IsNullOrEmpty(columnas.LetraColumnaCodigoPostal) ? null : rowUsed.Cell(columnas.LetraColumnaCodigoPostal).GetString(),

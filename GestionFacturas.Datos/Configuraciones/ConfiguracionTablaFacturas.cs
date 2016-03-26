@@ -50,7 +50,7 @@ namespace GestionFacturas.Datos.Configuraciones
             .HasMaxLength(50);
 
             Property(m => m.VendedorDireccion)
-            .HasMaxLength(50);
+            .HasMaxLength(128);
 
             Property(m => m.VendedorLocalidad)
             .HasMaxLength(50);
@@ -71,7 +71,7 @@ namespace GestionFacturas.Datos.Configuraciones
             .HasMaxLength(50);
 
             Property(m => m.CompradorDireccion)
-            .HasMaxLength(50);
+            .HasMaxLength(128);
 
             Property(m => m.CompradorLocalidad)
             .HasMaxLength(50);
@@ -104,9 +104,12 @@ namespace GestionFacturas.Datos.Configuraciones
 
 
             Property(m => m.Descripcion)
-                     .HasMaxLength(250);        
-          
-          
+                     .HasMaxLength(250);
+
+            //Property(m => m.Cantidad)
+            //         .HasPrecision(250);
+
+
         }
     }
 

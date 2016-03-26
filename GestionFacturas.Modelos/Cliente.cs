@@ -20,7 +20,13 @@ namespace GestionFacturas.Modelos
         public string NombreComercial { get; set; }
 
         public string Direccion { get; set; }
-        
+
+        private string[] LineasDireccion => Direccion.Split(new string[] {"\r\n", "\n"}, StringSplitOptions.None);
+
+        public string Direccion1 => LineasDireccion.FirstOrDefault();
+
+        public string Direccion2 => LineasDireccion.Length > 1 ? LineasDireccion[1] : string.Empty;
+
         public string Localidad { get; set; }
         
         public string Provincia { get; set; }
@@ -72,7 +78,18 @@ namespace GestionFacturas.Modelos
         public string NombreComercial { get; set; }
 
         [Display(Name = "Dirección")]
-        public string Direccion { get; set; }
+        public string Direccion
+        {
+            get { return Direccion1 + (string.IsNullOrEmpty(Direccion2) ? string.Empty : Environment.NewLine + Direccion2); }
+        }
+        
+        [Display(Name = "Dirección 1")]
+        [StringLength(64)]
+        public string Direccion1 { get; set; }
+
+        [Display(Name = "Dirección 2")]
+        [StringLength(64)]
+        public string Direccion2 { get; set; }
 
         [Display(Name = "Municipio")]
         public string Localidad { get; set; }

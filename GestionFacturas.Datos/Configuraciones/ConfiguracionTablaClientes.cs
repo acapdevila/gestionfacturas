@@ -27,7 +27,7 @@ namespace GestionFacturas.Datos.Configuraciones
           .HasMaxLength(50);
 
             Property(m => m.Direccion)
-            .HasMaxLength(50);
+            .HasMaxLength(128);
 
             Property(m => m.Localidad)
             .HasMaxLength(50);

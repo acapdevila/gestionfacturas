@@ -12,7 +12,8 @@ namespace GestionFacturas.Servicios
 
         public static void InyectarCliente(this EditorCliente editor, Cliente cliente)
         {
-            editor.InjectFrom(cliente);          
+            editor.InjectFrom(cliente);       
+              
         }
 
     }

@@ -800,13 +800,13 @@ namespace GestionFacturas.Modelos {
                 this.columnFechaEmisionFactura.AllowDBNull = false;
                 this.columnVendedorNumeroIdentificacionFiscal.MaxLength = 50;
                 this.columnVendedorNombreOEmpresa.MaxLength = 50;
-                this.columnVendedorDireccion.MaxLength = 50;
+                this.columnVendedorDireccion.MaxLength = 128;
                 this.columnVendedorLocalidad.MaxLength = 50;
                 this.columnVendedorProvincia.MaxLength = 50;
                 this.columnVendedorCodigoPostal.MaxLength = 10;
                 this.columnCompradorNumeroIdentificacionFiscal.MaxLength = 50;
                 this.columnCompradorNombreOEmpresa.MaxLength = 50;
-                this.columnCompradorDireccion.MaxLength = 50;
+                this.columnCompradorDireccion.MaxLength = 128;
                 this.columnCompradorLocalidad.MaxLength = 50;
                 this.columnCompradorProvincia.MaxLength = 50;
                 this.columnCompradorCodigoPostal.MaxLength = 10;
@@ -1079,7 +1079,7 @@ namespace GestionFacturas.Modelos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public FacturasLineasRow AddFacturasLineasRow(FacturasRow _parentFacturasRowByFK_dbo_FacturasLineas_dbo_Facturas_IdFactura, string Descripcion, int Cantidad, decimal PrecioUnitario, int PorcentajeImpuesto) {
+            public FacturasLineasRow AddFacturasLineasRow(FacturasRow _parentFacturasRowByFK_dbo_FacturasLineas_dbo_Facturas_IdFactura, string Descripcion, decimal Cantidad, decimal PrecioUnitario, int PorcentajeImpuesto) {
                 FacturasLineasRow rowFacturasLineasRow = ((FacturasLineasRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1137,7 +1137,7 @@ namespace GestionFacturas.Modelos {
                 base.Columns.Add(this.columnIdFactura);
                 this.columnDescripcion = new global::System.Data.DataColumn("Descripcion", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDescripcion);
-                this.columnCantidad = new global::System.Data.DataColumn("Cantidad", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnCantidad = new global::System.Data.DataColumn("Cantidad", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCantidad);
                 this.columnPrecioUnitario = new global::System.Data.DataColumn("PrecioUnitario", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPrecioUnitario);
@@ -1985,9 +1985,9 @@ namespace GestionFacturas.Modelos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Cantidad {
+            public decimal Cantidad {
                 get {
-                    return ((int)(this[this.tableFacturasLineas.CantidadColumn]));
+                    return ((decimal)(this[this.tableFacturasLineas.CantidadColumn]));
                 }
                 set {
                     this[this.tableFacturasLineas.CantidadColumn] = value;
