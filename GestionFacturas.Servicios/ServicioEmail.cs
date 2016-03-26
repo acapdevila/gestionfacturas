@@ -54,7 +54,7 @@ namespace GestionFacturas.Servicios
         }
 
 
-        private async static Task Enviar(MailMessage message)
+        private static async Task Enviar(MailMessage message)
         {
             var client = new SmtpClient();
             await client.SendMailAsync(message);

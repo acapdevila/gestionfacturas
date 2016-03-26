@@ -63,6 +63,9 @@
                     Fecha
                 </th>
                 <th>
+                    Cliente
+                </th>
+                <th>
                     Conceptos
                 </th>
                 <th>
@@ -77,9 +80,7 @@
                 <th>
                     Total
                 </th>
-                <th>
-                    Cliente
-                </th>
+              
 
                 <th></th>
             </tr>
@@ -92,6 +93,17 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FechaEmisionFactura, "FechaCorta")
+                    </td>
+                    <td>
+                        @if (item.IdComprador.HasValue)
+                        {
+                            @Html.ActionLink(item.CompradorNombre, "Editar", "Clientes", new { id = item.IdComprador.Value }, null)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.CompradorNombre)
+                        }
+
                     </td>
                     <td class="col-md-4 col-sm-4 col-lg-4">
                         <span title="@item.Conceptos">@item.Conceptos.TruncarConElipsis(50)</span>
@@ -108,17 +120,7 @@
                     <td class="text-nowrap">
                         @Html.DisplayFor(modelItem => item.ImporteTotal, "Moneda")
                     </td>
-                    <td>
-                       @if (item.IdComprador.HasValue)
-                       {
-                            @Html.ActionLink(item.CompradorNombre, "Editar","Clientes", new { id= item.IdComprador.Value }, null)
-                       }
-                       else
-                       {
-                            @Html.DisplayFor(modelItem => item.CompradorNombre)
-                       }
-                       
-                    </td>
+                 
                     <td style="min-width:95px"> 
                         <div class="btn-group">
                             @Html.ActionLink("Editar", "Editar", new { id = item.Id },new { @class = "btn btn-primary btn-sm"})
@@ -131,7 +133,7 @@
                                     @Html.ActionLink("Enviar", "EnviarPorEmail", new { id = item.Id })
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Imprimir", "Imprimir", new { id = item.Id , titulo= "Facrura " + item.NumeroFactura})
+                                    @Html.ActionLink("Imprimir", "Imprimir", new { id = item.Id , titulo= "Facrura " + item.NumeroFactura}, htmlAttributes: new { target = "_blank"})
                                 </li>
 
                                 <li role="separator" class="divider"></li>
