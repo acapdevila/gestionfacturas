@@ -1,4 +1,5 @@
-﻿@using GestionFacturas.Servicios
+﻿@using GestionFacturas.Modelos
+@using GestionFacturas.Servicios
 @using PagedList.Mvc
 @using GestionFacturas.Website.Helpers
 @model GestionFacturas.Website.Viewmodels.Facturas.ListaGestionFacturasViewModel
@@ -109,7 +110,9 @@
                         <span title="@item.Conceptos">@item.Conceptos.TruncarConElipsis(50)</span>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.EstadoFactura)
+                        <span style="@(item.EstadoFactura == EstadoFacturaEnum.Enviada ? "color: red" : "")">
+                            @Html.DisplayFor(modelItem => item.EstadoFactura)
+                        </span>
                     </td>
                     <td class="text-nowrap">
                         @Html.DisplayFor(modelItem => item.BaseImponible, "Moneda")
