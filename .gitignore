@@ -38,3 +38,4 @@ GestionFacturas.Website/Uploads/Logos/**
 /Migracion/**
 GestionFacturas.Website/Properties/PublishProfiles/**
 GestionFacturas.Website/Properties/PublishProfiles/gestionfacturasbuclenet.pubxml
+GestionFacturas.Website/Properties/PublishProfiles/*
