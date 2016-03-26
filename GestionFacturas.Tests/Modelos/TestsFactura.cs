@@ -13,7 +13,7 @@ namespace GestionFacturas.Tests.Modelos
         {
             var factura = FacturaEjemploConTresLineas();
 
-            var baseImponible = factura.BaseImponible();
+            var baseImponible = factura.BaseImponible;
 
             Assert.AreEqual((decimal)71.5, baseImponible, @"La base imponible no se calcula correctamente");
         }
@@ -23,7 +23,7 @@ namespace GestionFacturas.Tests.Modelos
         {
             var factura = FacturaEjemploConTresLineas();
 
-            var impuestos = factura.ImporteImpuestos();
+            var impuestos = factura.ImporteImpuestos;
 
             Assert.AreEqual((decimal)15.015, impuestos, @"Los impuestos de la factura no se calculan correctamente");
         }
@@ -33,7 +33,7 @@ namespace GestionFacturas.Tests.Modelos
         {
             var factura = FacturaEjemploConTresLineas();
 
-            var importeTotal = factura.ImporteTotal();
+            var importeTotal = factura.ImporteTotal;
 
             Assert.AreEqual((decimal)86.515, importeTotal, @"El importe total de la factura no se calcula correctamente");
         }

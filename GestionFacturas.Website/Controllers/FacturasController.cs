@@ -239,7 +239,7 @@ namespace GestionFacturas.Website.Controllers
 
             var mensaje = GenerarMensajeEmail(viewmodel.EditorEmail, factura);
 
-            await _servicioFactura.EnviarFacturaPorEmail(mensaje, factura);
+            _servicioFactura.EnviarFacturaPorEmail(mensaje, factura);
 
             var numeroFacturaCodificada = WebUtility.UrlEncode(factura.NumeroFactura);
 

@@ -78,28 +78,39 @@ namespace GestionFacturas.Modelos
             }
         }
 
-        public decimal BaseImponible()
+        public decimal BaseImponible
         {
-            if (!Lineas.Any()) return 0;
+            get
+            {
+                if (!Lineas.Any()) return 0;
 
-            return Lineas.Sum(m => m.PrecioXCantidad);
-
+                return Lineas.Sum(m => m.PrecioXCantidad);
+            }
         }
-        public decimal ImporteImpuestos()
-        {
-            if (!Lineas.Any()) return 0;
 
-            return Lineas.Sum(m => m.PrecioXCantidad * m.PorcentajeImpuesto / 100);
+        public decimal ImporteImpuestos
+        {
+            get
+            {
+                if (!Lineas.Any()) return 0;
+
+                return Lineas.Sum(m => m.ImporteImpuesto);
+            }
         }
-        public decimal ImporteTotal()
-        {
-            if (!Lineas.Any()) return 0;
 
-            return Lineas.Sum(m => m.PrecioXCantidad + (m.PrecioXCantidad * m.PorcentajeImpuesto / 100));
+        public decimal ImporteTotal
+        {
+            get
+            {
+                if (!Lineas.Any()) return 0;
+
+                return BaseImponible + ImporteImpuestos;
+            }
         }
 
         public virtual Cliente Comprador { get; set; }
     }
+
     public enum EstadoFacturaEnum
     {
         Creada = 1,
@@ -126,9 +137,12 @@ namespace GestionFacturas.Modelos
         public string Descripcion { get; set; }
         public decimal Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
-        public decimal PrecioXCantidad { get { return PrecioUnitario * Cantidad; } }
         public int PorcentajeImpuesto { get; set; }
-        public decimal ImporteBruto { get { return PrecioXCantidad + ((PrecioXCantidad * PorcentajeImpuesto) /100); } }
+
+        public decimal PrecioXCantidad { get { return PrecioUnitario * Cantidad; } }
+        public decimal ImporteImpuesto { get { return Math.Round(((PrecioXCantidad * PorcentajeImpuesto) /100), 2); } }
+        public decimal Importe { get { return PrecioXCantidad + ImporteImpuesto;  } }
+
         public virtual Factura Factura { get; set; }
     }
 
@@ -161,7 +175,9 @@ namespace GestionFacturas.Modelos
 
         public decimal BaseImponible { get; set; }
         public decimal Impuestos { get; set; }
-        public decimal ImporteTotal { get; set; }
+        public decimal ImporteTotal {
+            get { return BaseImponible + Impuestos; }
+        }
 
         public EstadoFacturaEnum EstadoFactura { get; set; }
 
@@ -284,8 +300,8 @@ namespace GestionFacturas.Modelos
 
 
 
-        public virtual ICollection<EditorLineaFactura> Lineas { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public ICollection<EditorLineaFactura> Lineas { get; set; }
+        public Usuario Usuario { get; set; }
 
         [Display(Name = "Estado")]
         public EstadoFacturaEnum EstadoFactura { get; set; }
@@ -367,8 +383,8 @@ namespace GestionFacturas.Modelos
         public FormaPagoEnum FormaPago { get; set; }
         public string FormaPagoDetalles { get; set; }
 
-        public virtual ICollection<LineaVisorFactura> Lineas { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public ICollection<LineaVisorFactura> Lineas { get; set; }
+        public Usuario Usuario { get; set; }
 
         public EstadoFacturaEnum EstadoFactura { get; set; }
         public string Comentarios { get; set; }
@@ -377,36 +393,13 @@ namespace GestionFacturas.Modelos
         public string ComentarioInterno { get; set; }
 
         public string Titulo { get; set; }
-       
-        public decimal BaseImponible
-        {
-            get {
-                if (!Lineas.Any()) return 0;
 
-                return Lineas.Sum(m => m.PrecioXCantidad);
-            }
-           
+        public decimal BaseImponible { get; set; }
 
-        }
-        public decimal ImporteImpuestos
-        {
-            get {
-                if (!Lineas.Any()) return 0;
+        public decimal ImporteImpuestos { get; set; }
 
-                return Lineas.Sum(m => m.PrecioXCantidad * m.PorcentajeImpuesto / 100);
-            }
-           
-        }
-        public decimal ImporteTotal
-        {
-            get {
-                if (!Lineas.Any()) return 0;
-
-                return Lineas.Sum(m => m.PrecioXCantidad + (m.PrecioXCantidad * m.PorcentajeImpuesto / 100));
-            }
-            
-        }
-
+        public decimal ImporteTotal { get; set; }
+        
         public void BorrarLineasFactura()
         {
             while (Lineas.Any())
@@ -454,10 +447,10 @@ namespace GestionFacturas.Modelos
         public string Descripcion { get; set; }
         public decimal Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
-        public decimal PrecioXCantidad { get { return PrecioUnitario * Cantidad; } }
+        public decimal PrecioXCantidad { get; set; }
         public int PorcentajeImpuesto { get; set; }
-        public decimal ImporteBruto { get { return PrecioXCantidad + ((PrecioXCantidad * PorcentajeImpuesto) / 100); } }
-     }
+        public decimal Importe { get; set; }
+    }
 
     public class SelectorColumnasExcelFactura
     {
@@ -591,12 +584,13 @@ namespace GestionFacturas.Modelos
         public string PorcentajeImpuesto { get; set; }
     }
 
-
     public class TotalesFacturas
     {        
         public decimal TotalBaseImponible { get; set; }
         public decimal TotalImpuestos { get; set; }
-        public decimal TotalImporte { get; set; }
+        public decimal TotalImporte {
+            get { return TotalBaseImponible + TotalImpuestos;  }
+        }
     }
-   
+
 }

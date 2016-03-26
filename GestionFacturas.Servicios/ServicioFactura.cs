@@ -48,8 +48,7 @@ namespace GestionFacturas.Servicios
                     FechaVencimientoFactura = m.FechaVencimientoFactura,
                     EstadoFactura = m.EstadoFactura,
                     BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
-                    Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
-                    ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0,
+                    Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100),2)) ?? 0,
                     CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
                     ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
                     CompradorNombreComercial = m.Comprador.NombreComercial
@@ -68,13 +67,11 @@ namespace GestionFacturas.Servicios
             {
                 Id = 1,
                 BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
-                Impuestos = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100)) ?? 0,
-                ImporteTotal = m.Lineas.Sum(l => (decimal?)((l.PrecioUnitario * l.Cantidad) + (l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100))) ?? 0
+                Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100),2)) ?? 0,
             })
             .GroupBy(m=> m.Id)
             .Select(g=> new TotalesFacturas {
                 TotalBaseImponible = g.Sum(t=>t.BaseImponible),
-                TotalImporte = g.Sum(t => t.ImporteTotal),
                 TotalImpuestos = g.Sum(t => t.Impuestos),
             }).FirstOrDefaultAsync();
 
@@ -199,9 +196,9 @@ namespace GestionFacturas.Servicios
         }
          
 
-        public async Task EnviarFacturaPorEmail(MensajeEmail mensaje, Factura factura)
+        public void EnviarFacturaPorEmail(MensajeEmail mensaje, Factura factura)
         {
-            await _servicioEmail.EnviarMensaje(mensaje);
+            _servicioEmail.EnviarMensaje(mensaje);
             
             factura.EstadoFactura = EstadoFacturaEnum.Enviada;
             _contexto.SaveChanges();

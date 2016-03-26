@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
 using GestionFacturas.Modelos;
-using System.IO;
 
 namespace GestionFacturas.Servicios
 {
     public class ServicioEmail
     {
-        public async Task EnviarMensaje(MensajeEmail mensaje)
+        public void EnviarMensaje(MensajeEmail mensaje)
         {
             Validar(mensaje);
 
@@ -22,8 +19,22 @@ namespace GestionFacturas.Servicios
                 email.AdjuntarArchivo(adjunto);
             }           
                     
-            await Enviar(email);
-        }        
+            Enviar(email);
+        }
+
+        public async Task EnviarMensajeAsync(MensajeEmail mensaje)
+        {
+            Validar(mensaje);
+
+            var email = GenerarEmail(mensaje);
+
+            foreach (var adjunto in mensaje.Adjuntos)
+            {
+                email.AdjuntarArchivo(adjunto);
+            }
+
+            await EnviarAsync(email);
+        }
 
         private MailMessage GenerarEmail(MensajeEmail mensaje)
         {
@@ -54,7 +65,13 @@ namespace GestionFacturas.Servicios
         }
 
 
-        private static async Task Enviar(MailMessage message)
+        private static void Enviar(MailMessage message)
+        {
+            var client = new SmtpClient();
+            client.Send(message);
+        }
+
+        private static async Task EnviarAsync(MailMessage message)
         {
             var client = new SmtpClient();
             await client.SendMailAsync(message);
