@@ -454,6 +454,7 @@
     <Content Include="Views\Facturas\ListaGestionFacturas.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

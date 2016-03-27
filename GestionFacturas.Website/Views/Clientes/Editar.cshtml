@@ -24,7 +24,10 @@
 
     <p>
         <div class="col-md-12">
-            <input type="submit" value="Guardar" class="btn btn-primary" />
+            <input type="submit" value="Guardar" class="btn btn-primary"/>
+            
+            @Html.ActionLink("Crear factura", "Crear", "Facturas", new { idCliente = Model.Cliente.Id }, new { @class= "btn btn-default" })
+            
             @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-link" })
         </div>
     </p>
