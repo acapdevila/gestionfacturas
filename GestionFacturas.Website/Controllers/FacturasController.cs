@@ -263,6 +263,8 @@ namespace GestionFacturas.Website.Controllers
                 filtroBusqueda = FiltroBusquedaConValoresPorDefecto();
             }
 
+            filtroBusqueda.LineasPorPagina = int.MaxValue;
+
             var listaGestionFacturas = await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda);
                         
             if (!listaGestionFacturas.Any())
@@ -286,6 +288,8 @@ namespace GestionFacturas.Website.Controllers
             {
                 filtroBusqueda = FiltroBusquedaConValoresPorDefecto();
             }
+
+            filtroBusqueda.LineasPorPagina = int.MaxValue;
 
             var listaGestionFacturas = await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda);
 

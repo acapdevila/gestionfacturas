@@ -10,6 +10,11 @@ namespace GestionFacturas.Modelos
     [Serializable]
     public  class FiltroBusquedaFactura
     {
+        public FiltroBusquedaFactura()
+        {
+            LineasPorPagina = 25;
+        }
+
         public int? IdCliente { get; set; }
 
         public string NombreOEmpresaCliente { get; set; }
@@ -32,8 +37,7 @@ namespace GestionFacturas.Modelos
             set { _indicePagina = value; }
         }
 
-        public int LineasPorPagina { get { return 25; } }
-
+        public int LineasPorPagina { get; set; }
 
         public OrdenFacturasEnum OrdenarPorEnum { get; set; }
 
