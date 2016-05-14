@@ -23,20 +23,47 @@
 
 @section Scripts{    
     <script type="text/javascript">
-    function DescargarZip() {
-        window.location = '@Url.Action("DescargarZip")?' + ParametrosBusquedaFormulario();
-    }
+        function DescargarZip() {
+            window.location = '@Url.Action("DescargarZip")?' + ParametrosBusquedaFormulario();
+        }
 
-     function DescargarExcel() {
+        function DescargarExcel() {
             window.location = '@Url.Action("DescargarExcel")?' + ParametrosBusquedaFormulario();
-     }
+        }
 
         function ParametrosBusquedaFormulario() {
             return $('#formularioBusqueda').serialize();
            
         }
-</script>
+
+  
+
+   
+
+    </script>
 }
+
+@functions{
+
+    public string ObtenerCssClasePorEstadoFactura(EstadoFacturaEnum estadoFactura)
+    {
+        if (estadoFactura == EstadoFacturaEnum.Borrador)
+        {
+            return "default";
+        }
+        else if (estadoFactura == EstadoFacturaEnum.Enviada)
+        {
+            return "warning";
+        }
+        else if (estadoFactura == EstadoFacturaEnum.Cobrada)
+        {
+            return "success";
+        }
+        return string.Empty;
+    }
+
+}
+
 
 <h2>Facturas</h2>
 
@@ -110,25 +137,14 @@
                         <span title="@item.Conceptos">@item.Conceptos.TruncarConElipsis(50)</span>
                     </td>
                     <td>
-                        @if (item.EstadoFactura == EstadoFacturaEnum.Borrador)
-                        {
-                            <span class="label label-default">
-                                @Html.DisplayFor(modelItem => item.EstadoFactura)
-                            </span>
-                        }
-                        else if (item.EstadoFactura == EstadoFacturaEnum.Enviada)
-                        {
-                            <span class="label label-warning">
-                                @Html.DisplayFor(modelItem => item.EstadoFactura)
-                            </span>
-                        }
-                        else if (item.EstadoFactura == EstadoFacturaEnum.Cobrada)
-                        {
-                            <span class="label label-success">
-                                @Html.DisplayFor(modelItem => item.EstadoFactura)
-                            </span>
-                        }
-
+                        <button type="button" class="btn btn-@ObtenerCssClasePorEstadoFactura(item.EstadoFactura) btn-xs"
+                                data-idfactura="@item.Id"
+                                data-numerofactura="@item.NumeroFactura"
+                                data-estadofactura="@((int) item.EstadoFactura)" 
+                                data-toggle="modal" data-target="#modalCambiarEstadoFactura">
+                            @Html.DisplayFor(modelItem => item.EstadoFactura)
+                        </button>
+                        
                     </td>
                     <td class="text-nowrap">
                         @Html.DisplayFor(modelItem => item.BaseImponible, "Moneda")
@@ -197,4 +213,52 @@
 
           </tr>
         </table>
-  
+
+<!-- Modal -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#modalCambiarEstadoFactura').on('show.bs.modal', function (event) {
+
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var idFactura = button.data('idfactura'); // Extract info from data-* attributes
+            var numeroFactura = button.data('numerofactura');
+            var estadoFactura = button.data('estadofactura');
+            var modal = $(this);
+            modal.find('#recipient-idFactura').val(idFactura);
+            modal.find('#recipient-numeroFactura').val(numeroFactura);
+            modal.find('#recipient-estadoFactura').val(estadoFactura);
+        });
+    });
+
+</script>
+
+<div class="modal" id="modalCambiarEstadoFactura" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cambiar estado factura</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    @Html.HiddenFor(m => m.EditorEstadoFactura.IdFactura, htmlAttributes: new { id = "recipient-idFactura" })
+                    <div class="form-group">
+                        @Html.Label("Factura", htmlAttributes: new {@class = "control-label", @for = "recipient-numeroFactura"})
+                        @Html.TextBox("NumeroFactura", "", htmlAttributes: new {@class = "form-control", id = "recipient-numeroFactura", disabled = "disabled"})
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EditorEstadoFactura.EstadoFactura, htmlAttributes: new {@class = "control-label", @for = "recipient-estadoFactura"})
+                        @Html.EnumDropDownListFor(model => model.EditorEstadoFactura.EstadoFactura, htmlAttributes: new {@class = "form-control", id = "recipient-estadoFactura"})
+                        @Html.ValidationMessageFor(model => model.EditorEstadoFactura.EstadoFactura, "", new {@class = "text-danger"})
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

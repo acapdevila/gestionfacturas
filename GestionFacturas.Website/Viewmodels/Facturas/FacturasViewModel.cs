@@ -14,6 +14,8 @@ namespace GestionFacturas.Website.Viewmodels.Facturas
         public FiltroBusquedaFactura FiltroBusqueda { get; set; }
         public IPagedList<LineaListaGestionFacturas> ListaFacturas { get; set; }
 
+        public EditorEstadoFactura EditorEstadoFactura { get; set; }
+       
         public TotalesFacturas Totales { get; set; }
 
 

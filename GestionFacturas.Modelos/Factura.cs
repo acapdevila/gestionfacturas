@@ -343,6 +343,15 @@ namespace GestionFacturas.Modelos
         }
     }
 
+
+    public class EditorEstadoFactura
+    {
+        public int IdFactura { get; set; }
+
+        [Display(Name = "Estado")]
+        public EstadoFacturaEnum EstadoFactura { get; set; }
+    }
+
     public class VisorFactura
     {
         public VisorFactura()
