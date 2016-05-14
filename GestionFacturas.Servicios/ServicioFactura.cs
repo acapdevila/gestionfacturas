@@ -96,7 +96,7 @@ namespace GestionFacturas.Servicios
                     FechaEmisionFactura = DateTime.Today,
                     PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
                     FormaPago = FormaPagoEnum.Transferencia,
-                    EstadoFactura = EstadoFacturaEnum.Creada,
+                    EstadoFactura = EstadoFacturaEnum.Borrador,
 
                     Lineas = new List<EditorLineaFactura> {
                             new EditorLineaFactura {
@@ -119,7 +119,7 @@ namespace GestionFacturas.Servicios
                     FormaPago = ultimaFacturaCreada.FormaPago,
                     FormaPagoDetalles = ultimaFacturaCreada.FormaPagoDetalles,
                     ComentariosPie = ultimaFacturaCreada.ComentariosPie,
-                    EstadoFactura = EstadoFacturaEnum.Creada,
+                    EstadoFactura = EstadoFacturaEnum.Borrador,
                     IdVendedor = ultimaFacturaCreada.IdVendedor,
                     VendedorCodigoPostal = ultimaFacturaCreada.VendedorCodigoPostal,
                     VendedorDireccion = ultimaFacturaCreada.VendedorDireccion,

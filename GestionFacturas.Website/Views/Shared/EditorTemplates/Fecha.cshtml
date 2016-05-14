@@ -6,7 +6,7 @@
      }
     
 
- @Html.TextBox("", (Model.HasValue ? Model.Value.ToShortDateString() : string.Empty), new { @class = "form-control" }) 
+ @Html.TextBox("", (Model.HasValue ? Model.Value.ToShortDateString() : string.Empty), new { @class = "form-control" , placeholder = "Fecha" }) 
      
     <script type="text/javascript">
         $(document).ready(function () {

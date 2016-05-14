@@ -309,7 +309,7 @@ namespace GestionFacturas.Website.Controllers
         {
             return new FiltroBusquedaFactura
             {
-                FechaDesde = ServicioFechas.PrimerDiaMesActual(),
+                FechaDesde = ServicioFechas.PrimerDiaMesAnterior(),
                 FechaHasta = ServicioFechas.UltimoDiaMesActual()
             };
         }

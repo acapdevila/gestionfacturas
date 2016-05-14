@@ -113,7 +113,7 @@ namespace GestionFacturas.Modelos
 
     public enum EstadoFacturaEnum
     {
-        Creada = 1,
+        Borrador = 1,
         Enviada = 2,
         Cobrada = 3,
         Transferida = 4

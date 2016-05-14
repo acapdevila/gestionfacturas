@@ -110,9 +110,25 @@
                         <span title="@item.Conceptos">@item.Conceptos.TruncarConElipsis(50)</span>
                     </td>
                     <td>
-                        <span style="@(item.EstadoFactura == EstadoFacturaEnum.Enviada ? "color: red" : "")">
-                            @Html.DisplayFor(modelItem => item.EstadoFactura)
-                        </span>
+                        @if (item.EstadoFactura == EstadoFacturaEnum.Borrador)
+                        {
+                            <span class="label label-default">
+                                @Html.DisplayFor(modelItem => item.EstadoFactura)
+                            </span>
+                        }
+                        else if (item.EstadoFactura == EstadoFacturaEnum.Enviada)
+                        {
+                            <span class="label label-warning">
+                                @Html.DisplayFor(modelItem => item.EstadoFactura)
+                            </span>
+                        }
+                        else if (item.EstadoFactura == EstadoFacturaEnum.Cobrada)
+                        {
+                            <span class="label label-success">
+                                @Html.DisplayFor(modelItem => item.EstadoFactura)
+                            </span>
+                        }
+
                     </td>
                     <td class="text-nowrap">
                         @Html.DisplayFor(modelItem => item.BaseImponible, "Moneda")
