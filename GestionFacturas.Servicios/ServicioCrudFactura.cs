@@ -62,7 +62,17 @@ namespace GestionFacturas.Servicios
             return  await GuardarCambiosAsync();
          }
 
-        
+
+        public async Task CambiarEstadoFacturaAsync(EditorEstadoFactura editor)
+        {
+            Factura = await BuscarFacturaAsync(editor.IdFactura);
+
+            Factura.EstadoFactura = editor.EstadoFactura;
+
+            _contexto.Entry(Factura).State = EntityState.Modified;
+            await GuardarCambiosAsync();
+        }
+
 
         public async Task<int> EliminarFactura(int idFactura)
         {

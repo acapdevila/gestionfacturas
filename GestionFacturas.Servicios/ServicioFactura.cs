@@ -17,7 +17,7 @@ namespace GestionFacturas.Servicios
 {
     public class ServicioFactura : ServicioCrudFactura
     {
-        private ServicioEmail _servicioEmail;
+        private readonly ServicioEmail _servicioEmail;
         
         private int PorcentajeIvaPorDefecto
         {
@@ -323,5 +323,7 @@ namespace GestionFacturas.Servicios
                 }
             }
         }
+
+       
     }
 }

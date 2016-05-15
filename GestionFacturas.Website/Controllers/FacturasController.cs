@@ -114,7 +114,24 @@ namespace GestionFacturas.Website.Controllers
 
             await _servicioFactura.ActualizarFacturaAsync(viewmodel.Factura);
             return RedirectToAction("Detalles", new { Id = viewmodel.Factura.Id });
-        }    
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CambiarEstado(EditorEstadoFactura editorEstadoFactura)
+        {
+            if (ModelState.IsValid)
+            {
+               await _servicioFactura.CambiarEstadoFacturaAsync(editorEstadoFactura);
+            }
+
+            return Json(new
+            {
+                editorEstadoFactura.IdFactura,
+                editorEstadoFactura.NumeroFactura,
+                editorEstadoFactura.EstadoFactura,
+                TextoEstadoFactura = editorEstadoFactura.EstadoFactura.ObtenerNombreAtributoDisplay()
+            });
+        }
 
         public async Task<ActionResult> Eliminar(int? id)
         {
