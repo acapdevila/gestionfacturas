@@ -29,6 +29,11 @@ namespace GestionFacturas.Servicios
             _servicioEmail = servicioEmail;
         }
 
+        public IQueryable<Factura> Facturas()
+        {
+            return _contexto.Facturas;
+        }
+
         public async Task<IPagedList<LineaListaGestionFacturas>> ListaGestionFacturasAsync(FiltroBusquedaFactura filtroBusqueda)
         {
             var consulta = CrearConsultaFacturasFiltrada(filtroBusqueda);

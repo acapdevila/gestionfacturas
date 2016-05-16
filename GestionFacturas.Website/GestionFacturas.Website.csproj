@@ -471,6 +471,10 @@
       <Project>{6a203cf3-8aa5-4e51-8f7f-18ded40da663}</Project>
       <Name>GestionFacturas.Datos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GestionFacturas.Infra\GestionFacturas.Infra.csproj">
+      <Project>{b9bca032-2f21-4586-a370-240061c30b1a}</Project>
+      <Name>GestionFacturas.Infra</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GestionFacturas.Modelos\GestionFacturas.Modelos.csproj">
       <Project>{830b5222-2dbf-47b9-a9a0-c6b07294bff3}</Project>
       <Name>GestionFacturas.Modelos</Name>

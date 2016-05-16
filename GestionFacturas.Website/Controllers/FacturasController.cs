@@ -7,6 +7,7 @@ using GestionFacturas.Website.Viewmodels.Facturas;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Data.Entity;
 using Microsoft.Reporting.WebForms;
 using GestionFacturas.Website.Helpers;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.IO;
 using Ionic.Zip;
 using GestionFacturas.Website.Viewmodels.Email;
 using Elmah;
+using GestionFacturas.Infra.Configuracion;
 
 namespace GestionFacturas.Website.Controllers
 {
@@ -208,8 +210,8 @@ namespace GestionFacturas.Website.Controllers
                 EditorEmail = new EditorEmail
                 {
                     Remitente = factura.VendedorEmail,
-                    Asunto = string.Format("{0} - Factura {1}", factura.VendedorNombreOEmpresa, factura.NumeroFactura),
-                    ContenidoHtml = string.Format("Hola,{0}{0}{0}{0}Gracias," , Environment.NewLine),
+                    Asunto = string.Format("{0} {1}", FactoriaConfiguracion.ObtenerConfiguracion().NombreComercialEmpresa , factura.NumeroFactura),
+                    ContenidoHtml = @"Hola,",
                     Destinatario = factura.CompradorEmail              
                 }
             };           

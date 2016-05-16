@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using GestionFacturas.Infra.Configuracion;
 
 namespace GestionFacturas.Website
 {
@@ -22,6 +23,8 @@ namespace GestionFacturas.Website
 
             ModelBinders.Binders.Add(typeof(DateTime), new DateTimeBinder());
             ModelBinders.Binders.Add(typeof(DateTime?), new NullableDateTimeBinder());
+
+            FactoriaConfiguracion.Inicializar(new ConfiguracionWebConfig());
         }
 
 
