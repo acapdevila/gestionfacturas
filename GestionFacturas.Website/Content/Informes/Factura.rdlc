@@ -179,7 +179,7 @@
                             <TextRun>
                               <Value>=Fields!Cantidad.Value * Fields!PrecioUnitario.Value</Value>
                               <Style>
-                                <Format>#,0.00'€'</Format>
+                                <Format>#,0.00 '€'</Format>
                                 <Color>DimGray</Color>
                               </Style>
                             </TextRun>
@@ -281,7 +281,7 @@
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
-                  <Format>#,0.00'€'</Format>
+                  <Format>#,0.00 '€'</Format>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -317,7 +317,7 @@
                 <Value>=Sum(Fields!BaseImponible.Value, "Facturas")</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
-                  <Format>#,0.00'€'</Format>
+                  <Format>#,0.00 '€'</Format>
                   <Color>DimGray</Color>
                 </Style>
               </TextRun>
@@ -354,7 +354,7 @@
                 <Value>=Sum(Fields!ImporteImpuestos.Value, "Facturas")</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
-                  <Format>#,0.00'€'</Format>
+                  <Format>#,0.00 '€'</Format>
                   <Color>DimGray</Color>
                 </Style>
               </TextRun>
@@ -1192,6 +1192,7 @@ rwLnIYJbhGyLGg5cDMw3+T+NdOwxvmNPsFxvkCnLLN+xay3XO70J12eHyWszoosyzPzF5PUC0iEGm/O7
 JCAXs5vletcCf8ooU43letORLfgPmonjschIvhSZ3LU0qxD33RTL9Z5ERrXxpi4nW67Xx5SlHJhluV5PxI6+CunUc9PqeTjiPZgNvG3a9ybL9boiJsmVNOJJQR7AfAZMNl6RUuAKZIApMZPx18w591mudzdyxxqETPbuz0ObfUEQW/ZnAT9ABHgr8CjgIN6BYciPuawGMM7+y5Fb2zjEnzkCscNm+o6N8SePRm79d5sG7A5c6Dv2apPnI8BTiM/zKOQiLsY80PAdu9yUqYsp38+QyeXFxr2GKdNLGXXZDjyNCCobryB+24Z4HAm6MsKUdTjiLpyITF7PMWs4xiKdOgbcg4hopO/YlSad+ciE+PvA0b5jbzDttsvUaxzwc5PHm+Y7NcikbH1aedYgE+djkAdTE03bX4CI9XLfsbeY/99GfO5zEBdkjL3enLzwfz21rqmo9RGwAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE1LTA5LTAzVDE2OjAwOjU3LTA1OjAwl1GcTgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNS0wOS0wM1QxNjowMDo1Ny0wNTowMOYMJPIAAAAASUVORK5CYII=</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
+  <Language>es-ES</Language>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>24d5b4c7-e6a1-4ed8-bf2f-4819b78b8a2b</rd:ReportID>
 </Report>

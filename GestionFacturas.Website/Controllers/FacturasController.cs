@@ -195,6 +195,32 @@ namespace GestionFacturas.Website.Controllers
             return File(pdfBytes, mimeType);
         }
 
+        public async Task<ActionResult> Descargar(int id, string titulo)
+        {
+            var facturaAImprimir = await _servicioFactura.BuscarFacturaAsync(id);
+
+            if (facturaAImprimir == null) return HttpNotFound();
+
+            var informeLocal = GenerarInformeLocalFactura(facturaAImprimir);
+
+            string mimeType;
+
+            byte[] pdfBytes = ServicioPdf.GenerarPdfFactura(informeLocal, out mimeType);
+
+            var cabecera = new System.Net.Mime.ContentDisposition
+            {
+                FileName = string.Format("{0}.pdf", titulo),
+
+                // Si es verdadero el navegador trata de mostrar el archivo directamente
+                Inline = false,
+            };
+
+            Response.AppendHeader("Content-Disposition", cabecera.ToString());
+
+            return File(pdfBytes, mimeType);
+        }
+
+
         public async Task<ActionResult> EnviarPorEmail(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -395,7 +421,7 @@ namespace GestionFacturas.Website.Controllers
                                 {
                                     Archivo = facturaPdf,
                                     MimeType = mimeType,
-                                    Nombre = factura.Titulo
+                                    Nombre = factura.Titulo + ".pdf"
                                 }
                     }
             };

@@ -191,6 +191,9 @@
                             @Html.ActionLink("Enviar", "EnviarPorEmail", new {id = item.Id})
                         </li>
                         <li>
+                            @Html.ActionLink("Descargar", "Descargar", new { id = item.Id, titulo = "Facrura " + item.NumeroFactura })
+                        </li>
+                        <li>
                             @Html.ActionLink("Imprimir", "Imprimir", new {id = item.Id, titulo = "Facrura " + item.NumeroFactura}, htmlAttributes: new {target = "_blank"})
                         </li>
 

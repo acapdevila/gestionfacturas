@@ -15,8 +15,10 @@
 
         @Html.ActionLink("Enviar", "EnviarPorEmail", new { id = Model.Factura.Id }, new { @class = "btn btn-primary" })
 
-        @Html.ActionLink("Imprimir", "Imprimir", new { id = Model.Factura.Id, titulo = Model.Factura.Titulo }, new { @class = "btn btn-primary", Target = "_balnk" })    
-       
+        @Html.ActionLink("Imprimir", "Imprimir", new {id = Model.Factura.Id, titulo = Model.Factura.Titulo}, new {@class = "btn btn-primary", Target = "_balnk"})
+
+        @Html.ActionLink("Descargar", "Descargar", new { id = Model.Factura.Id, titulo = Model.Factura.Titulo }, new { @class = "btn btn-primary" })
+    
         @Html.ActionLink("Lista de facturas", "ListaGestionFacturas", null , new { @class = "btn btn-link" })
    
 </p>
