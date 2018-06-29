@@ -9,8 +9,9 @@
 
     <p>
         <div class="col-md-12">
+            @Html.ActionLink("Crear nueva factura", "Crear", null, new { @class = "btn btn-primary" })
             <a href="javascript:history.back()" class="btn btn-link">Volver a enviar</a>
-            @Html.ActionLink("Volver a la lista de facturas", "ListaGestionFacturas", null, new { @class = "btn btn-link" })
+            @Html.ActionLink("Volver a la lista de facturas", "ListaGestionFacturas", null, new {@class = "btn btn-link"})
         </div>
     </p>
 
