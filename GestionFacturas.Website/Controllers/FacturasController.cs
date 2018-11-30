@@ -6,15 +6,12 @@ using GestionFacturas.Servicios;
 using GestionFacturas.Website.Viewmodels.Facturas;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Data.Entity;
 using Microsoft.Reporting.WebForms;
 using GestionFacturas.Website.Helpers;
 using System.Linq;
 using System.IO;
 using Ionic.Zip;
 using GestionFacturas.Website.Viewmodels.Email;
-using Elmah;
 using GestionFacturas.Infra.Configuracion;
 
 namespace GestionFacturas.Website.Controllers
@@ -78,6 +75,17 @@ namespace GestionFacturas.Website.Controllers
             };
             
             return View(viewmodel);
+        }
+
+
+        public async Task<ActionResult> Duplicar(int id)
+        {
+            var viewmodel = new CrearFacturaViewModel
+            {
+                Factura = await _servicioFactura.GenerarNuevoEditorFacturaDuplicado(id)
+            };
+
+            return View("Crear", viewmodel);
         }
 
         [HttpPost]

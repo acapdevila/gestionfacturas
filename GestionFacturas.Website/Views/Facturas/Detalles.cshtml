@@ -19,6 +19,8 @@
 
         @Html.ActionLink("Descargar", "Descargar", new { id = Model.Factura.Id, titulo = Model.Factura.Titulo }, new { @class = "btn btn-primary" })
     
-        @Html.ActionLink("Lista de facturas", "ListaGestionFacturas", null , new { @class = "btn btn-link" })
+    @Html.ActionLink("Duplicar", "Duplicar", new { id = Model.Factura.Id }, new { @class = "btn btn-primary" })
+    
+    @Html.ActionLink("Lista de facturas", "ListaGestionFacturas", null , new { @class = "btn btn-link" })
    
 </p>

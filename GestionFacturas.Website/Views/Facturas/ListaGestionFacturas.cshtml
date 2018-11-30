@@ -194,6 +194,9 @@
                             @Html.ActionLink("Descargar", "Descargar", new { id = item.Id, titulo = "Facrura " + item.NumeroFactura })
                         </li>
                         <li>
+                            @Html.ActionLink("Duplicar", "Duplicar", new { id = item.Id })
+                        </li>
+                        <li>
                             @Html.ActionLink("Imprimir", "Imprimir", new {id = item.Id, titulo = "Facrura " + item.NumeroFactura}, htmlAttributes: new {target = "_blank"})
                         </li>
 

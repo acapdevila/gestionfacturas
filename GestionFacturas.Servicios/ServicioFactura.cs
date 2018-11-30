@@ -151,6 +151,54 @@ namespace GestionFacturas.Servicios
 
             return editor;
         }
+
+
+        public async Task<EditorFactura> GenerarNuevoEditorFacturaDuplicado(int idFactura)
+        {
+            var factura = await BuscarFacturaAsync(idFactura);
+
+            var ultimaFacturaSerie = await ObtenerUlitmaFacturaDeLaSerie(factura.SerieFactura);
+
+            var editor = new EditorFactura
+            {
+                SerieFactura = factura.SerieFactura,
+                NumeracionFactura = ultimaFacturaSerie.NumeracionFactura + 1,
+                FormatoNumeroFactura = ultimaFacturaSerie.FormatoNumeroFactura,
+                FechaEmisionFactura = DateTime.Today,
+                NombreArchivoPlantillaInforme = factura.NombreArchivoPlantillaInforme,
+                PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+                FormaPago = factura.FormaPago,
+                FormaPagoDetalles = factura.FormaPagoDetalles,
+                ComentariosPie = factura.ComentariosPie,
+                EstadoFactura = EstadoFacturaEnum.Borrador,
+                IdVendedor = factura.IdVendedor,
+                VendedorCodigoPostal = factura.VendedorCodigoPostal,
+                VendedorDireccion = factura.VendedorDireccion,
+                VendedorEmail = factura.VendedorEmail,
+                VendedorLocalidad = factura.VendedorLocalidad,
+                VendedorNombreOEmpresa = factura.VendedorNombreOEmpresa,
+                VendedorNumeroIdentificacionFiscal = factura.VendedorNumeroIdentificacionFiscal,
+                VendedorProvincia = factura.VendedorProvincia,
+                Lineas = new List<EditorLineaFactura>()
+            };
+
+
+            foreach (var linea in factura.Lineas)
+            {
+                editor.Lineas.Add(new EditorLineaFactura
+                {
+                    PorcentajeImpuesto = linea.PorcentajeImpuesto,
+                    Cantidad = linea.Cantidad,
+                    Descripcion     = linea.Descripcion,
+                    PrecioUnitario = linea.PrecioUnitario
+                });
+            }
+            var cliente = _contexto.Clientes.Find(factura.IdComprador);
+            editor.AsignarDatosCliente(cliente);
+
+            return editor;
+        }
+
         public async Task<VisorFactura> BuscarVisorFacturaAsync(int? idFactura)
         {
             var factura = await BuscarFacturaAsync(idFactura); 
@@ -328,6 +376,7 @@ namespace GestionFacturas.Servicios
                 }
             }
         }
+
 
        
     }
