@@ -44,7 +44,7 @@ namespace GestionFacturas.Tests.Servicios
 
             var facturaEliminada = await servicioFactura.BuscarFacturaAsync(editorFactura.Id);
 
-            Assert.IsNull(facturaEliminada, "La facrura no se ha podido eliminar de la base de datos");
+            Assert.IsNull(facturaEliminada, "La factura no se ha podido eliminar de la base de datos");
         }
 
 
