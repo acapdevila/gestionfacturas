@@ -10,9 +10,10 @@ namespace GestionFacturas.Datos.Configuraciones
 {
     public class ConfiguracionTablaClientes : EntityTypeConfiguration<Cliente>
     {
-        public ConfiguracionTablaClientes()
+        public ConfiguracionTablaClientes(string esquema)
         {
-            ToTable("Clientes");
+
+            ToTable("Clientes", esquema);
             
            Property(m => m.ComentarioInterno)
                 .HasMaxLength(250);

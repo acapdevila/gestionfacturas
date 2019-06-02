@@ -10,9 +10,9 @@ namespace GestionFacturas.Datos.Configuraciones
 {
     public class ConfiguracionTablaFacturas : EntityTypeConfiguration<Factura>
     {
-        public ConfiguracionTablaFacturas()
+        public ConfiguracionTablaFacturas(string esquema)
         {
-            ToTable("Facturas");
+            ToTable("Facturas", esquema);
 
             HasRequired(m => m.Usuario)
               .WithMany(m=>m.Facturas)
@@ -93,9 +93,9 @@ namespace GestionFacturas.Datos.Configuraciones
 
     public class ConfiguracionTablaLineasFacturas : EntityTypeConfiguration<LineaFactura>
     {
-        public ConfiguracionTablaLineasFacturas()
+        public ConfiguracionTablaLineasFacturas(string esquema)
         {
-            ToTable("FacturasLineas");
+            ToTable("FacturasLineas", esquema);
 
             HasRequired(m => m.Factura)
               .WithMany(m => m.Lineas)

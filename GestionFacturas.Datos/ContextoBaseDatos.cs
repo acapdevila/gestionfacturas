@@ -22,10 +22,12 @@ namespace GestionFacturas.Datos
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            var esquema = "GestionFacturas";
             modelBuilder.Configurations.Add(new ConfiguracionTablaUsuarios());
-            modelBuilder.Configurations.Add(new ConfiguracionTablaFacturas());
-            modelBuilder.Configurations.Add(new ConfiguracionTablaLineasFacturas());
-            modelBuilder.Configurations.Add(new ConfiguracionTablaClientes());
+
+            modelBuilder.Configurations.Add(new ConfiguracionTablaFacturas(esquema));
+            modelBuilder.Configurations.Add(new ConfiguracionTablaLineasFacturas(esquema));
+            modelBuilder.Configurations.Add(new ConfiguracionTablaClientes(esquema));
 
             base.OnModelCreating(modelBuilder);
         }

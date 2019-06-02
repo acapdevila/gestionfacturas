@@ -124,6 +124,10 @@
     <Compile Include="Migrations\201603261449074_Cliente_LongitudDireccion.Designer.cs">
       <DependentUpon>201603261449074_Cliente_LongitudDireccion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906021538337_EsquemaGestionFacturas.cs" />
+    <Compile Include="Migrations\201906021538337_EsquemaGestionFacturas.Designer.cs">
+      <DependentUpon>201906021538337_EsquemaGestionFacturas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -176,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603261449074_Cliente_LongitudDireccion.resx">
       <DependentUpon>201603261449074_Cliente_LongitudDireccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906021538337_EsquemaGestionFacturas.resx">
+      <DependentUpon>201906021538337_EsquemaGestionFacturas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
