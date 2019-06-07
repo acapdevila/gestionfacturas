@@ -23,6 +23,9 @@ namespace GestionFacturas.Datos
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             var esquema = "GestionFacturas";
+
+            modelBuilder.HasDefaultSchema(esquema);
+
             modelBuilder.Configurations.Add(new ConfiguracionTablaUsuarios());
 
             modelBuilder.Configurations.Add(new ConfiguracionTablaFacturas(esquema));
