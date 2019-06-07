@@ -7,6 +7,7 @@ namespace GestionFacturas.Datos.Migrations
     {
         public override void Up()
         {
+            // Se hace manualmente duplicando las tablas para no eliminar las tablas compartidas por otras app's
             //MoveTable(name: "dbo.AspNetUsers", newSchema: "GestionFacturas");
             //MoveTable(name: "dbo.AspNetUserClaims", newSchema: "GestionFacturas");
             //MoveTable(name: "dbo.AspNetUserLogins", newSchema: "GestionFacturas");
