@@ -68,7 +68,7 @@ namespace GestionFacturas.Datos.Configuraciones
             .HasMaxLength(50);
 
             Property(m => m.CompradorNombreOEmpresa)
-            .HasMaxLength(50);
+            .HasMaxLength(128);
 
             Property(m => m.CompradorDireccion)
             .HasMaxLength(128);

@@ -805,7 +805,7 @@ namespace GestionFacturas.Modelos {
                 this.columnVendedorProvincia.MaxLength = 50;
                 this.columnVendedorCodigoPostal.MaxLength = 10;
                 this.columnCompradorNumeroIdentificacionFiscal.MaxLength = 50;
-                this.columnCompradorNombreOEmpresa.MaxLength = 50;
+                this.columnCompradorNombreOEmpresa.MaxLength = 128;
                 this.columnCompradorDireccion.MaxLength = 128;
                 this.columnCompradorLocalidad.MaxLength = 50;
                 this.columnCompradorProvincia.MaxLength = 50;

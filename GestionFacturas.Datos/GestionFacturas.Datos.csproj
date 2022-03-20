@@ -132,6 +132,14 @@
     <Compile Include="Migrations\201906070719422_EsquemaGestionFacturasParaTablasIdentity.Designer.cs">
       <DependentUpon>201906070719422_EsquemaGestionFacturasParaTablasIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010270902317_Migracion_NombreCliente128.cs" />
+    <Compile Include="Migrations\202010270902317_Migracion_NombreCliente128.Designer.cs">
+      <DependentUpon>202010270902317_Migracion_NombreCliente128.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010282010163_Migracion_Factura_NombreComprador128.cs" />
+    <Compile Include="Migrations\202010282010163_Migracion_Factura_NombreComprador128.Designer.cs">
+      <DependentUpon>202010282010163_Migracion_Factura_NombreComprador128.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -190,6 +198,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906070719422_EsquemaGestionFacturasParaTablasIdentity.resx">
       <DependentUpon>201906070719422_EsquemaGestionFacturasParaTablasIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010270902317_Migracion_NombreCliente128.resx">
+      <DependentUpon>202010270902317_Migracion_NombreCliente128.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010282010163_Migracion_Factura_NombreComprador128.resx">
+      <DependentUpon>202010282010163_Migracion_Factura_NombreComprador128.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

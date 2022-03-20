@@ -266,7 +266,7 @@ namespace GestionFacturas.Modelos
         public string CompradorNumeroIdentificacionFiscal { get; set; }
 
         [Display(Name = "Nombre o empresa")]
-        [StringLength(50)]
+        [StringLength(128)]
         public string CompradorNombreOEmpresa { get; set; }
 
         public string CompradorDireccion {
