@@ -15,7 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionFacturas.Datos", "Ge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionFacturas.Infra", "GestionFacturas.Infra\GestionFacturas.Infra.csproj", "{B9BCA032-2F21-4586-A370-240061C30B1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionFacturas.Dominio", "GestionFacturas.Dominio\GestionFacturas.Dominio.csproj", "{0BE61755-5C14-43D2-8ED0-D5265446CE59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestionFacturas.Dominio", "GestionFacturas.Dominio\GestionFacturas.Dominio.csproj", "{0BE61755-5C14-43D2-8ED0-D5265446CE59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionFacturas.AccesoDatosSql", "GestionFacturas.AccesoDatosSql\GestionFacturas.AccesoDatosSql.csproj", "{5A6F0C71-AD72-4906-BBCF-C0AEEA44AFF3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{F750F552-4EBF-4E1F-A0E3-9AE35892E295}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionFacturas.Aplicacion", "GestionFacturas.Aplicacion\GestionFacturas.Aplicacion.csproj", "{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,9 +72,28 @@ Global
 		{0BE61755-5C14-43D2-8ED0-D5265446CE59}.Demo|Any CPU.Build.0 = Debug|Any CPU
 		{0BE61755-5C14-43D2-8ED0-D5265446CE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BE61755-5C14-43D2-8ED0-D5265446CE59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A6F0C71-AD72-4906-BBCF-C0AEEA44AFF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A6F0C71-AD72-4906-BBCF-C0AEEA44AFF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A6F0C71-AD72-4906-BBCF-C0AEEA44AFF3}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A6F0C71-AD72-4906-BBCF-C0AEEA44AFF3}.Demo|Any CPU.Build.0 = Debug|Any CPU
+		{5A6F0C71-AD72-4906-BBCF-C0AEEA44AFF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A6F0C71-AD72-4906-BBCF-C0AEEA44AFF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}.Demo|Any CPU.Build.0 = Debug|Any CPU
+		{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B5ECA3F7-1858-49D0-A148-D4AB14B9C02B} = {F750F552-4EBF-4E1F-A0E3-9AE35892E295}
+		{830B5222-2DBF-47B9-A9A0-C6B07294BFF3} = {F750F552-4EBF-4E1F-A0E3-9AE35892E295}
+		{BE82B157-113E-48F7-AD13-69E50AF03BF5} = {F750F552-4EBF-4E1F-A0E3-9AE35892E295}
+		{6A203CF3-8AA5-4E51-8F7F-18DED40DA663} = {F750F552-4EBF-4E1F-A0E3-9AE35892E295}
+		{B9BCA032-2F21-4586-A370-240061C30B1A} = {F750F552-4EBF-4E1F-A0E3-9AE35892E295}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32DF7F9B-3305-46EE-80C2-714CB9592384}
