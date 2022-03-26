@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DataSetFactura.xsc" />
+    <None Remove="DataSetFactura.xss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DataSetFactura.xsc" />
+    <Content Include="DataSetFactura.xss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.95.4" />
+    <PackageReference Include="ValueInjecter" Version="3.2.0" />
+    <PackageReference Include="X.PagedList" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GestionFacturas.AccesoDatosSql\GestionFacturas.AccesoDatosSql.csproj" />
+    <ProjectReference Include="..\GestionFacturas.Dominio\GestionFacturas.Dominio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DataSetFactura.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DataSetFactura.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DataSetFactura.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>DataSetFactura.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>
