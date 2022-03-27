@@ -16,7 +16,7 @@ namespace GestionFacturas.Aplicacion
         }
 
         public ServicioFactura(
-            FacturasContext contexto, 
+            SqlDb contexto, 
             ServicioEmail servicioEmail) : base(contexto)
         {
             _servicioEmail = servicioEmail;

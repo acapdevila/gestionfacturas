@@ -11,11 +11,11 @@ namespace GestionFacturas.Aplicacion
     public class ServicioCrudCliente
     {
         
-        protected readonly FacturasContext _contexto;
+        protected readonly SqlDb _contexto;
 
         private Cliente Cliente { get; set; }
 
-        public ServicioCrudCliente(FacturasContext contexto)
+        public ServicioCrudCliente(SqlDb contexto)
         {
             _contexto = contexto;
         }
