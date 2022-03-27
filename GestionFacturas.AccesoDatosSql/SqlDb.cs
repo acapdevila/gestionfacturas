@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionFacturas.AccesoDatosSql
 {
-    public partial class FacturasContext : DbContext
+    public partial class SqlDb : DbContext
     {
         private readonly string _connectionString;
 
-        public FacturasContext(string connectionString)
+        public SqlDb(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public FacturasContext(DbContextOptions<FacturasContext> options)
+        public SqlDb(DbContextOptions<SqlDb> options)
             : base(options)
         {
         }
