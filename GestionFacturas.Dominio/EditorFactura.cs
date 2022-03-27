@@ -120,7 +120,7 @@ public class EditorFactura
 
 
     public ICollection<EditorLineaFactura> Lineas { get; set; } = new List<EditorLineaFactura>();
-    public Usuario Usuario { get; set; } = new Usuario();
+    public Usuario Usuario { get; set; } = Usuario.Nulo;
 
     [Display(Name = "Estado")]
     public EstadoFacturaEnum EstadoFactura { get; set; }
