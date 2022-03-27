@@ -17,11 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionFacturas.Infra", "Ge
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestionFacturas.Dominio", "GestionFacturas.Dominio\GestionFacturas.Dominio.csproj", "{0BE61755-5C14-43D2-8ED0-D5265446CE59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionFacturas.AccesoDatosSql", "GestionFacturas.AccesoDatosSql\GestionFacturas.AccesoDatosSql.csproj", "{5A6F0C71-AD72-4906-BBCF-C0AEEA44AFF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestionFacturas.AccesoDatosSql", "GestionFacturas.AccesoDatosSql\GestionFacturas.AccesoDatosSql.csproj", "{5A6F0C71-AD72-4906-BBCF-C0AEEA44AFF3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{F750F552-4EBF-4E1F-A0E3-9AE35892E295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionFacturas.Aplicacion", "GestionFacturas.Aplicacion\GestionFacturas.Aplicacion.csproj", "{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestionFacturas.Aplicacion", "GestionFacturas.Aplicacion\GestionFacturas.Aplicacion.csproj", "{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionFacturas.Web", "GestionFacturas.Web\GestionFacturas.Web.csproj", "{7AAB3691-8BC5-4C68-80B6-628B4FF86C32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +86,12 @@ Global
 		{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}.Demo|Any CPU.Build.0 = Debug|Any CPU
 		{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCCC6EBB-C390-4A4B-B705-F23D3B3120B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AAB3691-8BC5-4C68-80B6-628B4FF86C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AAB3691-8BC5-4C68-80B6-628B4FF86C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AAB3691-8BC5-4C68-80B6-628B4FF86C32}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AAB3691-8BC5-4C68-80B6-628B4FF86C32}.Demo|Any CPU.Build.0 = Debug|Any CPU
+		{7AAB3691-8BC5-4C68-80B6-628B4FF86C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AAB3691-8BC5-4C68-80B6-628B4FF86C32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

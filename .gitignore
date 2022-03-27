@@ -41,3 +41,4 @@ GestionFacturas.Website/Properties/PublishProfiles/gestionfacturasbuclenet.pubxm
 GestionFacturas.Website/Properties/PublishProfiles/*
 **.pbix
 /packages
+/GestionFacturas.Web/appsettings.Development.json
