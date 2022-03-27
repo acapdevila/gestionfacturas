@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GestionFacturas.AccesoDatosSql\GestionFacturas.AccesoDatosSql.csproj" />
+    <ProjectReference Include="..\GestionFacturas.Aplicacion\GestionFacturas.Aplicacion.csproj" />
+    <ProjectReference Include="..\GestionFacturas.Dominio\GestionFacturas.Dominio.csproj" />
+  </ItemGroup>
+
+</Project>
