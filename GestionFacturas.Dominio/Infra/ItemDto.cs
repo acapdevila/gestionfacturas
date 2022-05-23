@@ -1,4 +1,6 @@
-﻿namespace GestionFacturas.Dominio.Infra
+﻿using GestionFacturas.Dominio.Clientes;
+
+namespace GestionFacturas.Dominio.Infra
 {
     public class ItemDto
     {

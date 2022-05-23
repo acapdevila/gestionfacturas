@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace GestionFacturas.Dominio
+namespace GestionFacturas.Dominio.Clientes
 {
-    
+
     public class Cliente : Entity<int>
     {
         public string NumeroIdentificacionFiscal { get; set; } = string.Empty;
@@ -13,7 +13,7 @@ namespace GestionFacturas.Dominio
 
         public string Direccion { get; set; } = string.Empty;
 
-        private string[] LineasDireccion => Direccion.Split(new string[] {"\r\n", "\n"}, StringSplitOptions.None);
+        private string[] LineasDireccion => Direccion.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
 
         public string Direccion1 => LineasDireccion.FirstOrDefault() ?? string.Empty;
 
@@ -29,7 +29,7 @@ namespace GestionFacturas.Dominio
 
         public string PersonaContacto { get; set; } = string.Empty;
 
-        public string ComentarioInterno { get; set; } = string.Empty;
+        public string? ComentarioInterno { get; set; }
 
         public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
 

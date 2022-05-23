@@ -1,4 +1,5 @@
 ﻿using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Clientes;
 
 namespace GestionFacturas.Aplicacion
 {

@@ -1,4 +1,5 @@
 ﻿using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Clientes;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionFacturas.AccesoDatosSql
@@ -7,16 +8,11 @@ namespace GestionFacturas.AccesoDatosSql
     {
         private readonly string _connectionString;
 
-        public SqlDb(string connectionString)
+        public SqlDb(string connectionString) 
         {
             _connectionString = connectionString;
         }
-
-        public SqlDb(DbContextOptions<SqlDb> options)
-            : base(options)
-        {
-        }
-
+        
         public virtual DbSet<Cliente> Clientes { get; set; } = null!;
         public virtual DbSet<Factura> Facturas { get; set; } = null!;
         public virtual DbSet<LineaFactura> FacturasLineas { get; set; } = null!;
@@ -39,7 +35,9 @@ namespace GestionFacturas.AccesoDatosSql
 
                 entity.Property(e => e.CodigoPostal).HasMaxLength(10);
 
-                entity.Property(e => e.ComentarioInterno).HasMaxLength(250);
+                entity.Property(e => e.ComentarioInterno)
+                    .IsRequired(false)
+                    .HasMaxLength(250);
 
                 entity.Property(e => e.Direccion).HasMaxLength(128);
 

@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Clientes;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 

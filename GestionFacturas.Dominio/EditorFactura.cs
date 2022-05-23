@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GestionFacturas.Dominio.Clientes;
+using System.ComponentModel.DataAnnotations;
 
 namespace GestionFacturas.Dominio;
 
