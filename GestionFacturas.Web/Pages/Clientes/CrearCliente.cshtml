@@ -1,0 +1,24 @@
+@page
+@model CrearClienteModel
+
+@{
+    ViewData["Title"] = "Crear cliente";
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<form method="post" role="form">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    
+    @Html.EditorFor(m=>m.Editor, "EditorCliente")
+    
+    <input class="btn btn-primary" type="submit" value="Guardar" />
+    <a class="btn btn-link" asp-page="@ListaGestionClientesModel.NombrePagina"> Back to the list</a>
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}

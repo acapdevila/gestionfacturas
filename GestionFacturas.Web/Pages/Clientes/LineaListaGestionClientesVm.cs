@@ -1,6 +1,6 @@
-﻿namespace GestionFacturas.Dominio;
+﻿namespace GestionFacturas.Web.Pages.Clientes;
 
-public class LineaListaGestionClientes
+public class LineaListaGestionClientesVm
 {
     public int Id { get; set; }
 
