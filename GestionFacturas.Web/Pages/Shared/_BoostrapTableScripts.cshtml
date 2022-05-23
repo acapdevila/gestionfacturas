@@ -1,0 +1,46 @@
+﻿@*Información en: https://bootstrap-table.com/ *@
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.css">
+<script src="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.20.0/dist/extensions/addrbar/bootstrap-table-addrbar.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.20.0/dist/extensions/cookie/bootstrap-table-cookie.min.js"></script>
+<script>
+    $(function() {
+        // Valores por perdeterminados para las grids
+        $.extend($.fn.bootstrapTable.defaults,
+            {
+                cookie: true,
+                addrbar: true,
+                showRefresh: true,
+                search: true,
+                pagination: true,
+                sidePagination: "server",
+                pageSize: "All",
+                showPageList : true,
+                pageList: "[5,25,50,100,All]",
+                queryParams: "queryParams"
+            });
+
+        //$.extend($.fn.bootstrapTable.columnDefaults,
+        //    {
+        //        align: 'center',
+        //        valign: 'middle'
+        //    });
+
+    });
+
+
+    function queryParams(params) {
+        $('#toolbar').find('input[name]').each(function() {
+            params[$(this).attr('name')] = $(this).val();
+        });
+
+        $('#toolbar').find('select[name]').each(function() {
+            params[$(this).attr('name')] = $(this).val();
+        });
+        return params;
+    }
+
+    function footerFormatter(data, footerValue) {
+        return '<br /><br /><br /><br />';
+    }
+</script>
