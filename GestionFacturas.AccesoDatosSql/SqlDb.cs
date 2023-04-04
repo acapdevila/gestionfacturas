@@ -65,7 +65,7 @@ namespace GestionFacturas.AccesoDatosSql
 
                 entity.Property(e => e.NumeroIdentificacionFiscal).HasMaxLength(50);
 
-                entity.Property(e => e.PersonaContacto).HasMaxLength(50);
+                entity.Property(e => e.PersonaContacto).HasMaxLength(50).IsRequired(false);
 
                 entity.Property(e => e.Provincia).HasMaxLength(50);
             });

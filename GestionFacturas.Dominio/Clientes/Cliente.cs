@@ -27,7 +27,7 @@ namespace GestionFacturas.Dominio.Clientes
 
         public string Email { get; set; } = string.Empty;
 
-        public string PersonaContacto { get; set; } = string.Empty;
+        public string? PersonaContacto { get; set; } = string.Empty;
 
         public string? ComentarioInterno { get; set; }
 

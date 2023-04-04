@@ -15,20 +15,14 @@ public class EditorClienteVm
 
     [Display(Name = "Nombre comercial")]
     public string NombreComercial { get; set; } = string.Empty;
-
-    [Display(Name = "Dirección")]
-    public string Direccion
-    {
-        get { return Direccion1 + (string.IsNullOrEmpty(Direccion2) ? string.Empty : Environment.NewLine + Direccion2); }
-    }
-        
+    
     [Display(Name = "Dirección 1")]
     [StringLength(64)]
     public string Direccion1 { get; set; } = string.Empty;
 
     [Display(Name = "Dirección 2")]
     [StringLength(64)]
-    public string Direccion2 { get; set; } = string.Empty;
+    public string? Direccion2 { get; set; } = string.Empty;
 
     [Display(Name = "Municipio")]
     public string Localidad { get; set; } = string.Empty;
@@ -44,8 +38,8 @@ public class EditorClienteVm
     public string Email { get; set; } = string.Empty;
 
     [Display(Name = "Persona de contacto")]
-    public string PersonaContacto { get; set; } = string.Empty;
+    public string? PersonaContacto { get; set; } = string.Empty;
 
     [Display(Name = "Nota interna")]
-    public string ComentarioInterno { get; set; } = string.Empty;
+    public string? ComentarioInterno { get; set; } = string.Empty;
 }

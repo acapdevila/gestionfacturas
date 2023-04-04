@@ -1,8 +1,8 @@
-@page
-@model EditarClienteModel
+@page "{id:int}"
+@model EliminarClienteModel
 
 @{
-    ViewData["Title"] = "Editar cliente";
+    ViewData["Title"] = "Eliminar cliente";
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -13,7 +13,7 @@
     
     @Html.EditorFor(m=>m.Editor, "EditorCliente")
     
-    <input class="btn btn-primary" type="submit" value="Guardar" />
+    <input class="btn btn-danger" type="submit" value="Eliminar" />
     <a class="btn btn-link" asp-page="@ListaGestionClientesModel.NombrePagina"> Back to the list</a>
 
 </form>

@@ -11,9 +11,7 @@ namespace GestionFacturas.Web.Pages.Clientes;
 public class EditarClienteModel : PageModel
 {
     
-    public static string NombrePagina = "/" + nameof(Clientes) +
-                                        "/" + nameof(EditarClienteModel)
-                                                .QuitarStringModel();
+    public static readonly string NombrePagina = "/" + nameof(Clientes) + "/" + nameof(EditarClienteModel).QuitarStringModel();
 
     private readonly SqlDb _db;
     
@@ -52,7 +50,7 @@ public class EditarClienteModel : PageModel
 
         await  _db.SaveChangesAsync();
 
-        return RedirectToAction(ListaGestionClientesModel.NombrePagina);
+        return RedirectToPage(ListaGestionClientesModel.NombrePagina);
     }
     
 }

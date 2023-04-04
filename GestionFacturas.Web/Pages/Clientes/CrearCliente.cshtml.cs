@@ -43,7 +43,7 @@ public class CrearClienteModel : PageModel
 
         await  _db.SaveChangesAsync();
 
-        return RedirectToAction(ListaGestionClientesModel.NombrePagina);
+        return RedirectToPage(ListaGestionClientesModel.NombrePagina);
     }
     
 }

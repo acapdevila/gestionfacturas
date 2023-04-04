@@ -55,7 +55,7 @@ public class EliminarClienteModel : PageModel
 
         var nombreOEmpresaCodificado = WebUtility.UrlEncode(Editor.NombreOEmpresa);
 
-        return RedirectToAction("EliminarConfirmado", new { nombreOEmpresaEliminado = nombreOEmpresaCodificado });
+        return RedirectToPage("EliminarConfirmado", new { nombreOEmpresaEliminado = nombreOEmpresaCodificado });
 
         }
     

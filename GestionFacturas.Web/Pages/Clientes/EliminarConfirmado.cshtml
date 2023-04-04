@@ -1,15 +1,17 @@
-﻿@{
+﻿@page
+@{
     ViewBag.Title = "Eliminar confirmado";
 }
 
 <h2>Confirmación</h2>
 
-<h3>El cliente <span class="label label-success">@ViewBag.NombreOEmpresaEliminado</span> ha sido eliminado correctamente</h3>
+<h3>El cliente <span class="label label-success">@Request.Query["nombreOEmpresaEliminado"]</span> ha sido eliminado correctamente</h3>
 
 
     <p>
         <div class="col-md-12">
-            @Html.ActionLink("Volver a la lista de clientes", "ListaGestionClientes", null, new { @class = "btn btn-link" })
+        <a class="btn btn-link" asp-page="@ListaGestionClientesModel.NombrePagina">Volver a la lista de clientes</a>
+            
         </div>
     </p>
 

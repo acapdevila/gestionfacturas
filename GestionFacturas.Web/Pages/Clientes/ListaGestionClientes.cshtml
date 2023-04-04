@@ -16,7 +16,7 @@
                 <a class="btn btn-primary border-white float-end" 
                    asp-page="@CrearClienteModel.NombrePagina">
                     @*  <partial name="Shared/Iconos/_PlusSquare" />*@
-                    Add a new program
+                    Nuevo cliente
                 </a>
             </div>
         </div>
@@ -91,7 +91,7 @@
                 
                 $("#table").bootstrapTable('destroy').bootstrapTable({
                     toolbar:"#toolbar",
-                    searchSelector:"#Search",
+                    searchSelector:"#BuscarPor",
                     cookieIdTable : "@ListaGestionClientesModel.NombrePagina",
                     url: "@Url.Action("Get", "GridClientes")"
                 });
