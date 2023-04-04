@@ -1,0 +1,175 @@
+﻿@page
+@model GestionFacturas.Web.Pages.Facturas.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Factura</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Factura.Id" />
+            <div class="form-group">
+                <label asp-for="Factura.IdUsuario" class="control-label"></label>
+                <input asp-for="Factura.IdUsuario" class="form-control" />
+                <span asp-validation-for="Factura.IdUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.SerieFactura" class="control-label"></label>
+                <input asp-for="Factura.SerieFactura" class="form-control" />
+                <span asp-validation-for="Factura.SerieFactura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.NumeracionFactura" class="control-label"></label>
+                <input asp-for="Factura.NumeracionFactura" class="form-control" />
+                <span asp-validation-for="Factura.NumeracionFactura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.FormatoNumeroFactura" class="control-label"></label>
+                <input asp-for="Factura.FormatoNumeroFactura" class="form-control" />
+                <span asp-validation-for="Factura.FormatoNumeroFactura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.FechaEmisionFactura" class="control-label"></label>
+                <input asp-for="Factura.FechaEmisionFactura" class="form-control" />
+                <span asp-validation-for="Factura.FechaEmisionFactura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.FechaVencimientoFactura" class="control-label"></label>
+                <input asp-for="Factura.FechaVencimientoFactura" class="form-control" />
+                <span asp-validation-for="Factura.FechaVencimientoFactura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.FormaPago" class="control-label"></label>
+                <select asp-for="Factura.FormaPago" class="form-control"></select>
+                <span asp-validation-for="Factura.FormaPago" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.FormaPagoDetalles" class="control-label"></label>
+                <input asp-for="Factura.FormaPagoDetalles" class="form-control" />
+                <span asp-validation-for="Factura.FormaPagoDetalles" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.IdVendedor" class="control-label"></label>
+                <input asp-for="Factura.IdVendedor" class="form-control" />
+                <span asp-validation-for="Factura.IdVendedor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.VendedorNumeroIdentificacionFiscal" class="control-label"></label>
+                <input asp-for="Factura.VendedorNumeroIdentificacionFiscal" class="form-control" />
+                <span asp-validation-for="Factura.VendedorNumeroIdentificacionFiscal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.VendedorNombreOEmpresa" class="control-label"></label>
+                <input asp-for="Factura.VendedorNombreOEmpresa" class="form-control" />
+                <span asp-validation-for="Factura.VendedorNombreOEmpresa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.VendedorDireccion" class="control-label"></label>
+                <input asp-for="Factura.VendedorDireccion" class="form-control" />
+                <span asp-validation-for="Factura.VendedorDireccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.VendedorLocalidad" class="control-label"></label>
+                <input asp-for="Factura.VendedorLocalidad" class="form-control" />
+                <span asp-validation-for="Factura.VendedorLocalidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.VendedorProvincia" class="control-label"></label>
+                <input asp-for="Factura.VendedorProvincia" class="form-control" />
+                <span asp-validation-for="Factura.VendedorProvincia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.VendedorCodigoPostal" class="control-label"></label>
+                <input asp-for="Factura.VendedorCodigoPostal" class="form-control" />
+                <span asp-validation-for="Factura.VendedorCodigoPostal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.VendedorEmail" class="control-label"></label>
+                <input asp-for="Factura.VendedorEmail" class="form-control" />
+                <span asp-validation-for="Factura.VendedorEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.IdComprador" class="control-label"></label>
+                <select asp-for="Factura.IdComprador" class="form-control" asp-items="ViewBag.IdComprador"></select>
+                <span asp-validation-for="Factura.IdComprador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.CompradorNumeroIdentificacionFiscal" class="control-label"></label>
+                <input asp-for="Factura.CompradorNumeroIdentificacionFiscal" class="form-control" />
+                <span asp-validation-for="Factura.CompradorNumeroIdentificacionFiscal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.CompradorNombreOEmpresa" class="control-label"></label>
+                <input asp-for="Factura.CompradorNombreOEmpresa" class="form-control" />
+                <span asp-validation-for="Factura.CompradorNombreOEmpresa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.CompradorDireccion" class="control-label"></label>
+                <input asp-for="Factura.CompradorDireccion" class="form-control" />
+                <span asp-validation-for="Factura.CompradorDireccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.CompradorLocalidad" class="control-label"></label>
+                <input asp-for="Factura.CompradorLocalidad" class="form-control" />
+                <span asp-validation-for="Factura.CompradorLocalidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.CompradorProvincia" class="control-label"></label>
+                <input asp-for="Factura.CompradorProvincia" class="form-control" />
+                <span asp-validation-for="Factura.CompradorProvincia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.CompradorCodigoPostal" class="control-label"></label>
+                <input asp-for="Factura.CompradorCodigoPostal" class="form-control" />
+                <span asp-validation-for="Factura.CompradorCodigoPostal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.CompradorEmail" class="control-label"></label>
+                <input asp-for="Factura.CompradorEmail" class="form-control" />
+                <span asp-validation-for="Factura.CompradorEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.EstadoFactura" class="control-label"></label>
+                <select asp-for="Factura.EstadoFactura" class="form-control"></select>
+                <span asp-validation-for="Factura.EstadoFactura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.Comentarios" class="control-label"></label>
+                <input asp-for="Factura.Comentarios" class="form-control" />
+                <span asp-validation-for="Factura.Comentarios" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.ComentariosPie" class="control-label"></label>
+                <input asp-for="Factura.ComentariosPie" class="form-control" />
+                <span asp-validation-for="Factura.ComentariosPie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.ComentarioInterno" class="control-label"></label>
+                <input asp-for="Factura.ComentarioInterno" class="form-control" />
+                <span asp-validation-for="Factura.ComentarioInterno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.NombreArchivoPlantillaInforme" class="control-label"></label>
+                <input asp-for="Factura.NombreArchivoPlantillaInforme" class="form-control" />
+                <span asp-validation-for="Factura.NombreArchivoPlantillaInforme" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

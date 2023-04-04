@@ -19,9 +19,9 @@ builder.Services.AddAuthorization(options =>
 
     // Crear otras policy
 });
-
+var connectionString = builder.Configuration.GetConnectionString("ConnectionString");
 builder.Services.AddScoped(m=> 
-    new SqlDb(builder.Configuration.GetConnectionString("ConnectionString")));
+    new SqlDb(connectionString));
 
 
 // Add services to the container.

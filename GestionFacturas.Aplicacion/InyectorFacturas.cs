@@ -92,9 +92,9 @@ namespace GestionFacturas.Aplicacion
             fila.FormaPago = factura.FormaPago.ObtenerNombreAtributoDisplay();
             fila.FormaPagoDetalles = factura.FormaPagoDetalles;
 
-            fila.BaseImponible = factura.BaseImponible;
-            fila.ImporteImpuestos = factura.ImporteImpuestos;
-            fila.ImporteTotal = factura.ImporteTotal;
+            fila.BaseImponible = factura.BaseImponible();
+            fila.ImporteImpuestos = factura.ImporteImpuestos();
+            fila.ImporteTotal = factura.ImporteTotal();
         }
     }
 }

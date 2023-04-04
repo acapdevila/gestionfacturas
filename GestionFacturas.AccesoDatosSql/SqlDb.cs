@@ -8,6 +8,13 @@ namespace GestionFacturas.AccesoDatosSql
     {
         private readonly string _connectionString;
 
+        //public SqlDb()
+        //{
+        //    _connectionString =
+        //        @"Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=C:\Proyectos\GestionFacturas\GestionFacturas.Datos\BaseDatosLocal\aspnet-GestionFacturas.Website-20150802075020.mdf;Integrated Security=True";
+
+        //}
+
         public SqlDb(string connectionString) 
         {
             _connectionString = connectionString;
@@ -78,11 +85,11 @@ namespace GestionFacturas.AccesoDatosSql
 
                 entity.HasIndex(e => e.IdUsuario, "IX_IdUsuario");
 
-                entity.Property(e => e.ComentarioInterno).HasMaxLength(250);
+                entity.Property(e => e.ComentarioInterno).HasMaxLength(250).IsRequired(false);
 
-                entity.Property(e => e.Comentarios).HasMaxLength(250);
+                entity.Property(e => e.Comentarios).HasMaxLength(250).IsRequired(false);
 
-                entity.Property(e => e.ComentariosPie).HasMaxLength(800);
+                entity.Property(e => e.ComentariosPie).HasMaxLength(800).IsRequired(false);
 
                 entity.Property(e => e.CompradorCodigoPostal).HasMaxLength(10);
 
@@ -129,6 +136,11 @@ namespace GestionFacturas.AccesoDatosSql
                 entity.Property(e => e.VendedorNumeroIdentificacionFiscal).HasMaxLength(50);
 
                 entity.Property(e => e.VendedorProvincia).HasMaxLength(50);
+
+                entity.HasOne(m => m.Usuario)
+                    .WithMany()
+                    .HasForeignKey(u => u.IdUsuario)
+                    .IsRequired();
 
                 entity.HasOne(d => d.Comprador)
                     .WithMany(p => p.Facturas)

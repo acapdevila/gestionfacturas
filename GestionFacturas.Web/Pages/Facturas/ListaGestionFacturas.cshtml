@@ -1,0 +1,150 @@
+﻿@page
+@using Microsoft.AspNetCore.Http.Extensions
+@using GestionFacturas.Dominio
+@model ListaGestionFacturasModel
+@{
+    ViewData["Title"] = "Facturas";
+}
+
+<div class="row">
+    <nav id="sidebarMenu" class="col-sm-12 col-md-3 col-lg-2 d-md-block bg-light border-end">
+        <div class="position-sticky pt-3">
+
+            <div id="toolbar1" class="toolbar">
+                <div class="row g-3">
+
+                    <div class="col-12">
+                        <label asp-for="BuscarPor">Descripción/Cliente</label>
+                        <input type="text" asp-for="BuscarPor" class="form-control" placeholder="Descripción o cliente...">
+                    </div>
+
+                   <div class="col-12">
+                        <label asp-for="Desde">Desde</label>
+                        <input asp-for="Desde" type="date" class="form-control" poster="Desde" placeholder="Desde">
+
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="Hasta">Hasta</label>
+                        <input asp-for="Hasta" type="date" class="form-control" poster="Hasta" placeholder="Hasta">
+
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Orden">Ordenar por</label>
+                        <select asp-for="Orden" class="form-select" asp-items="Html.GetEnumSelectList<OrdenFacturasEnum>()">
+                            
+                        </select>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="col-sm-12 col-md-9 col-lg-10">
+
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h2 class="h2">
+                <svg class="bi" width="24" height="24">
+                    <use xlink:href="#bi-list-task"></use>
+                </svg>
+                @ViewData["Title"]
+            </h2>
+            <div class="btn-toolbar mb-2 mb-md-0">
+
+                <a class="btn btn-outline-primary"
+                   asp-page="@CrearFacturaModel.NombrePagina">
+                    <i class="bi bi-plus"></i>
+                    Nueva factura
+                </a>
+
+            </div>
+        </div>
+
+
+        <div class="table-responsive">
+            <table id="tablaAcciones"
+                   class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Id)" data-visible="false" data-serchable="false">ID</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.NumeroFactura)" data-width="20">Factura</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.FechaEmisionFactura)">Fecha</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.CompradorNombreOEmpresa)" data-width="30" data-width-unit="%">Descripción</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.EstadoFactura)">Estado</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.BaseImponible)">BI</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Impuestos)">IVA</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.ImporteTotal)" >Total</th>
+                        <th data-field="acciones" data-footer-formatter="footerFormatter" data-formatter="accionesFormatter" data-width="100" data-sortable="false">Acciones</th>
+
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts
+    {
+    <partial name="_BootstrapTableScripts" />
+
+
+    <script>
+        const returnUrl = "ReturnUrl=@HttpContext.Request.GetEncodedPathAndQuery()";
+              
+        function refrescar() {
+            guardarEstadoFiltros('#toolbar1');
+            $("#tablaAcciones").bootstrapTable('refresh');
+        }
+
+        function initTable() {
+
+            $("#@Html.IdFor(m => m.BuscarPor)").change(refrescar);
+            $("#@Html.IdFor(m => m.Desde)").change(refrescar);
+            $("#@Html.IdFor(m => m.Hasta)").change(refrescar);
+                      
+
+            $("#tablaAcciones").bootstrapTable({
+                //toolbar:"#toolbar1",
+                // search: false,
+                url: "@Url.Action("Buscar", "GridFacturas")",
+                sortName: "@nameof(LineaListaGestionFacturas.NumeracionFactura)",
+                sortOrder: "desc"
+            });
+        }
+
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+                                 
+            initTable();
+        });
+
+        function accionesFormatter(value, row, index) {
+
+            return [
+                '<div class="dropdown text-center">',
+                '<button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">',
+                'Acciones',
+                '</button>',
+                '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">',
+                '<li><a class="dropdown-item" href="/AnadirAccionARaport/Index/' + row.Id + '?' + returnUrl + '">Editar</a></li>',
+             @*   //'<li><a class="dropdown-item" href="@ModificarAccionModel.NombrePagina/' + row.Id + '?' + returnUrl + '">Enviar</a></li>',
+                //'<li><a class="dropdown-item" href="@ComentarAccionModel.NombrePagina/' + row.Id + '?' + returnUrl + '">Descargar</a></li>',
+                //'<li><a class="dropdown-item" href="@MarcarComentariosAccionComoLeidosModel.NombrePagina/' + row.Id + '?' + returnUrl + '">Duplicar</a></li>',
+                //'<li><a class="dropdown-item" href="@ComentarAccionModel.NombrePagina/' + row.Id + '?' + returnUrl + '">Imprimir</a></li>',
+                //'<li><a class="dropdown-item" href="@EliminarAccionModel.NombrePagina/' + row.Id + '?' + returnUrl + '"><i class="bi bi-trash text-danger"></i> Eliminar</a></li>',
+               *@ '</ul>',
+                '</div>'
+            ].join('');
+        }
+
+    </script>
+
+
+      }
+
