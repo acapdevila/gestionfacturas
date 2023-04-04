@@ -6,7 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ClosedXML" Version="0.100.3" />
+		<PackageReference Include="ClosedXML.Extensions.Mvc" Version="0.4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
     <ProjectReference Include="..\GestionFacturas.AccesoDatosSql\GestionFacturas.AccesoDatosSql.csproj" />
     <ProjectReference Include="..\GestionFacturas.Aplicacion\GestionFacturas.Aplicacion.csproj" />
     <ProjectReference Include="..\GestionFacturas.Dominio\GestionFacturas.Dominio.csproj" />

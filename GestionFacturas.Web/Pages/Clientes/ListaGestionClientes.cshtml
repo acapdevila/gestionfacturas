@@ -1,118 +1,149 @@
 ﻿@page
-@model GestionFacturas.Web.Pages.Clientes.ListaGestionClientesModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ListaGestionClientesModel
 @{
     ViewData["Title"] = "Clientes";
 }
-
-
-<h2>@ViewData["Title"] </h2>
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col">
-                <h4>@ViewData["Title"]</h4> 
-            </div>
-            <div class="col-8">
-                <a class="btn btn-primary border-white float-end" 
-                   asp-page="@CrearClienteModel.NombrePagina">
-                    @*  <partial name="Shared/Iconos/_PlusSquare" />*@
-                    Nuevo cliente
-                </a>
+<div class="row">
+    
+    <nav id="sidebarMenu" class="d-flex col-sm-12 col-md-3 col-lg-2 d-md-block bg-light border-end">
+        <div class="position-sticky pt-3">
+        
+            <div id="toolbar1" class="toolbar">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <input type="text"
+                               asp-for="NombreOEmpresa"
+                               class="form-control" placeholder="Buscar por nombre...">
+                    </div>
+                    
+                    <div class="col-12">
+                        <input type="text" asp-for="Nif"
+                               class="form-control" placeholder="Buscar por Nif...">
+                    </div>
+                    <div class="col-12">
+                        <input type="text" asp-for="Ref"
+                               class="form-control" placeholder="Buscar por Ref...">
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="card">
-    <div id="toolbar" class="card-header">
-        <form method="get">
-            <div class="row">
-                <div class="col-9">
-                    <input asp-for="BuscarPor" class="form-control" placeholder="Search by program code or description..." />
-                </div>
-                <div class="col-3">
-                    <input id="btnBuscar" name="boton" type="submit" value="Search" class="btn btn-primary" />
+    </nav>
+    
+    <div class="col-sm-12 col-md-9 col-lg-10">
+    
+        <div class="px-3 py-2 border-bottom mb-3  bg-light">
+            <div class="container-fluid d-flex flex-wrap">
+                <h1 class="col-2">
+                    <svg class="bi" width="24" height="24">
+                        <use xlink:href="#bi-people-fill"></use>
+                    </svg>
+                    @ViewData["Title"]
+                </h1>
+                <div class="text-end align-content-end col-10 pt-2">
+                    <a asp-page="@CrearClienteModel.NombrePagina"
+                       class="btn btn-outline-primary me-2">
+                        <i class="bi bi-plus"></i>
+                        Nuevo cliente
+                    </a>
+                    <a class="btn btn-primary" href="#"
+                       onclick="generarUrlExcelClientes(this);">
+                        <i class="bi bi-file-excel"></i>
+                        Exportar excel
+                    </a>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="card-body">
+        </div>
+
+        
         <div class="table-responsive">
-            <table id="table" class="table table-striped table-sm">
+            <table id="table1" class="table table-striped table-sm">
                 <thead>
                 <tr>
-                    <th data-field="acciones" 
-                        data-footer-formatter="footerFormatter" 
-                        data-formatter="actionsFormatter" 
-                        data-searchable="false">Acciones</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionClientesVm.Id)" data-width="100" data-visible="true" data-serchable="true">Ref.</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionClientesVm.NombreOEmpresa)" data-footer-formatter="footerFormatter">Nombre</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionClientesVm.Nif)" data-width="200">NIF</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionClientesVm.Email)" >E-mail</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionClientesVm.NumFacturas)" data-width="100" data-formatter="numFacturasFormatter">Facturas</th>
+                        <th data-field="acciones" 
+                            data-footer-formatter="footerFormatter" 
+                            data-formatter="actionsFormatter" 
+                            data-searchable="false">Acciones</th>
 
-                    <th scope="col" 
-                        data-field="@nameof(LineaListaGestionClientesVm.Id)" 
-                        data-visible="false" 
-                        data-searchable="false">ID</th>
-
-                    <th scope="col"
-                        data-field="@nameof(LineaListaGestionClientesVm.Nombre)">
-                        Nombre
-                    </th>
-
-                    <th scope="col"
-                        data-field="@nameof(LineaListaGestionClientesVm.NumeroIdentificacionFiscal)">
-                        NIF
-                    </th>
-
-                    <th scope="col"
-                        data-field="@nameof(LineaListaGestionClientesVm.NumFacturas)">
-                        Facturas
-                    </th>
                 </tr>
                 </thead>
             </table>
         </div>
     </div>
-</div>
 
-@section Scripts
-{
-    <partial name="_BoostrapTableScripts" />
-    
-     <script>
-            $(function() {
-                initTable();
-            });
-    
-            function refrescar(){
-                $("#table").bootstrapTable('refresh');
-            }
-    
-            function initTable() {
-    
-                $("#@Html.IdFor(m => m.BuscarPor)").change(refrescar);
-                
-                $("#table").bootstrapTable('destroy').bootstrapTable({
-                    toolbar:"#toolbar",
-                    searchSelector:"#BuscarPor",
-                    cookieIdTable : "@ListaGestionClientesModel.NombrePagina",
-                    url: "@Url.Action("Get", "GridClientes")"
-                });
-            }
-    
-            function actionsFormatter(value, row, index) {
-                return [
-                    '<div class="btn-group">',
-                    '<a class="btn btn-primary" href="@EditarClienteModel.NombrePagina/' + row.Id + '">',
-                    'Edit',
-                    '</a>',
-                    '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">',
-                    '<span class="visually-hidden">Toggle Dropdown</span>',
-                    '</button>',
-                    '<ul class="dropdown-menu">',
-                    '<li><a class="dropdown-item text-danger" href="@EliminarClienteModel.NombrePagina/' + row.Id + '">',
-                    'Delete',
-                    '</a></li>',
-                    '</ul>',
-                    '</div>'
-                ].join('');
-            }
-        </script>
-}
+</div>
+      @section scripts
+      {
+           <partial name="_BootstrapTableScripts" />
+
+           <script>
+               
+               $(document).ready(function () {
+                                       
+                   initTable();
+               });
+               
+               function refrescar() {
+                   guardarEstadoFiltros('#toolbar1');
+                   $("#table1").bootstrapTable('refresh');
+               }
+               
+               function initTable() {
+
+                   $("#@Html.IdFor(m => m.NombreOEmpresa)").change(refrescar);
+                   $("#@Html.IdFor(m => m.Nif)").change(refrescar);
+                   $("#@Html.IdFor(m => m.Ref)").change(refrescar);
+                   
+                   $("#table1").bootstrapTable({
+                      // toolbar:"#toolbar-table1",
+                       url: "@Url.Action("Buscar", "GridClientes")"
+                   });
+               }
+              
+                function numFacturasFormatter(value, row, index) {
+                   return [
+                        @*'<a href="@ListaGestionFacturasModel.NombrePagina/'+ row.Id+'">'+ value +'</a>'*@
+                        row.@nameof(LineaListaGestionClientesVm.NumFacturas)
+                   ].join('');
+               }
+
+        function actionsFormatter(value, row, index) {
+            return [
+                '<div class="btn-group">',
+                '<a class="btn btn-primary" href="@EditarClienteModel.NombrePagina/' + row.Id + '">',
+                'Edit',
+                '</a>',
+                '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">',
+                '<span class="visually-hidden">Toggle Dropdown</span>',
+                '</button>',
+                '<ul class="dropdown-menu">',
+                '<li><a class="dropdown-item text-danger" href="@EliminarClienteModel.NombrePagina/' + row.Id + '">',
+                'Delete',
+                '</a></li>',
+                '</ul>',
+                '</div>'
+            ].join('');
+        }
+
+               function generarUrlExcelClientes(element) {
+                   const params = obtenerDatosFiltros("#toolbar1");
+                   const searchParams = new URLSearchParams(params);
+                   $(element).attr("href", "@Url.Action("ExportarExcel", "GridClientes")?"+ searchParams);
+               }
+           </script>
+
+           
+      }
+
+         

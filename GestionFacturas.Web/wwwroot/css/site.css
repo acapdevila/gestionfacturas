@@ -1,18 +1,35 @@
-html {
-  font-size: 14px;
+.bi {
+    /*vertical-align: -.125em;*/
+    fill: currentColor;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+
+
+textarea {
+    overflow: hidden;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/*Autocomplete tags*/
+.ui-autocomplete {
+    list-style: none;
+    background: #f8f8f8;
+    line-height: 32px;
+    cursor: pointer;
+    width: auto;
+    font-weight: bold;
+    width: 30%;
+    z-index: 10000 !important;
 }
 
-body {
-  margin-bottom: 60px;
+.ui-autocomplete li {
+    border-bottom: 1px dashed #bef3db;
+    width: 100%;
+}
+
+.ui-autocomplete li:hover {
+    color: #337bab;
+}
+
+.ui-helper-hidden-accessible {
+    display: none;
 }

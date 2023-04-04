@@ -1,0 +1,45 @@
+﻿@using GestionFacturas.Web.Pages.Clientes
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+   
+<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+    <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+        <h1><i class="bi bi-bootstrap"></i></h1>
+         &nbsp; Gestión facturas
+    </a>
+
+    <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0">
+        <li>
+            <a asp-page="@ListaGestionClientesModel.NombrePagina" class="nav-link text-white">
+                <i class="bi bi-people-fill fs-3 d-block mx-auto ms-2"></i>
+                Clientes
+            </a>
+        </li>
+                   
+     @*   <li>
+            <a asp-page="@ListaGestionFactuasModel.NombrePagina" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                    <use xlink:href="#bi-list-task"></use>
+                </svg>
+                Facturas
+            </a>
+        </li>*@
+       
+        <li>
+            <div class="dropdown">
+                <a href="#" class="nav-link text-white dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle fs-3 d-block mx-auto ms-4"></i>
+                 
+                    Seguridad
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownUser1" 
+                    data-popper-placement="top-start" 
+                    style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(0px, -34px);">
+                    <li><a class="dropdown-item" disabled>Usuarios</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" asp-page="/Seguridad/Acceso/CerrarSesion">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
