@@ -52,10 +52,10 @@ namespace GestionFacturas.Aplicacion
             //Lineas
             var row = 4;
             var col = 1;
-            foreach (var factura in facturas.OrderBy(m => m.FechaEmisionFactura))
+            foreach (var factura in facturas.OrderBy(m => m.FechaEmisionFacturaDateTime))
             {
 
-                worksheet.Cell(row, col).Value = factura.FechaEmisionFactura.ToShortDateString();
+                worksheet.Cell(row, col).Value = factura.FechaEmisionFacturaDateTime.ToShortDateString();
                 //col++;
                 //worksheet.Cell(row, col).Value = factura.FechaEmisionFactura.Day;
                 //col++;

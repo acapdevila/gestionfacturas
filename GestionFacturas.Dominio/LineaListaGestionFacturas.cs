@@ -1,4 +1,7 @@
-﻿namespace GestionFacturas.Dominio;
+﻿using GestionFacturas.Dominio.Infra;
+using System.Text.Json.Serialization;
+
+namespace GestionFacturas.Dominio;
 
 public class LineaListaGestionFacturas
 {
@@ -11,7 +14,9 @@ public class LineaListaGestionFacturas
 
     public string NumeroFactura { get { return string.Format(FormatoNumeroFactura, SerieFactura, NumeracionFactura); } }
 
-    public DateTime FechaEmisionFactura { get; set; }
+    [JsonIgnore]
+    public DateTime FechaEmisionFacturaDateTime { get; set; }
+    public string FechaEmisionFactura => FechaEmisionFacturaDateTime.ToFechaCorta();
     public DateTime? FechaVencimientoFactura { get; set; }
 
     public IEnumerable<string> ListaDescripciones { get; set; } = new List<string>();

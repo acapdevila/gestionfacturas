@@ -32,6 +32,14 @@
             return DateOnly.Parse(inputFecha);
         }
 
+        public static DateTime FromInputToDateTime(this string inputFecha, DateTime defaultValue = default)
+        {
+            if (string.IsNullOrEmpty(inputFecha))
+                return defaultValue;
+            _ = DateTime.TryParse(inputFecha, out defaultValue);
+            return defaultValue;
+        }
+
         public static string ToFechaYHora(this DateTimeOffset fecha)
         {
             return fecha.ToString($"{FormatoFecha} HH:mm");

@@ -14,8 +14,8 @@
                 <div class="row g-3">
 
                     <div class="col-12">
-                        <label asp-for="BuscarPor">Descripción/Cliente</label>
-                        <input type="text" asp-for="BuscarPor" class="form-control" placeholder="Descripción o cliente...">
+                        <label asp-for="NombreOEmpresa">Descripción/Cliente</label>
+                        <input type="text" asp-for="NombreOEmpresa" class="form-control" placeholder="Nombre cliente...">
                     </div>
 
                    <div class="col-12">
@@ -69,14 +69,14 @@
                 <thead>
                     <tr>
                         <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Id)" data-visible="false" data-serchable="false">ID</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.NumeroFactura)" data-width="20">Factura</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.FechaEmisionFactura)">Fecha</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.CompradorNombreOEmpresa)" data-width="30" data-width-unit="%">Descripción</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.EstadoFactura)">Estado</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.BaseImponible)">BI</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Impuestos)">IVA</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.ImporteTotal)" >Total</th>
-                        <th data-field="acciones" data-footer-formatter="footerFormatter" data-formatter="accionesFormatter" data-width="100" data-sortable="false">Acciones</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.NumeroFactura)" data-width="50">Factura</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.FechaEmisionFactura)" data-width="50">Fecha</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.CompradorNombreOEmpresa)" data-width="40" data-width-unit="%">Descripción</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.EstadoFactura)" data-footer-formatter="etiquetaTotalFormatter" data-formatter="estadoFormatter" data-width="50">Estado</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.BaseImponible)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">BI</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Impuestos)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">IVA</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.ImporteTotal)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">Total</th>
+                        <th data-field="acciones" data-formatter="accionesFormatter" data-width="100" data-sortable="false">Acciones</th>
 
                     </tr>
                 </thead>
@@ -87,8 +87,8 @@
 </div>
 
 @section scripts
-    {
-    <partial name="_BootstrapTableScripts" />
+{
+    <partial name="_BootstrapTableScripts"/>
 
 
     <script>
@@ -101,17 +101,17 @@
 
         function initTable() {
 
-            $("#@Html.IdFor(m => m.BuscarPor)").change(refrescar);
+            $("#@Html.IdFor(m => m.NombreOEmpresa)").change(refrescar);
             $("#@Html.IdFor(m => m.Desde)").change(refrescar);
             $("#@Html.IdFor(m => m.Hasta)").change(refrescar);
+            $("#@Html.IdFor(m => m.Orden)").change(refrescar);
                       
 
             $("#tablaAcciones").bootstrapTable({
                 //toolbar:"#toolbar1",
-                // search: false,
+                //search: false,
                 url: "@Url.Action("Buscar", "GridFacturas")",
-                sortName: "@nameof(LineaListaGestionFacturas.NumeracionFactura)",
-                sortOrder: "desc"
+                showFooter: true,
             });
         }
 
@@ -143,8 +143,62 @@
             ].join('');
         }
 
+        function totalFormatter(data) {
+            var field = this.field
+            return data.map(function (row) {
+                return +row[field]
+                }).reduce(function (sum, i) {
+                    return sum + i
+            }, 0).toLocaleString('es-ES', {
+                style: 'currency',
+                currency: 'EUR',
+            })
+        }
+
+        function etiquetaTotalFormatter() {
+            return 'Total'
+        }
+
+        function priceFormatter(value) {
+            return value.toLocaleString('es-ES', {
+                style: 'currency',
+                currency: 'EUR',
+            })
+        }
+
+        function obtenerCssClasePorEstadoFactura(estadoFactura) {
+            if (estadoFactura === 1) {
+                return "default";
+            } else if (estadoFactura === 2) {
+                return "warning";
+            } else if (estadoFactura === 3) {
+                return "success";
+            }
+            return "";
+        }
+
+        function obtenerTextoEstadoFactura(estadoFactura) {
+            if (estadoFactura === 1) {
+                return '@EstadoFacturaEnum.Borrador';
+            } else if (estadoFactura === 2) {
+                return "@EstadoFacturaEnum.Enviada";
+            } else if (estadoFactura === 3) {
+                return "@EstadoFacturaEnum.Cobrada";
+            }
+            return "";
+        }
+
+        function etiquetaTotalFormatter() {
+            return 'Total'
+        }
+
+        function estadoFormatter(value, row, index) {
+            var cssEstado = obtenerCssClasePorEstadoFactura(value);
+            var texto = obtenerTextoEstadoFactura(value);
+            return '<span class="badge bg-' + cssEstado + '">'+texto+'</span>'
+             }
     </script>
 
 
-      }
+}
 

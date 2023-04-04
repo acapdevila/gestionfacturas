@@ -43,7 +43,7 @@ namespace GestionFacturas.Aplicacion
                     FormatoNumeroFactura = m.FormatoNumeroFactura,
                     NumeracionFactura = m.NumeracionFactura,
                     SerieFactura = m.SerieFactura,
-                    FechaEmisionFactura = m.FechaEmisionFactura,
+                    FechaEmisionFacturaDateTime = m.FechaEmisionFactura,
                     FechaVencimientoFactura = m.FechaVencimientoFactura,
                     EstadoFactura = m.EstadoFactura,
                     BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,

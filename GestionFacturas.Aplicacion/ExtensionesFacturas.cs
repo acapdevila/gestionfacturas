@@ -73,6 +73,42 @@ namespace GestionFacturas.Aplicacion
 
             return consultaOrdenada;
         }
+        public static IOrderedQueryable<LineaListaGestionFacturas> OrderBy_OrdenarPor(this IQueryable<LineaListaGestionFacturas> consulta, OrdenFacturasEnum orden)
+        {
+            IOrderedQueryable<LineaListaGestionFacturas> consultaOrdenada;
 
-   }
+            switch (orden)
+            {
+                case OrdenFacturasEnum.NumeroDesc:
+                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
+                        .ThenByDescending(m => m.NumeracionFactura)
+                        .ThenByDescending(m => m.FechaEmisionFacturaDateTime);
+                    break;
+                case OrdenFacturasEnum.NumeroAsc:
+                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
+                        .ThenBy(m => m.NumeracionFactura)
+                        .ThenBy(m => m.FechaEmisionFacturaDateTime);
+                    break;
+                case OrdenFacturasEnum.FechaDesc:
+                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
+                        .ThenByDescending(m => m.FechaEmisionFacturaDateTime)
+                        .ThenByDescending(m => m.NumeracionFactura);
+                    break;
+                case OrdenFacturasEnum.FechaAsc:
+                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
+                        .ThenBy(m => m.FechaEmisionFacturaDateTime)
+                        .ThenBy(m => m.NumeracionFactura);
+                    break;
+                default:
+                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
+                        .ThenByDescending(m => m.NumeracionFactura)
+                        .ThenByDescending(m => m.FechaEmisionFacturaDateTime);
+                    break;
+            }
+
+
+            return consultaOrdenada;
+        }
+
+    }
 }

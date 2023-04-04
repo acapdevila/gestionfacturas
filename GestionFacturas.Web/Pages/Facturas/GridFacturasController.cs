@@ -4,6 +4,7 @@ using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.AccesoDatosSql.Filtros;
 using GestionFacturas.Aplicacion;
 using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Infra;
 using GestionFacturas.Web.Framework.Grid;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,6 @@ namespace GestionFacturas.Web.Pages.Facturas
             var consulta = _db.Facturas
                 .AsNoTracking()
                 .FiltrarPorParametros(gridParams)
-                //.OrderBy_OrdenarPor(gridParams.Order)
                 .Select(m => new LineaListaGestionFacturas
                 {
                     Id = m.Id,
@@ -34,7 +34,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                     FormatoNumeroFactura = m.FormatoNumeroFactura,
                     NumeracionFactura = m.NumeracionFactura,
                     SerieFactura = m.SerieFactura,
-                    FechaEmisionFactura = m.FechaEmisionFactura,
+                    FechaEmisionFacturaDateTime = m.FechaEmisionFactura,
                     FechaVencimientoFactura = m.FechaVencimientoFactura,
                     EstadoFactura = m.EstadoFactura,
                     BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
@@ -42,7 +42,8 @@ namespace GestionFacturas.Web.Pages.Facturas
                     CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
                     ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
                     CompradorNombreComercial = m.Comprador.NombreComercial
-                });
+                })
+                .OrderBy_OrdenarPor(gridParams.Orden);
 
 
             var source = await consulta.ToGrid(gridParams);
@@ -77,10 +78,16 @@ namespace GestionFacturas.Web.Pages.Facturas
     public class GridParamsFacturas : GridParams
     {
         public string Nif { get; set; } = string.Empty;
-
         public string NombreOEmpresa { get; set; } = string.Empty;
+
+        public DateTime DesdeFecha => Desde.FromInputToDateTime();
+        public string Desde { get; set; } = string.Empty;
+
+
+        public DateTime HastaFecha => Hasta.FromInputToDateTime();
+        public string Hasta { get; set; } = string.Empty;
         
-        public int Ref { get; set; }
+        public OrdenFacturasEnum Orden { get; set; }
 
     }
 
@@ -92,11 +99,17 @@ namespace GestionFacturas.Web.Pages.Facturas
         {
             return consulta
                 .If(!string.IsNullOrEmpty(gridParams.NombreOEmpresa))
-                .ThenWhere(m => m.VendedorNombreOEmpresa.Contains(gridParams.NombreOEmpresa))
-                
+                    .ThenWhere(m => m.CompradorNombreOEmpresa.Contains(gridParams.NombreOEmpresa))
 
-                .If(0 < gridParams.Ref)
-                .ThenWhere(m => m.Id == gridParams.Ref);
+
+                .If(!string.IsNullOrEmpty(gridParams.Nif))
+                .ThenWhere(m => m.CompradorNumeroIdentificacionFiscal.Contains(gridParams.Nif))
+
+                .If(!string.IsNullOrEmpty(gridParams.Desde))
+                .ThenWhere(m => gridParams.DesdeFecha <= m.FechaEmisionFactura)
+                .If(!string.IsNullOrEmpty(gridParams.Hasta))
+                .ThenWhere(m => m.FechaEmisionFactura <= gridParams.HastaFecha)
+              ;
 
         }
 

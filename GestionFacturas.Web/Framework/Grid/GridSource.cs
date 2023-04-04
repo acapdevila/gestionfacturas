@@ -29,6 +29,10 @@ namespace GestionFacturas.Web.Framework.Grid
             this IQueryable<T> consulta, 
                 GridParams gridParams)
         {
+            if (gridParams.Limit == 0)
+            {
+                gridParams.Limit = Int32.MaxValue;
+            }
             var source = new GridSource
             {
                 total = await consulta.CountAsync(),
