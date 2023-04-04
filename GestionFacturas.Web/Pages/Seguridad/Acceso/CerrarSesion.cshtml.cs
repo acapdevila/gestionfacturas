@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Hospi.Web.Pages
+namespace GestionFacturas.Web.Pages.Seguridad.Acceso
 {
     public class CerrarSesionModel : PageModel
     {
@@ -23,10 +22,5 @@ namespace Hospi.Web.Pages
             return RedirectToPage("/seguridad/acceso/entrar");
 
         }
-
-        //public async Task<IActionResult> OnPost()
-        //{
-            
-        //}
     }
 }

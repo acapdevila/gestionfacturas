@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using GestionFacturas.AccesoDatosSql;
-using GestionFacturas.Dominio;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace GestionFacturas.Web.Pages.Acceso
+namespace GestionFacturas.Web.Pages.Seguridad.Acceso
 {
     public class EntrarViewModel
     {
@@ -53,7 +52,7 @@ namespace GestionFacturas.Web.Pages.Acceso
             }
 
 
-            var usuario = Usuario.Todos
+            var usuario = _db.Usuarios
                 .FirstOrDefault(m => m.Email == ViewModel.Email);
 
             if (usuario == null)

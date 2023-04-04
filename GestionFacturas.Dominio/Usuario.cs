@@ -4,27 +4,15 @@ using GestionFacturas.Dominio.Infra;
 namespace GestionFacturas.Dominio
 {
     
-    public class Usuario : Entity<int>
+    public class Usuario : Entity<string>
     {
-        public static readonly Usuario Nulo = new (0, "-", "-");
-        public static readonly Usuario Admin = new (1, "info@bahiacode.com", "vamos a facturar");
-        
-
-        public static IReadOnlyList<Usuario> Todos = new List<Usuario> {
-            Admin
-        };
-
-        public static Usuario DeId(long id)
-        {
-            return Todos.First(m => m.Id == id);
-        }
 
         protected Usuario()
         {
 
         }
 
-        private Usuario(int id, string email, string password) : base(id)
+        private Usuario(string id, string email, string password) : base(id)
         {
             Email = email;
             Password = PasswordHasher.HashPassword(password);

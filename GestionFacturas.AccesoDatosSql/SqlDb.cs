@@ -12,7 +12,9 @@ namespace GestionFacturas.AccesoDatosSql
         {
             _connectionString = connectionString;
         }
-        
+
+        public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
+
         public virtual DbSet<Cliente> Clientes { get; set; } = null!;
         public virtual DbSet<Factura> Facturas { get; set; } = null!;
         public virtual DbSet<LineaFactura> FacturasLineas { get; set; } = null!;
@@ -29,6 +31,16 @@ namespace GestionFacturas.AccesoDatosSql
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.ToTable("AspNetUsers", "GestionFacturas");
+
+                entity.Property(e => e.Email);
+
+                entity.Property(e => e.Password).HasColumnName("PasswordHash");
+            });
+
+
             modelBuilder.Entity<Cliente>(entity =>
             {
                 entity.ToTable("Clientes", "GestionFacturas");

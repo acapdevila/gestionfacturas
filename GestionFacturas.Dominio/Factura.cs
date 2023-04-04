@@ -55,7 +55,7 @@ namespace GestionFacturas.Dominio
         public string CompradorEmail { get; set; } = string.Empty;
 
         public virtual ICollection<LineaFactura> Lineas { get; set; }
-        public virtual Usuario Usuario { get; set; } = Usuario.Nulo;
+        public virtual Usuario Usuario { get; set; } = null!;
         
         public EstadoFacturaEnum EstadoFactura { get; set; }
         public string Comentarios { get; set; } = string.Empty;

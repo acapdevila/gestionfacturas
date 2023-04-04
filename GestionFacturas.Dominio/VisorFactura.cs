@@ -41,8 +41,7 @@ public class VisorFactura
     public string FormaPagoDetalles { get; set; } = string.Empty;
 
     public ICollection<LineaVisorFactura> Lineas { get; set; } = new List<LineaVisorFactura>();
-    public Usuario Usuario { get; set; } = Usuario.Nulo;
-
+    
     public EstadoFacturaEnum EstadoFactura { get; set; }
     public string Comentarios { get; set; } = string.Empty;
     public string ComentariosPie { get; set; } = string.Empty;
