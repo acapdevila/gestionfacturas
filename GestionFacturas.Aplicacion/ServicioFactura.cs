@@ -22,66 +22,7 @@ namespace GestionFacturas.Aplicacion
         {
             _servicioEmail = servicioEmail;
         }
-
-        public IQueryable<Factura> Facturas()
-        {
-            return _contexto.Facturas;
-        }
-
-        public async Task<IPagedList<LineaListaGestionFacturas>> ListaGestionFacturasAsync(FiltroBusquedaFactura filtroBusqueda)
-        {
-            var consulta = CrearConsultaFacturasFiltrada(filtroBusqueda);
-
-            var consultaOrdenada = consulta.OrderBy_OrdenarPor(filtroBusqueda.OrdenarPorEnum);
-
-            var consultaLineasFacturas = consultaOrdenada
-                .Select(m => new LineaListaGestionFacturas
-                {
-                    Id = m.Id,
-                    IdUsuario = m.IdUsuario,
-                    IdComprador = m.IdComprador,
-                    FormatoNumeroFactura = m.FormatoNumeroFactura,
-                    NumeracionFactura = m.NumeracionFactura,
-                    SerieFactura = m.SerieFactura,
-                    FechaEmisionFacturaDateTime = m.FechaEmisionFactura,
-                    FechaVencimientoFactura = m.FechaVencimientoFactura,
-                    EstadoFactura = m.EstadoFactura,
-                    BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
-                    Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100),2)) ?? 0,
-                    CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
-                    ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
-                    CompradorNombreComercial = m.Comprador.NombreComercial
-                });
-
-            var facturas = await consultaLineasFacturas
-                                .ToPagedListAsync(
-                                    filtroBusqueda.IndicePagina, 
-                                    filtroBusqueda.LineasPorPagina);
-
-            return facturas;
-        }
-
-        public async Task<TotalesFacturas> ObtenerTotalesAsync(FiltroBusquedaFactura filtroBusqueda)
-        {
-           var consultaFacturas = CrearConsultaFacturasFiltrada(filtroBusqueda);
-
-           var totales = await consultaFacturas.Select(m=> new
-            {
-                Id = 1,
-                BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
-                Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100),2)) ?? 0,
-            })
-            .GroupBy(m=> m.Id)
-            .Select(g=> new TotalesFacturas {
-                TotalBaseImponible = g.Sum(t=>t.BaseImponible),
-                TotalImpuestos = g.Sum(t => t.Impuestos),
-            }).FirstOrDefaultAsync();
-
-            if (totales == null) totales = new TotalesFacturas();               
-            
-            return totales;
-        }
-
+        
         public async Task<EditorFactura> ObtenerEditorFacturaParaCrearNuevaFactura(string serie, int? idCliente)
         {
             EditorFactura editor;
@@ -212,19 +153,7 @@ namespace GestionFacturas.Aplicacion
             return editor;
         }
 
-
-        private IQueryable<Factura> CrearConsultaFacturasFiltrada(FiltroBusquedaFactura filtroBusqueda)
-        {
-            var consulta = _contexto.Facturas.AsQueryable();
-
-            if (filtroBusqueda.TieneValores)
-            {
-                consulta = consulta.Where_FiltroBusqueda(filtroBusqueda);
-            }
-            
-            return consulta;
-        }
-
+        
         private async Task<Factura> ObtenerUlitmaFacturaDeLaSerie(string serie)
         {
             if (string.IsNullOrEmpty(serie))
