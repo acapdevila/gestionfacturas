@@ -1,50 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.Dominio;
+using GestionFacturas.Aplicacion;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
     public class CrearFacturaModel : PageModel
     {
         public static readonly string NombrePagina = "/Facturas/CrearFactura";
+        
+        private readonly ServicioFactura _servicioFactura;
 
-        private readonly GestionFacturas.AccesoDatosSql.SqlDb _context;
-
-        public CrearFacturaModel(GestionFacturas.AccesoDatosSql.SqlDb context)
+        public CrearFacturaModel(ServicioFactura servicioFactura)
         {
-            _context = context;
+            _servicioFactura = servicioFactura;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-        ViewData["IdComprador"] = new SelectList(_context.Clientes, "Id", "CodigoPostal");
+            Editor =
+                await _servicioFactura
+                    .ObtenerEditorFacturaParaCrearNuevaFactura(serie: string.Empty, idCliente: IdCliente);
+            
             return Page();
         }
+        [BindProperty(SupportsGet = true)]
+        public int? IdCliente { get; set; }
 
         [BindProperty]
-        public Factura Factura { get; set; } = default!;
-
-        
+        public EditorFactura Editor { get; set; } 
 
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Facturas == null || Factura == null)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Facturas.Add(Factura);
-            await _context.SaveChangesAsync();
+            Editor.IdUsuario = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return RedirectToPage("./Index");
+            await _servicioFactura.CrearFacturaAsync(Editor);
+            return RedirectToAction("Detalles", new { Id = Editor.Id });
         }
+        
     }
+    
 }
