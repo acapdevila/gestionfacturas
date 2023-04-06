@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GestionFacturas.Dominio;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GestionFacturas.Web.Pages.Facturas
@@ -14,7 +15,9 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         public string Hasta { get; set; } = string.Empty;
 
-        public int Orden { get; set; } 
+        public int Orden { get; set; }
+
+        public EditorEstadoFactura EditorEstadoFactura { get; set; }
 
         public void OnGet()
         {

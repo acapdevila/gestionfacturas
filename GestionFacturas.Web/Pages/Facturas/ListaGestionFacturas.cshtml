@@ -18,7 +18,7 @@
                         <input type="text" asp-for="NombreOEmpresa" class="form-control" placeholder="Nombre cliente...">
                     </div>
 
-                   <div class="col-12">
+                    <div class="col-12">
                         <label asp-for="Desde">Desde</label>
                         <input asp-for="Desde" type="date" class="form-control" poster="Desde" placeholder="Desde">
 
@@ -67,21 +67,64 @@
             <table id="tablaAcciones"
                    class="table table-striped table-sm">
                 <thead>
-                    <tr>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Id)" data-visible="false" data-serchable="false">ID</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.NumeroFactura)" data-width="50">Factura</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.FechaEmisionFactura)" data-width="50">Fecha</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.CompradorNombreOEmpresa)" data-width="40" data-width-unit="%">Descripción</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.EstadoFactura)" data-footer-formatter="etiquetaTotalFormatter" data-formatter="estadoFormatter" data-width="50">Estado</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.BaseImponible)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">BI</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Impuestos)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">IVA</th>
-                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.ImporteTotal)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">Total</th>
-                        <th data-field="acciones" data-formatter="accionesFormatter" data-width="100" data-sortable="false">Acciones</th>
+                <tr>
+                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Id)" data-visible="false" data-serchable="false">ID</th>
+                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.NumeroFactura)" data-width="50">Factura</th>
+                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.FechaEmisionFactura)" data-width="50">Fecha</th>
+                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.CompradorNombreOEmpresa)" data-width="40" data-width-unit="%">Descripción</th>
+                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.EstadoFactura)" data-footer-formatter="etiquetaTotalFormatter" data-formatter="estadoFormatter" data-width="50">Estado</th>
+                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.BaseImponible)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">BI</th>
+                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Impuestos)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">IVA</th>
+                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.ImporteTotal)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">Total</th>
+                    <th data-field="acciones" data-formatter="accionesFormatter" data-width="100" data-sortable="false">Acciones</th>
 
-                    </tr>
+                </tr>
                 </thead>
 
             </table>
+        </div>
+    </div>
+</div>
+
+@*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCambiarEstadoFactura">
+    Launch demo modal
+</button>*@
+
+
+<div class="modal" id="modalCambiarEstadoFactura" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cambiar estado factura</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               
+            </div>
+            <div class="modal-body">
+                <form id="formCambiarEstado">
+
+                    @Html.HiddenFor(m => m.EditorEstadoFactura.IdFactura, htmlAttributes: new { id = "recipient-idFactura" })
+                    @Html.HiddenFor(m => m.EditorEstadoFactura.NumeroFactura, htmlAttributes: new { id = "recipient-numeroFactura" })
+                    <div class="form-group">
+                        <label for="recipient-numeroFactura" class="control-label" id="Factura">Factura</label>
+                        @Html.TextBox("numeroFacturaDeshabilitado", "", htmlAttributes: new { @class = "form-control", id = "recipient-numeroFacturaDeshabilitado", disabled = "disabled" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EditorEstadoFactura.EstadoFactura, htmlAttributes: new {@class = "control-label", @for = "recipient-estadoFactura"})
+                        <select id="recipient-estadoFactura" asp-for="EditorEstadoFactura.EstadoFactura" class="form-select" asp-items="Html.GetEnumSelectList<EstadoFacturaEnum>()">
+                            
+                        </select>
+                        @Html.ValidationMessageFor(model => model.EditorEstadoFactura.EstadoFactura, "", new {@class = "text-danger"})
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>*@
+                <button type="button" id="btnGuardar" class="btn btn-primary">Guardar</button>
+
+
+
+            </div>
         </div>
     </div>
 </div>
@@ -195,10 +238,103 @@
         function estadoFormatter(value, row, index) {
             var cssEstado = obtenerCssClasePorEstadoFactura(value);
             var texto = obtenerTextoEstadoFactura(value);
-            return '<span class="badge bg-' + cssEstado + '">'+texto+'</span>'
+            var element = crearBotonEstadoFactura(row.Id, row.NumeroFactura, value, texto);
+            //alert(element.outerHtml);
+            //var stringElement = element.outerHtml;
+            var numFactura = row.NumeroFactura;
+            return  [
+                '<div id="contenedorBotonEstadoFactura'+ row.Id +'">',
+                  element.outerHTML,
+                  '</div>'
+            ].join('');
+            
              }
     </script>
+    
+    <!-- Modal -->
 
+
+
+    <script type="text/javascript">
+
+        function crearBotonEstadoFactura(idFactura, numeroFactura, estadoFactura, textoBotton) {
+
+            var element = document.createElement("button");
+            element.type = "button";
+
+            var t = document.createTextNode(textoBotton);
+            element.appendChild(t);
+
+            element.className = "btn btn-" + obtenerCssClasePorEstadoFactura(estadoFactura) + " btn-xs";
+
+            element.setAttribute("data-idfactura", idFactura);
+            element.setAttribute("data-numerofactura", numeroFactura);
+            element.setAttribute("data-estadofactura", estadoFactura);
+            element.setAttribute("data-bs-toggle", "modal");
+            element.setAttribute("data-bs-target", "#modalCambiarEstadoFactura");
+            return element;
+        }
+
+        function eliminarBotonEstadoFactura(idFactura) {
+            $("#contenedorBotonEstadoFactura" + idFactura).empty();
+        }
+        
+
+    $(document).ready(function () {
+    
+        $('#modalCambiarEstadoFactura').on('show.bs.modal', function(event) {
+
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var idFactura = button.data('idfactura'); // Extract info from data-* attributes
+            var numeroFactura = button.data('numerofactura');
+            var estadoFactura = button.data('estadofactura');
+            var modal = $(this);
+            modal.find('#recipient-idFactura').val(idFactura);
+            modal.find('#recipient-numeroFactura').val(numeroFactura);
+            modal.find('#recipient-numeroFacturaDeshabilitado').val(numeroFactura);
+            modal.find('#recipient-estadoFactura').val(estadoFactura);
+        });
+
+        $("#btnGuardar").click(function (event) {
+
+            $(this).val('Guardando...').prop('disabled', true);
+
+            event.preventDefault();
+
+            guardar();
+        });
+
+        function guardar() {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("CambiarEstado", "CambiarEstadoFactura")",
+                data: $("#formCambiarEstado").serialize(),
+                dataType: "json"
+            }).done(function(data) {
+
+                $("#btnGuardar")
+                    .val("Guardar")
+                    .prop('disabled', false);
+
+                eliminarBotonEstadoFactura(data.IdFactura);
+                var element = crearBotonEstadoFactura(data.IdFactura,data.NumeroFactura, data.EstadoFactura, data.TextoEstadoFactura);
+                var contenedor = document.getElementById("contenedorBotonEstadoFactura" + data.IdFactura);
+                contenedor.appendChild(element);
+
+                $('#modalCambiarEstadoFactura').modal('hide');
+
+            }).fail(function() {
+                    alert("Se ha producido un error inesperado.");
+                    return false;
+                }
+            );
+        }
+
+
+    });
+
+
+    </script>
 
 }
 
