@@ -1,4 +1,5 @@
 using GestionFacturas.AccesoDatosSql;
+using GestionFacturas.Aplicacion;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 
@@ -38,6 +39,9 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.WriteIndented = true;
 });
 
+
+builder.Services.AddScoped<ServicioEmail>();
+builder.Services.AddScoped<ServicioFactura>();
 
 var app = builder.Build();
 

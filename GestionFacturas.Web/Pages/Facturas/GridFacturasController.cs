@@ -87,7 +87,7 @@ namespace GestionFacturas.Web.Pages.Facturas
         public DateTime HastaFecha => Hasta.FromInputToDateTime();
         public string Hasta { get; set; } = string.Empty;
         
-        public OrdenFacturasEnum Orden { get; set; }
+        public OrdenFacturas Orden { get; set; }
 
     }
 

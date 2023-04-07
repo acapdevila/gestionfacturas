@@ -23,42 +23,6 @@ namespace GestionFacturas.Aplicacion
             _servicioEmail = servicioEmail;
         }
 
-        public async Task<IPagedList<LineaListaGestionFacturas>> ListaGestionFacturasAsync(FiltroBusquedaFactura filtroBusqueda)
-        {
-            var consulta = _contexto.Facturas.AsQueryable();
-
-            if (filtroBusqueda.TieneValores)
-            {
-                consulta = consulta.Where_FiltroBusqueda(filtroBusqueda);
-            }
-
-            var consultaOrdenada = consulta.OrderBy_OrdenarPor(filtroBusqueda.OrdenarPorEnum);
-
-            var consultaLineasFacturas = consultaOrdenada
-                .Select(m => new LineaListaGestionFacturas
-                {
-                    Id = m.Id,
-                    IdUsuario = m.IdUsuario,
-                    IdComprador = m.IdComprador,
-                    FormatoNumeroFactura = m.FormatoNumeroFactura,
-                    NumeracionFactura = m.NumeracionFactura,
-                    SerieFactura = m.SerieFactura,
-                    FechaEmisionFacturaDateTime = m.FechaEmisionFactura,
-                    FechaVencimientoFactura = m.FechaVencimientoFactura,
-                    EstadoFactura = m.EstadoFactura,
-                    BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
-                    Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100), 2)) ?? 0,
-                    CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
-                    ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
-                    CompradorNombreComercial = m.Comprador.NombreComercial
-                });
-
-            var facturas = await consultaLineasFacturas
-                                .ToPagedListAsync(filtroBusqueda.IndicePagina, filtroBusqueda.LineasPorPagina);
-
-            return facturas;
-        }
-
         public async Task<EditorFactura> ObtenerEditorFacturaParaCrearNuevaFactura(string serie, int? idCliente)
         {
             EditorFactura editor;

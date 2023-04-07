@@ -1,14 +1,12 @@
-﻿using System.Globalization;
-using System.Linq;
-using ClosedXML.Excel;
-using System.Collections.Generic;
+﻿using ClosedXML.Excel;
+using GestionFacturas.Aplicacion;
 using GestionFacturas.Dominio;
 
-namespace GestionFacturas.Aplicacion
+namespace GestionFacturas.Web.Pages.Facturas
 {
     public static class ServicioExcel
     {
-         public static XLWorkbook GenerarExcelFactura(FiltroBusquedaFactura filtroBusqueda, IEnumerable<LineaListaGestionFacturas> facturas)
+         public static XLWorkbook GenerarExcelFactura(GridParamsFacturas filtroBusqueda, IEnumerable<LineaListaGestionFacturas> facturas)
         {
             var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Facturación");
@@ -17,14 +15,14 @@ namespace GestionFacturas.Aplicacion
 
             worksheet.Range("A1:E1").Style.Font.SetBold();
 
-            if (filtroBusqueda.FechaDesde.HasValue && filtroBusqueda.FechaHasta.HasValue)
-                worksheet.Range("A1:E1").Merge().Value = string.Format("Facturación entre {0} y {1}",
-                    filtroBusqueda.FechaDesde.Value.ToShortDateString(),
-                    filtroBusqueda.FechaHasta.Value.ToShortDateString());
+            if (!string.IsNullOrEmpty(filtroBusqueda.Desde) &&
+                !string.IsNullOrEmpty(filtroBusqueda.Hasta))
+                worksheet.Range("A1:E1").Merge().Value =
+                    $"Facturación entre {filtroBusqueda.Desde} y {filtroBusqueda.Hasta}";
 
 
             //cabecera
-            worksheet.Cell("A3").Value = new[]
+            worksheet.Cell("A3").InsertData(new[]
             {
               new
               {
@@ -39,7 +37,7 @@ namespace GestionFacturas.Aplicacion
                   CuotaIva ="CUOTA IVA",
                   Total ="TOTAL FACTURA"
               }  
-            };
+            });
 
             worksheet.Range("A3:G3").Style
                  .Font.SetFontSize(13)
@@ -69,18 +67,18 @@ namespace GestionFacturas.Aplicacion
                 worksheet.Cell(row, col).Value = factura.CompradorNombreOEmpresa;
                 col++;
                 worksheet.Cell(row, col).Value = factura.Conceptos.TruncarConElipsis(70);
-                worksheet.Cell(row, col).Comment.AddText(factura.Conceptos);
+                worksheet.Cell(row, col).CreateComment().AddText(factura.Conceptos);
                 col++;
-                worksheet.Cell(row, col).DataType = XLDataType.Number;
+                //worksheet.Cell(row, col).SetDataType() = XLDataType.Number;
                 worksheet.Cell(row, col).Value = factura.BaseImponible;
                 worksheet.Cell(row, col).Style.NumberFormat.SetFormat("#,##0.00 €");
 
                 col++;
-                worksheet.Cell(row, col).DataType = XLDataType.Number;
+                //worksheet.Cell(row, col).DataType = XLDataType.Number;
                 worksheet.Cell(row, col).Value = factura.Impuestos;
                 worksheet.Cell(row, col).Style.NumberFormat.SetFormat("#,##0.00 €");
                 col++;
-                worksheet.Cell(row, col).DataType = XLDataType.Number;
+                //worksheet.Cell(row, col).DataType = XLDataType.Number;
                 worksheet.Cell(row, col).Value = factura.ImporteTotal;
                 worksheet.Cell(row, col).Style.NumberFormat.SetFormat("#,##0.00 €");
                 row++;

@@ -31,7 +31,7 @@
 
                     <div class="col-12">
                         <label asp-for="Orden">Ordenar por</label>
-                        <select asp-for="Orden" class="form-select" asp-items="Html.GetEnumSelectList<OrdenFacturasEnum>()">
+                        <select asp-for="Orden" class="form-select" asp-items="Html.GetEnumSelectList<OrdenFacturas>()">
                             
                         </select>
                     </div>
@@ -58,6 +58,17 @@
                     <i class="bi bi-plus"></i>
                     Nueva factura
                 </a>
+                &nbsp;
+                <a asp-action="DescargarZip" asp-controller="DescargasFacturas" class="btn btn-outline-secondary"
+                   onclick="DescargarZip();return false;">
+                    Descargar Zip
+                </a>
+                &nbsp;
+                <a asp-action="DescargarExcel" asp-controller="DescargasFacturas" class="btn btn-outline-secondary"
+                   onclick="DescargarExcel();return false;">
+                    Descargar Excel
+                </a>
+             
 
             </div>
         </div>

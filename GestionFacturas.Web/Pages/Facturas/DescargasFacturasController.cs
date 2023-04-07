@@ -2,45 +2,57 @@
 using GestionFacturas.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using ClosedXML.Extensions;
+using GestionFacturas.AccesoDatosSql;
+using GestionFacturas.Dominio.Infra;
 using Ionic.Zip;
+using Microsoft.EntityFrameworkCore;
+using DocumentFormat.OpenXml.InkML;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
     public class DescargasFacturasController : Controller
     {
         private readonly ServicioFactura _servicioFactura;
+        private readonly SqlDb _db;
         private readonly IWebHostEnvironment _env;
 
-        public DescargasFacturasController(ServicioFactura servicioFactura, IWebHostEnvironment env)
+        public DescargasFacturasController(ServicioFactura servicioFactura, IWebHostEnvironment env, SqlDb db)
         {
             _servicioFactura = servicioFactura;
             _env = env;
+            _db = db;
         }
 
-        public async Task<ActionResult> DescargarZip(FiltroBusquedaFactura filtroBusqueda)
+        public async Task<ActionResult> DescargarZip(GridParamsFacturas gridParams)
         {
-            if (!filtroBusqueda.TieneValores)
-            {
-                filtroBusqueda = new FiltroBusquedaFactura
-                {
-                    FechaDesde = ServicioFechas.PrimerDiaMesAnterior(),
-                    FechaHasta = ServicioFechas.UltimoDiaMesActual()
-                };
-            }
+            var facturas =
+                await _db.Facturas
+                    .AsNoTracking()
+                    .FiltrarPorParametros(gridParams)
+                    .Select(m => new LineaListaGestionFacturas
+                    {
+                        Id = m.Id,
+                        IdUsuario = m.IdUsuario,
+                        IdComprador = m.IdComprador,
+                        FormatoNumeroFactura = m.FormatoNumeroFactura,
+                        NumeracionFactura = m.NumeracionFactura,
+                        SerieFactura = m.SerieFactura,
+                        FechaEmisionFacturaDateTime = m.FechaEmisionFactura,
+                        FechaVencimientoFactura = m.FechaVencimientoFactura,
+                        EstadoFactura = m.EstadoFactura,
+                        BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
+                        Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100), 2)) ?? 0,
+                        CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
+                        ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
+                        CompradorNombreComercial = m.Comprador.NombreComercial
+                    })
+                    .OrderBy_OrdenarPor(gridParams.Orden)
+                    .ToListAsync();
+            
 
-            filtroBusqueda.LineasPorPagina = int.MaxValue;
+            var archivoZip = await GenerarZip(facturas);
 
-            var listaGestionFacturas =
-                await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda);
-
-            if (!listaGestionFacturas.Any())
-                return RedirectToPage("ListaGestionFacturas");
-
-            var archivoZip = await GenerarZip(listaGestionFacturas);
-
-            var nombreArchivoZip = string.Format("Facturas_desde_{0}_hasta_{1}.zip",
-                filtroBusqueda.FechaDesde.Value.ToString("dd-MM-yyyy"),
-                filtroBusqueda.FechaHasta.Value.ToString("dd-MM-yyyy"));
+            var nombreArchivoZip = $"Facturas_desde_{gridParams.Desde}_hasta_{gridParams.Hasta}.zip";
 
             archivoZip.Position = 0;
             HttpContext.Response.Headers.Add("content-disposition", "attachment; filename=" + nombreArchivoZip);
@@ -56,7 +68,10 @@ namespace GestionFacturas.Web.Pages.Facturas
             {
                 foreach (var itemFactura in listaGestionFacturas)
                 {
-                    var factura = await _servicioFactura.BuscarFacturaAsync(itemFactura.Id);
+                    var factura = await _db.Facturas
+                        .Include(m => m.Lineas)
+                        .FirstAsync(m => m.Id == itemFactura.Id);
+
                     var informeLocal = GeneraLocalReportFactura.GenerarInformeLocalFactura(factura, _env.WebRootPath);
 
                     byte[] pdf = informeLocal.Render("PDF");
@@ -71,32 +86,38 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         }
 
-        public async Task<ActionResult> DescargarExcel(FiltroBusquedaFactura filtroBusqueda)
+        public async Task<ActionResult> DescargarExcel(GridParamsFacturas gridParams)
         {
-            if (!filtroBusqueda.TieneValores)
-            {
-                filtroBusqueda = new FiltroBusquedaFactura
+            var facturas =
+                await _db.Facturas
+                .AsNoTracking()
+                .FiltrarPorParametros(gridParams)
+                .Select(m => new LineaListaGestionFacturas
                 {
-                    FechaDesde = ServicioFechas.PrimerDiaMesAnterior(),
-                    FechaHasta = ServicioFechas.UltimoDiaMesActual()
-                };
-            }
+                    Id = m.Id,
+                    IdUsuario = m.IdUsuario,
+                    IdComprador = m.IdComprador,
+                    FormatoNumeroFactura = m.FormatoNumeroFactura,
+                    NumeracionFactura = m.NumeracionFactura,
+                    SerieFactura = m.SerieFactura,
+                    FechaEmisionFacturaDateTime = m.FechaEmisionFactura,
+                    FechaVencimientoFactura = m.FechaVencimientoFactura,
+                    EstadoFactura = m.EstadoFactura,
+                    BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
+                    Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100), 2)) ?? 0,
+                    CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
+                    ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
+                    CompradorNombreComercial = m.Comprador.NombreComercial
+                })
+                .OrderBy_OrdenarPor(gridParams.Orden)
+                .ToListAsync();
 
-            filtroBusqueda.LineasPorPagina = int.MaxValue;
 
-            var listaGestionFacturas =
-                await _servicioFactura.ListaGestionFacturasAsync(filtroBusqueda);
+            var workbook = ServicioExcel.GenerarExcelFactura(gridParams, facturas);
 
-            if (!listaGestionFacturas.Any())
-                return RedirectToPage("ListaGestionFacturas");
+            var nombreArchivoExcel = $"Facturacion_desde_{gridParams.Desde}_hasta_{gridParams.Desde}.xlsx";
 
-            var workbook = ServicioExcel.GenerarExcelFactura(filtroBusqueda, listaGestionFacturas);
-
-            var nombreArchivoExcel = string.Format("Facturacion_desde_{0}_hasta_{1}",
-                filtroBusqueda.FechaDesde.Value.ToString("dd-MM-yyyy"),
-                filtroBusqueda.FechaHasta.Value.ToString("dd-MM-yyyy"));
-
-            return workbook.Deliver(nombreArchivoExcel);
+            return workbook.Deliver(nombreArchivoExcel,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
             // or specify the content type:
             // return wb.Deliver("generatedFile.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

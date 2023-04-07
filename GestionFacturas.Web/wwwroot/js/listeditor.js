@@ -1,5 +1,5 @@
 ﻿function removeNestedForm(element, container, deleteElement) {
-    var $container = $(element).parents(container);
+    let $container = $(element).parents(container);
     $container.find(deleteElement).val('True');
     
     //El elemento se esconde y hay que tratar las validaciones
@@ -13,9 +13,9 @@
  }
 
 function addNestedForm(container, counter, ticks, content, focusId) {
-    var nextIndex = $(counter).length;
-    var pattern = new RegExp(ticks, "gi");
-    var patternIndex = new RegExp("proximoIndice", "gi");
+    let nextIndex = $(counter).length;
+    let pattern = new RegExp(ticks, "gi");
+    let patternIndex = new RegExp("proximoIndice", "gi");
     content = content.replace(pattern, nextIndex).replace(patternIndex, nextIndex);
     $(container).append(content);
     $(focusId.replace(pattern, nextIndex)).focus();

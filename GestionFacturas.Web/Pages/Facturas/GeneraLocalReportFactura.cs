@@ -9,7 +9,7 @@ namespace GestionFacturas.Web.Pages.Facturas
         
         public static LocalReport GenerarInformeLocalFactura(Factura factura, string webRootPath)
         {
-            var rutaReport = Path.Combine(webRootPath, "Content\\informes", "Factura.rdlc");
+            var rutaReport = Path.Combine(webRootPath, "informes", "Factura.rdlc");
 
             var informeLocal = new LocalReport
             {

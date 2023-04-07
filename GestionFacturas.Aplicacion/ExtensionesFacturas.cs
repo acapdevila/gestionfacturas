@@ -4,97 +4,29 @@ namespace GestionFacturas.Aplicacion
 {
     public static class ExtensionesFacturas
     {
-
-        public static IQueryable<Factura> Where_FiltroBusqueda(this IQueryable<Factura> consulta, FiltroBusquedaFactura filtroBusqueda)
-        {
-            if (!string.IsNullOrEmpty(filtroBusqueda.SerieFactura))
-            {
-                consulta = consulta.Where(m => m.SerieFactura == filtroBusqueda.SerieFactura);
-            }
-
-            if (!string.IsNullOrEmpty(filtroBusqueda.NombreOEmpresaCliente))
-            {
-                consulta = consulta.Where(m =>
-                            m.CompradorNombreOEmpresa.Contains(filtroBusqueda.NombreOEmpresaCliente) ||
-                            m.Comprador.NombreComercial.Contains(filtroBusqueda.NombreOEmpresaCliente));
-            }
-
-            if (filtroBusqueda.FechaDesde.HasValue && filtroBusqueda.FechaHasta.HasValue)
-            {
-                consulta = consulta.Where(m => m.FechaEmisionFactura >= filtroBusqueda.FechaDesde.Value && m.FechaEmisionFactura <= filtroBusqueda.FechaHasta.Value);
-            }
-
-            if (filtroBusqueda.IdCliente.HasValue)
-            {
-                consulta = consulta.Where(m => m.IdComprador == filtroBusqueda.IdCliente.Value);
-            }
             
-            if (!string.IsNullOrEmpty(filtroBusqueda.Conceptos))
-            {
-                consulta = consulta.Where(m => m.Lineas.Any(l => l.Descripcion.Contains(filtroBusqueda.Conceptos)));    
-            }
-
-            return consulta;
-        }
-
-        public static IOrderedQueryable<Factura> OrderBy_OrdenarPor(this IQueryable<Factura> consulta, OrdenFacturasEnum orden)
-        {
-            IOrderedQueryable<Factura> consultaOrdenada;
-
-            switch (orden)
-            {
-                case OrdenFacturasEnum.NumeroDesc:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                         .ThenByDescending(m => m.NumeracionFactura)
-                        .ThenByDescending(m => m.FechaEmisionFactura);
-                    break;
-                case OrdenFacturasEnum.NumeroAsc:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                        .ThenBy(m => m.NumeracionFactura)
-                        .ThenBy(m => m.FechaEmisionFactura);
-                    break;
-                case OrdenFacturasEnum.FechaDesc:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                         .ThenByDescending(m => m.FechaEmisionFactura)
-                         .ThenByDescending(m => m.NumeracionFactura);
-                    break;
-                case OrdenFacturasEnum.FechaAsc:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                       .ThenBy(m => m.FechaEmisionFactura)
-                       .ThenBy(m => m.NumeracionFactura);
-                    break;
-                default:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                       .ThenByDescending(m => m.NumeracionFactura)
-                      .ThenByDescending(m => m.FechaEmisionFactura);
-                    break;
-            }
-
-
-            return consultaOrdenada;
-        }
-        public static IOrderedQueryable<LineaListaGestionFacturas> OrderBy_OrdenarPor(this IQueryable<LineaListaGestionFacturas> consulta, OrdenFacturasEnum orden)
+        public static IOrderedQueryable<LineaListaGestionFacturas> OrderBy_OrdenarPor(this IQueryable<LineaListaGestionFacturas> consulta, OrdenFacturas orden)
         {
             IOrderedQueryable<LineaListaGestionFacturas> consultaOrdenada;
 
             switch (orden)
             {
-                case OrdenFacturasEnum.NumeroDesc:
+                case OrdenFacturas.NumeroDesc:
                     consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
                         .ThenByDescending(m => m.NumeracionFactura)
                         .ThenByDescending(m => m.FechaEmisionFacturaDateTime);
                     break;
-                case OrdenFacturasEnum.NumeroAsc:
+                case OrdenFacturas.NumeroAsc:
                     consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
                         .ThenBy(m => m.NumeracionFactura)
                         .ThenBy(m => m.FechaEmisionFacturaDateTime);
                     break;
-                case OrdenFacturasEnum.FechaDesc:
+                case OrdenFacturas.FechaDesc:
                     consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
                         .ThenByDescending(m => m.FechaEmisionFacturaDateTime)
                         .ThenByDescending(m => m.NumeracionFactura);
                     break;
-                case OrdenFacturasEnum.FechaAsc:
+                case OrdenFacturas.FechaAsc:
                     consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
                         .ThenBy(m => m.FechaEmisionFacturaDateTime)
                         .ThenBy(m => m.NumeracionFactura);
