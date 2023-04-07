@@ -96,7 +96,9 @@ namespace GestionFacturas.Aplicacion
 
         public async Task<Factura> BuscarFacturaAsync(int? idFactura)
         {
-            return await _contexto.Facturas.Include(m => m.Lineas).FirstOrDefaultAsync(m => m.Id == idFactura);
+            return await _contexto.Facturas
+                        .Include(m => m.Lineas)
+                        .FirstOrDefaultAsync(m => m.Id == idFactura);
         }
 
 

@@ -1,4 +1,7 @@
-﻿@model GestionFacturas.Dominio.EditorFactura
+﻿@using GestionFacturas.Dominio
+@using GestionFacturas.Web.Framework
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model GestionFacturas.Dominio.EditorFactura
           
 @*
     Esta plantilla de bootstrap se ha obtenido de:
@@ -75,11 +78,11 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.EstadoFactura, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-8">
-                                    @*<div class="input-group">*@
-                                        @Html.EnumDropDownListFor(model => model.EstadoFactura, htmlAttributes: new { @class = "form-control" })
+                                    <select asp-for="EstadoFactura" class="form-select" asp-items="Html.GetEnumSelectList<EstadoFacturaEnum>()">
+
+                                    </select>
+                                       
                                       
-                                        @*<span class="input-group-addon">*</span>
-                                    </div>*@
                                 @Html.ValidationMessageFor(model => model.EstadoFactura, "", new { @class = "text-danger" })
                                      </div>
                             </div>
@@ -97,7 +100,10 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.FormaPago, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-8">
-                                    @Html.EnumDropDownListFor(model => model.FormaPago, htmlAttributes: new { @class = "form-control" })
+                                    <select asp-for="FormaPago" class="form-select" asp-items="Html.GetEnumSelectList<FormaPagoEnum>()">
+
+                                    </select>
+                                   
                                     @Html.ValidationMessageFor(model => model.FormaPago, "", new { @class = "text-danger" })
                                 </div>
                             </div>

@@ -334,6 +334,19 @@
     });
 
 
+        function DescargarZip() {
+            window.location = '@Url.Action("DescargarZip", "DescargasFacturas")?' + ParametrosBusquedaFormulario();
+        }
+
+        function DescargarExcel() {
+            window.location = '@Url.Action("DescargarExcel", "DescargasFacturas")?' + ParametrosBusquedaFormulario();
+        }
+
+        function ParametrosBusquedaFormulario() {
+            return $('#toolbar1').serialize();
+
+        }
+
     </script>
 
 }
