@@ -46,7 +46,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 builder.Services.AddScoped<ServicioEmail>();
 builder.Services.AddScoped<ServicioFactura>();
-builder.Services.AddScoped<ServicioCliente>();
 
 var app = builder.Build();
 

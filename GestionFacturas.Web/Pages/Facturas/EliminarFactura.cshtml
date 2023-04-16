@@ -1,0 +1,28 @@
+﻿@page "{id}"
+@model EliminarFacturaModel
+
+@{
+    ViewBag.Title = "Eliminar factura";
+}
+
+<h2>Eliminar factura @Model.Editor.NumeroFactura</h2>
+
+<h3>Confirma que quieres eliminar las siguiente factura:</h3>
+
+
+@using (Html.BeginForm())   
+{
+    @Html.AntiForgeryToken()
+
+    @Html.EditorFor(m => m.Editor, "EditorFactura")
+
+
+    <p>
+        <div class="col-md-12">
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a asp-page="@DetallesFacturaModel.NombrePagina" class="btn btn-secondary" asp-route-id="@Model.Editor.Id">Cancelar</a>
+        </div>
+    </p>
+}
+<br /><br />
+

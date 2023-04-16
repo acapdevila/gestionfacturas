@@ -1,0 +1,20 @@
+﻿@page
+@model EnviarFacturaPorEmailModelConfirmadoModel
+@{
+    ViewBag.Title = "Factura enviada";
+}
+
+<h2>Confirmación</h2>
+
+<h3>La factura <span class="label label-success">@Model.NumeroFacturaEnviada</span> ha sido enviada correctamente</h3>
+
+
+    <p>
+        <div class="col-md-12">
+            <a asp-page="@CrearFacturaModel.NombrePagina" class="btn btn-primary">Crear nueva factura</a>
+            <a href="javascript:history.back()" class="btn btn-link">Volver a enviar</a>
+            <a asp-page="@ListaGestionFacturasModel.NombrePagina" class="btn btn-light">"Volver a la lista de facturas"</a>
+        </div>
+    </p>
+
+<br /><br />

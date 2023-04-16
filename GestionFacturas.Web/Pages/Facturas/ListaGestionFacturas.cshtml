@@ -190,8 +190,8 @@
                 '<li><a class="dropdown-item" href="@EditarFacturaModel.NombrePagina/' + row.Id + ' ? ' + returnUrl + '">Editar</a></li>',
                 '<li><a class="dropdown-item" href="DescargasFacturas/Descargar/' + row.Id + '">Descargar</a></li>',
                 '<li><a class="dropdown-item" href="@CrearFacturaModel.NombrePagina/?id=' + row.Id + '&' + returnUrl + '">Duplicar</a></li>',
-           @*       //'<li><a class="dropdown-item" href="@EliminarAccionModel.NombrePagina/' + row.Id + '?' + returnUrl + '"><i class="bi bi-trash text-danger"></i> Eliminar</a></li>',
-               *@ '</ul>',
+                '<li><a class="dropdown-item" href="@EnviarFacturaPorEmailModel.NombrePagina/' + row.Id + '?' + returnUrl + '"><i class="bi bi-trash text-danger"></i> Eliminar</a></li>',
+               '</ul>',
                 '</div>'
             ].join('');
         }
