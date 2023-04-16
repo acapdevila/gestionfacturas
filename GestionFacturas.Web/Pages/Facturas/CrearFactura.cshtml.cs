@@ -17,11 +17,18 @@ namespace GestionFacturas.Web.Pages.Facturas
             _servicioFactura = servicioFactura;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(int? id)
         {
-            Editor =
-                await _servicioFactura
-                    .ObtenerEditorFacturaParaCrearNuevaFactura(serie: string.Empty, idCliente: IdCliente);
+            if (id.HasValue)
+            {
+                Editor = await _servicioFactura.GenerarNuevoEditorFacturaDuplicado(id.Value);
+            }
+            else
+            {
+                Editor =
+                    await _servicioFactura
+                        .ObtenerEditorFacturaParaCrearNuevaFactura(serie: string.Empty, idCliente: IdCliente);
+            }
 
             Editor.IdUsuario = User.FindFirstValue(ClaimTypes.NameIdentifier);
 

@@ -48,6 +48,10 @@ public class EditarClienteModel : PageModel
         var cliente = await _db.Clientes.FirstAsync(m => m.Id == Id);
         cliente.InjectFrom(Editor);
 
+        cliente.Direccion = Editor.Direccion1;
+        if(!string.IsNullOrEmpty(Editor.Direccion2))
+            cliente.Direccion += "\r\n" + (Editor.Direccion2 ?? string.Empty);
+
         await  _db.SaveChangesAsync();
 
         return RedirectToPage(ListaGestionClientesModel.NombrePagina);
