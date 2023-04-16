@@ -116,5 +116,30 @@ namespace GestionFacturas.Web.Pages.Facturas
             return workbook.Deliver(nombreArchivoExcel,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             
         }
+
+        public async Task<ActionResult> Descargar(int id)
+        {
+            var factura = await _db.Facturas
+                .Include(m => m.Lineas)
+                .FirstAsync(m => m.Id == id);
+
+            var informeLocal = GeneraLocalReportFactura.GenerarInformeLocalFactura(factura, _env.WebRootPath);
+            
+            byte[] pdf = informeLocal.Render("PDF");
+            var nombrePdf = factura.Titulo().Replace(":", " ").Replace("·", "").Replace("€", "").Replace("/", "-").EliminarDiacriticos() + ".pdf";
+            
+            var cabecera = new System.Net.Mime.ContentDisposition
+            {
+                FileName = nombrePdf,
+
+                // Si es verdadero el navegador trata de mostrar el archivo directamente
+                Inline = false,
+            };
+
+            HttpContext.Response.Headers.Add("Content-Disposition", cabecera.ToString());
+
+            return File(pdf, "application/pdf");
+            
+        }
     }
 }

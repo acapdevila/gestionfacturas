@@ -45,7 +45,7 @@ namespace GestionFacturas.Web.Pages.Facturas
            
 
             await _servicioFactura.CrearFacturaAsync(Editor);
-            return RedirectToAction("Detalles", new { Editor.Id });
+            return RedirectToPage("DetallesFactura", new { Editor.Id });
         }
         
     }

@@ -100,7 +100,7 @@ public class EditorFactura
 
     [Display(Name = "Dirección 2")]
     [StringLength(64)]
-    public string CompradorDireccion2 { get; set; } = string.Empty;
+    public string? CompradorDireccion2 { get; set; } = string.Empty;
 
     [Display(Name = "Municipio")]
     [StringLength(50)]

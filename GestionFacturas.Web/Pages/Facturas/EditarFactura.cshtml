@@ -1,0 +1,38 @@
+﻿@page "{id}"
+@model EditarFacturaModel
+
+
+@{
+    ViewBag.Title = "Editar factura";
+}
+
+<div class="container">
+    <h2>Editar factura @Model.Editor.NumeroFactura</h2>
+<form method="post" enctype="multipart/form-data">
+    @Html.EditorFor(m => m.Editor, "EditorFactura")
+    <p>
+        <div class="col-md-12">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+            <a asp-page="@DetallesFacturaModel.NombrePagina" asp-route-id="Model.Factura.Id" class="btn btn-secondary">Detalles</a>
+            <a asp-page="@ListaGestionFacturasModel.NombrePagina" asp-route-id="Model.Factura.Id" class="btn btn-link">Lista de facturas</a>
+        </div>
+    </p>
+</form>
+</div>
+<br /><br />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/listeditor.min.js"></script>
+    <script src="~/js/autocompletarfactura.js"></script>
+
+    <script type="text/javascript">
+     
+        $(document).ready(function () {
+           configurarInputsAutocomplete();           
+        });
+    </script>
+
+}
