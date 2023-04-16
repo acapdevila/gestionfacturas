@@ -1,5 +1,6 @@
 ﻿using GestionFacturas.Dominio.Clientes;
 using System.ComponentModel.DataAnnotations;
+using GestionFacturas.Dominio.Infra;
 
 namespace GestionFacturas.Dominio;
 
@@ -7,7 +8,6 @@ public class EditorFactura
 {
     public EditorFactura()
     {
-        Lineas = new List<EditorLineaFactura>();
     }
 
     public int Id { get; set; }
@@ -30,11 +30,12 @@ public class EditorFactura
 
     [Required]
     [Display(Name = "Fecha emisión")]
-    public DateTime FechaEmisionFactura { get; set; }
+    public string FechaEmisionFactura { get; set; } = string.Empty;
 
     [Display(Name = "Fecha vencimiento")]
-    public DateTime? FechaVencimientoFactura { get; set; }
-        
+    public string? FechaVencimientoFactura { get; set; }
+
+    [Required]
     [Display(Name = "Plantilla")]
     [StringLength(50)]
     public string NombreArchivoPlantillaInforme { get; set; } = string.Empty;
@@ -120,21 +121,21 @@ public class EditorFactura
 
 
 
-    public ICollection<EditorLineaFactura> Lineas { get; set; } = new List<EditorLineaFactura>();
+    public List<EditorLineaFactura> Lineas { get; set; } = new ();
     
     [Display(Name = "Estado")]
     public EstadoFacturaEnum EstadoFactura { get; set; }
 
     [StringLength(250)]
-    public string Comentarios { get; set; } = string.Empty;
+    public string? Comentarios { get; set; } = string.Empty;
 
     [Display(Name = "Pie")]
     [StringLength(800)]
-    public string ComentariosPie { get; set; } = string.Empty;
+    public string? ComentariosPie { get; set; } = string.Empty;
 
     [Display(Name = "Nota interna")]
     [StringLength(250)]
-    public string ComentarioInterno { get; set; } = string.Empty;
+    public string? ComentarioInterno { get; set; } = string.Empty;
 
 
     public int PorcentajeIvaPorDefecto { get; set; }

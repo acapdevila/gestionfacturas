@@ -2,6 +2,7 @@
 using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.Dominio;
 using GestionFacturas.Dominio.Clientes;
+using GestionFacturas.Dominio.Infra;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 
@@ -36,7 +37,7 @@ namespace GestionFacturas.Aplicacion
                     SerieFactura = serie,
                     NumeracionFactura = 1,
                     FormatoNumeroFactura = "{0}{1:1000}",
-                    FechaEmisionFactura = DateTime.Today,
+                    FechaEmisionFactura = DateTime.Today.ToInputDate(),
                     PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
                     FormaPago = FormaPagoEnum.Transferencia,
                     EstadoFactura = EstadoFacturaEnum.Borrador,
@@ -56,7 +57,7 @@ namespace GestionFacturas.Aplicacion
                     SerieFactura = ultimaFacturaCreada.SerieFactura,
                     NumeracionFactura = ultimaFacturaCreada.NumeracionFactura + 1,
                     FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
-                    FechaEmisionFactura = DateTime.Today,
+                    FechaEmisionFactura = DateTime.Today.ToInputDate(),
                     NombreArchivoPlantillaInforme = ultimaFacturaCreada.NombreArchivoPlantillaInforme,
                     PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
                     FormaPago = ultimaFacturaCreada.FormaPago,
@@ -84,7 +85,7 @@ namespace GestionFacturas.Aplicacion
             if (idCliente.HasValue)
             {
                 var cliente = _contexto.Clientes.Find(idCliente.Value);
-                editor.AsignarDatosCliente(cliente); 
+                editor.AsignarDatosCliente(cliente!); 
             }
 
             return editor;
@@ -100,9 +101,9 @@ namespace GestionFacturas.Aplicacion
             var editor = new EditorFactura
             {
                 SerieFactura = factura.SerieFactura,
-                NumeracionFactura = ultimaFacturaSerie.NumeracionFactura + 1,
+                NumeracionFactura = ultimaFacturaSerie!.NumeracionFactura + 1,
                 FormatoNumeroFactura = ultimaFacturaSerie.FormatoNumeroFactura,
-                FechaEmisionFactura = DateTime.Today,
+                FechaEmisionFactura = DateTime.Today.ToInputDate(),
                 NombreArchivoPlantillaInforme = factura.NombreArchivoPlantillaInforme,
                 PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
                 FormaPago = factura.FormaPago,
@@ -132,7 +133,7 @@ namespace GestionFacturas.Aplicacion
                 });
             }
             var cliente = _contexto.Clientes.Find(factura.IdComprador);
-            editor.AsignarDatosCliente(cliente);
+            editor.AsignarDatosCliente(cliente!);
 
             return editor;
         }
@@ -154,7 +155,7 @@ namespace GestionFacturas.Aplicacion
         }
 
         
-        private async Task<Factura> ObtenerUlitmaFacturaDeLaSerie(string serie)
+        private async Task<Factura?> ObtenerUlitmaFacturaDeLaSerie(string serie)
         {
             if (string.IsNullOrEmpty(serie))
             {
@@ -213,53 +214,47 @@ namespace GestionFacturas.Aplicacion
 
             while (!rowUsed.Cell(columnas.NumeroFactura).IsEmpty())
             {
-                var factura = new EditorFactura();
+                var factura = new EditorFactura
+                {
+                    IdUsuario = columnas.IdUsuario,
+                    SerieFactura = columnas.SerieFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.SerieFactura).GetString() : columnas.SerieFactura,
+                    NumeracionFactura = Convert.ToInt32(rowUsed.Cell(columnas.NumeroFactura).GetString()),
+                    FormatoNumeroFactura = columnas.FormatoNumeroFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.FormatoNumeroFactura).GetString() : columnas.FormatoNumeroFactura,
+                    FechaEmisionFactura = rowUsed.Cell(columnas.FechaEmisionFactura).GetString(),
+                    FechaVencimientoFactura = columnas.FechaVencimientoFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.FechaVencimientoFactura).GetString() : columnas.FechaVencimientoFactura,
+                    EstadoFactura = (EstadoFacturaEnum)Enum.Parse(typeof(EstadoFacturaEnum), (columnas.EstadoFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.EstadoFactura).GetString() : columnas.EstadoFactura), true),
+                    FormaPago = (FormaPagoEnum)Enum.Parse(typeof(FormaPagoEnum), (columnas.FormaPago.EsLetraMayuscula() ? rowUsed.Cell(columnas.FormaPago).GetString() : columnas.FormaPago), true),
+                    FormaPagoDetalles = columnas.FormaPagoDetalles.EsLetraMayuscula() ? rowUsed.Cell(columnas.FormaPagoDetalles).GetString() : columnas.FormaPagoDetalles,
+                    IdVendedor = columnas.IdVendedor.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.IdVendedor).GetDouble()) : string.IsNullOrEmpty(columnas.IdVendedor) ? (int?)null : Convert.ToInt32(columnas.IdVendedor),
+                    VendedorCodigoPostal = columnas.VendedorCodigoPostal.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorCodigoPostal).GetString() : columnas.VendedorCodigoPostal,
+                    VendedorDireccion = columnas.VendedorDireccion.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorDireccion).GetString() : columnas.VendedorDireccion,
+                    VendedorEmail = columnas.VendedorEmail.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorEmail).GetString() : columnas.VendedorEmail,
+                    VendedorLocalidad = columnas.VendedorLocalidad.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorLocalidad).GetString() : columnas.VendedorLocalidad,
+                    VendedorNombreOEmpresa = columnas.VendedorNombreOEmpresa.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorNombreOEmpresa).GetString() : columnas.VendedorNombreOEmpresa,
+                    VendedorNumeroIdentificacionFiscal = columnas.VendedorNumeroIdentificacionFiscal.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorNumeroIdentificacionFiscal).GetString() : columnas.VendedorNumeroIdentificacionFiscal,
+                    VendedorProvincia = columnas.VendedorProvincia.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorProvincia).GetString() : columnas.VendedorProvincia,
+                    IdComprador = columnas.IdComprador.EsLetraMayuscula() ?  rowUsed.Cell(columnas.IdComprador).GetValue<int>() : string.IsNullOrEmpty(columnas.IdComprador) ? (int?)null : Convert.ToInt32(columnas.IdComprador),
+                    CompradorCodigoPostal = columnas.CompradorCodigoPostal.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorCodigoPostal).GetString() : columnas.CompradorCodigoPostal,
+                    CompradorDireccion1 = columnas.CompradorDireccion.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorDireccion).GetString() : columnas.CompradorDireccion,
+                    CompradorEmail = columnas.CompradorEmail.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorEmail).GetString() : columnas.CompradorEmail,
+                    CompradorLocalidad = columnas.CompradorLocalidad.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorLocalidad).GetString() : columnas.CompradorLocalidad,
+                    CompradorNombreOEmpresa = columnas.CompradorNombreOEmpresa.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorNombreOEmpresa).GetString() : columnas.CompradorNombreOEmpresa,
+                    CompradorNumeroIdentificacionFiscal = columnas.CompradorNumeroIdentificacionFiscal.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorNumeroIdentificacionFiscal).GetString() : columnas.CompradorNumeroIdentificacionFiscal,
+                    CompradorProvincia = columnas.CompradorProvincia.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorProvincia).GetString() : columnas.CompradorProvincia,
+                    PorcentajeIvaPorDefecto = columnas.PorcentajeImpuesto.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.PorcentajeImpuesto).GetDouble()) : Convert.ToInt32(columnas.PorcentajeImpuesto),
+                    Lineas = new List<EditorLineaFactura> {
+                        new EditorLineaFactura {
+                            Cantidad = columnas.Cantidad.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.Cantidad).GetDouble()) : Convert.ToInt32(columnas.Cantidad),
+                            PorcentajeImpuesto =  columnas.PorcentajeImpuesto.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.PorcentajeImpuesto).GetDouble()) : Convert.ToInt32(columnas.PorcentajeImpuesto),
+                            Descripcion = rowUsed.Cell(columnas.Descripcion).GetString(),
+                            PrecioUnitario = Convert.ToDecimal(rowUsed.Cell(columnas.PrecioUnitario).GetDouble())
+                        }
+                    },
+                    Comentarios = columnas.Comentarios.EsLetraMayuscula() ? rowUsed.Cell(columnas.Comentarios).GetString() : columnas.Comentarios,
+                    ComentarioInterno = columnas.ComentarioInterno.EsLetraMayuscula() ? rowUsed.Cell(columnas.ComentarioInterno).GetString() : columnas.ComentarioInterno,
+                    ComentariosPie = columnas.ComentariosPie.EsLetraMayuscula() ? rowUsed.Cell(columnas.ComentariosPie).GetString() : columnas.ComentariosPie
+                };
 
-                factura.IdUsuario = columnas.IdUsuario;
-
-                factura.SerieFactura = columnas.SerieFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.SerieFactura).GetString() : columnas.SerieFactura;
-                factura.NumeracionFactura = Convert.ToInt32(rowUsed.Cell(columnas.NumeroFactura).GetString());
-                factura.FormatoNumeroFactura = columnas.FormatoNumeroFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.FormatoNumeroFactura).GetString() : columnas.FormatoNumeroFactura;
-                factura.FechaEmisionFactura = rowUsed.Cell(columnas.FechaEmisionFactura).GetDateTime();
-                factura.FechaVencimientoFactura = columnas.FechaVencimientoFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.FechaVencimientoFactura).GetDateTime() : string.IsNullOrEmpty(columnas.FechaVencimientoFactura) ? (DateTime?)null : Convert.ToDateTime(columnas.FechaVencimientoFactura);
-                factura.EstadoFactura = (EstadoFacturaEnum)Enum.Parse(typeof(EstadoFacturaEnum), (columnas.EstadoFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.EstadoFactura).GetString() : columnas.EstadoFactura), true);
-
-                factura.FormaPago = (FormaPagoEnum)Enum.Parse(typeof(FormaPagoEnum), (columnas.FormaPago.EsLetraMayuscula() ? rowUsed.Cell(columnas.FormaPago).GetString() : columnas.FormaPago), true);
-                factura.FormaPagoDetalles = columnas.FormaPagoDetalles.EsLetraMayuscula() ? rowUsed.Cell(columnas.FormaPagoDetalles).GetString() : columnas.FormaPagoDetalles;
-
-                factura.IdVendedor = columnas.IdVendedor.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.IdVendedor).GetDouble()) : string.IsNullOrEmpty(columnas.IdVendedor) ? (int?)null : Convert.ToInt32(columnas.IdVendedor);
-                factura.VendedorCodigoPostal = columnas.VendedorCodigoPostal.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorCodigoPostal).GetString() : columnas.VendedorCodigoPostal;
-                factura.VendedorDireccion = columnas.VendedorDireccion.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorDireccion).GetString() : columnas.VendedorDireccion;
-                factura.VendedorEmail = columnas.VendedorEmail.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorEmail).GetString() : columnas.VendedorEmail;
-                factura.VendedorLocalidad = columnas.VendedorLocalidad.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorLocalidad).GetString() : columnas.VendedorLocalidad;
-                factura.VendedorNombreOEmpresa = columnas.VendedorNombreOEmpresa.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorNombreOEmpresa).GetString() : columnas.VendedorNombreOEmpresa;
-                factura.VendedorNumeroIdentificacionFiscal = columnas.VendedorNumeroIdentificacionFiscal.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorNumeroIdentificacionFiscal).GetString() : columnas.VendedorNumeroIdentificacionFiscal;
-                factura.VendedorProvincia = columnas.VendedorProvincia.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorProvincia).GetString() : columnas.VendedorProvincia;
-
-                factura.IdComprador = columnas.IdComprador.EsLetraMayuscula() ?  rowUsed.Cell(columnas.IdComprador).GetValue<int>() : string.IsNullOrEmpty(columnas.IdComprador) ? (int?)null : Convert.ToInt32(columnas.IdComprador);
-                factura.CompradorCodigoPostal = columnas.CompradorCodigoPostal.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorCodigoPostal).GetString() : columnas.CompradorCodigoPostal;
-                factura.CompradorDireccion1 = columnas.CompradorDireccion.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorDireccion).GetString() : columnas.CompradorDireccion;
-                factura.CompradorEmail = columnas.CompradorEmail.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorEmail).GetString() : columnas.CompradorEmail;
-                factura.CompradorLocalidad = columnas.CompradorLocalidad.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorLocalidad).GetString() : columnas.CompradorLocalidad;
-                factura.CompradorNombreOEmpresa = columnas.CompradorNombreOEmpresa.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorNombreOEmpresa).GetString() : columnas.CompradorNombreOEmpresa;
-                factura.CompradorNumeroIdentificacionFiscal = columnas.CompradorNumeroIdentificacionFiscal.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorNumeroIdentificacionFiscal).GetString() : columnas.CompradorNumeroIdentificacionFiscal;
-                factura.CompradorProvincia = columnas.CompradorProvincia.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorProvincia).GetString() : columnas.CompradorProvincia;
-
-                factura.PorcentajeIvaPorDefecto = columnas.PorcentajeImpuesto.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.PorcentajeImpuesto).GetDouble()) : Convert.ToInt32(columnas.PorcentajeImpuesto);
-
-                factura.Lineas = new List<EditorLineaFactura> {
-                             new EditorLineaFactura {
-                                     Cantidad = columnas.Cantidad.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.Cantidad).GetDouble()) : Convert.ToInt32(columnas.Cantidad),
-                                     PorcentajeImpuesto =  columnas.PorcentajeImpuesto.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.PorcentajeImpuesto).GetDouble()) : Convert.ToInt32(columnas.PorcentajeImpuesto),
-                                     Descripcion = rowUsed.Cell(columnas.Descripcion).GetString(),
-                                     PrecioUnitario = Convert.ToDecimal(rowUsed.Cell(columnas.PrecioUnitario).GetDouble())
-                             }
-                    };
-
-                factura.Comentarios = columnas.Comentarios.EsLetraMayuscula() ? rowUsed.Cell(columnas.Comentarios).GetString() : columnas.Comentarios;
-                factura.ComentarioInterno = columnas.ComentarioInterno.EsLetraMayuscula() ? rowUsed.Cell(columnas.ComentarioInterno).GetString() : columnas.ComentarioInterno;
-                factura.ComentariosPie = columnas.ComentariosPie.EsLetraMayuscula() ? rowUsed.Cell(columnas.ComentariosPie).GetString() : columnas.ComentariosPie;
-                
                 facturas.Add(factura);
 
                 rowUsed = rowUsed.RowBelow();

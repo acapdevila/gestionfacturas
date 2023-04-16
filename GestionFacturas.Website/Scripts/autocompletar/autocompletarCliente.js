@@ -23,6 +23,41 @@ function autocompleteJqueryUiCliente(idCampo, urlAutocompletar) {
     };
 }
 
+function configurarAutocompleteUnico(idControl, callbackUrl) {
+
+
+    $("#" + idControl)
+        .autocomplete({
+            source: callbackUrl,
+            type: "GET",
+            dataType: "json",
+            minLength: 3,
+            select: function (event, ui) {
+                $("#" + idControl).val(ui.item.value);
+                return false;
+            }
+        });
+
+}
+
+function configurarAutocompleteId(idControlValue, idControlId, callbackUrl) {
+
+
+    $("#" + idControlValue)
+        .autocomplete({
+            source: callbackUrl,
+            type: "GET",
+            dataType: "json",
+            minLength: 3,
+            select: function (event, ui) {
+                $("#" + idControlValue).val(ui.item.value);
+                $("#" + idControlId).val(ui.item.id);
+                return false;
+            }
+        });
+
+}
+
 function completarDatosCliente(ui) {
     $("#Factura_IdComprador").val(ui.item.Id);
     $("#Factura_CompradorNombreOEmpresa").val(ui.item.NombreOEmpresa);

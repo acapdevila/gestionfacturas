@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Infra;
 using Microsoft.EntityFrameworkCore;
 using Omu.ValueInjecter;
 
@@ -94,7 +95,7 @@ namespace GestionFacturas.Aplicacion
             return await _contexto.SaveChangesAsync();
         }
 
-        public async Task<Factura> BuscarFacturaAsync(int? idFactura)
+        public async Task<Factura?> BuscarFacturaAsync(int? idFactura)
         {
             return await _contexto.Facturas
                         .Include(m => m.Lineas)
@@ -118,6 +119,9 @@ namespace GestionFacturas.Aplicacion
         private void ModificarCabeceraFactura(EditorFactura editor)
         {
             Factura.InjectFrom(editor);
+
+            Factura.FechaEmisionFactura = editor.FechaEmisionFactura.FromInputToDateTime();
+            Factura.FechaVencimientoFactura = editor.FechaVencimientoFactura?.FromInputToDateTime();
         }
 
         private void ModificarLineasFactura(ICollection<EditorLineaFactura> lineasEditor)
