@@ -22,14 +22,16 @@ namespace GestionFacturas.Web.Pages.Facturas
             Editor =
                 await _servicioFactura
                     .ObtenerEditorFacturaParaCrearNuevaFactura(serie: string.Empty, idCliente: IdCliente);
-            
+
+            Editor.IdUsuario = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             return Page();
         }
         [BindProperty(SupportsGet = true)]
         public int? IdCliente { get; set; }
 
         [BindProperty]
-        public EditorFactura Editor { get; set; } 
+        public EditorFactura Editor { get; set; }  = new ();
 
 
 
@@ -40,10 +42,10 @@ namespace GestionFacturas.Web.Pages.Facturas
                 return Page();
             }
 
-            Editor.IdUsuario = User.FindFirstValue(ClaimTypes.NameIdentifier);
+           
 
             await _servicioFactura.CrearFacturaAsync(Editor);
-            return RedirectToAction("Detalles", new { Id = Editor.Id });
+            return RedirectToAction("Detalles", new { Editor.Id });
         }
         
     }

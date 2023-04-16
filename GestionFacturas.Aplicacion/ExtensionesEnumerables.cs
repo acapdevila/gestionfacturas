@@ -26,7 +26,7 @@ namespace GestionFacturas.Aplicacion
                outString = ((DisplayAttribute)attrs[0]).GetName();
            }
 
-           return outString;
+           return outString!;
        }
 
     }

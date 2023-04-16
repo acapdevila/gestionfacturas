@@ -33,8 +33,8 @@ namespace GestionFacturas.Web.Framework
             string containerElement, 
             string counterElement, 
             string focusPropertyName, 
-            object[] argValues = null, 
-            string cssClass = null) where TProperty : IEnumerable<object>
+            object[]? argValues = null, 
+            string? cssClass = null) where TProperty : IEnumerable<object>
         {
             // a fake index to replace with a real index
             long ticks = DateTime.UtcNow.Ticks;
@@ -43,7 +43,7 @@ namespace GestionFacturas.Web.Framework
             var expresionProvider = htmlHelper.ViewContext.HttpContext.RequestServices
                 .GetService(typeof(ModelExpressionProvider)) as ModelExpressionProvider;
             // pull the name and type from the passed in expression
-            string collectionProperty = expresionProvider.GetExpressionText(expression);
+            string collectionProperty = expresionProvider!.GetExpressionText(expression);
 
             var nestedObject = Activator.CreateInstance(typeof(TProperty).GetGenericArguments()[0], argValues);
 
@@ -59,7 +59,7 @@ namespace GestionFacturas.Web.Framework
 
             var focusId = string.Format("#{0}_{1}", htmlHelper.ViewData.TemplateInfo.HtmlFieldPrefix.Replace(".", "_").Replace("[", "_").Replace("]", "_"), focusPropertyName);
 
-            var templateName = nestedObject.GetType().Name;
+            var templateName = nestedObject!.GetType().Name;
 
             var editor = htmlHelper.EditorFor(x => nestedObject, templateName);
             

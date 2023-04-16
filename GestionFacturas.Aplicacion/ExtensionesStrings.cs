@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -30,7 +27,7 @@ namespace GestionFacturas.Aplicacion
         {
             var enumerable = terms as IList<string> ?? terms.ToList();
 
-            if (terms != null && enumerable.Any())
+            if (enumerable.Any())
             {
                 var sb = new StringBuilder();
                 foreach (var item in enumerable)
@@ -41,7 +38,7 @@ namespace GestionFacturas.Aplicacion
                 return sb.ToString();
             }
 
-            return null;
+            return string.Empty;
         }
 
         public static List<string> ToListString(this string stringComaSeparated)
@@ -56,7 +53,6 @@ namespace GestionFacturas.Aplicacion
 
         public static string ToSlugString(this string text)
         {
-            if (text == null) return null;
             return text.Replace(" ", "-").Replace("/", "-").EliminarDiacriticos();
         }
 

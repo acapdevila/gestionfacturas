@@ -1,5 +1,7 @@
 using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.Aplicacion;
+using GestionFacturas.Dominio;
+using GestionFacturas.Web.Pages.Facturas;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 
@@ -28,6 +30,8 @@ builder.Services.AddScoped(m=>
 // Add services to the container.
 builder.Services.AddRazorPages(options =>
 {
+    options.Conventions.AddPageRoute(ListaGestionFacturasModel.NombrePagina, "");
+
     options.Conventions.AuthorizeFolder("/");
     options.Conventions.AllowAnonymousToFolder("/seguridad/acceso");
 });
@@ -42,6 +46,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 builder.Services.AddScoped<ServicioEmail>();
 builder.Services.AddScoped<ServicioFactura>();
+builder.Services.AddScoped<ServicioCliente>();
 
 var app = builder.Build();
 

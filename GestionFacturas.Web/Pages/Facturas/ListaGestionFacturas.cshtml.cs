@@ -17,10 +17,11 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         public int Orden { get; set; }
 
-        public EditorEstadoFactura EditorEstadoFactura { get; set; }
+        public EditorEstadoFactura EditorEstadoFactura { get; set; } = new();
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Page();
         }
     }
 }

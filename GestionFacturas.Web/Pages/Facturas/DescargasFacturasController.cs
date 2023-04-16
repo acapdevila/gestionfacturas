@@ -3,22 +3,18 @@ using GestionFacturas.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using ClosedXML.Extensions;
 using GestionFacturas.AccesoDatosSql;
-using GestionFacturas.Dominio.Infra;
 using Ionic.Zip;
 using Microsoft.EntityFrameworkCore;
-using DocumentFormat.OpenXml.InkML;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
     public class DescargasFacturasController : Controller
     {
-        private readonly ServicioFactura _servicioFactura;
         private readonly SqlDb _db;
         private readonly IWebHostEnvironment _env;
 
-        public DescargasFacturasController(ServicioFactura servicioFactura, IWebHostEnvironment env, SqlDb db)
+        public DescargasFacturasController(IWebHostEnvironment env, SqlDb db)
         {
-            _servicioFactura = servicioFactura;
             _env = env;
             _db = db;
         }
@@ -118,9 +114,7 @@ namespace GestionFacturas.Web.Pages.Facturas
             var nombreArchivoExcel = $"Facturacion_desde_{gridParams.Desde}_hasta_{gridParams.Desde}.xlsx";
 
             return workbook.Deliver(nombreArchivoExcel,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-
-            // or specify the content type:
-            // return wb.Deliver("generatedFile.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            
         }
     }
 }

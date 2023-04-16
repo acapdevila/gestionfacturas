@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="~/css/bootstrap-custom.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @await RenderSectionAsync("styles", required: false)
+    
+    
 </head>
 <body class="d-flex flex-column h-100">
     @await RenderSectionAsync("scriptsTop", required: false)
@@ -33,6 +35,8 @@
             <partial name="_Footer" />
         </div>
     </footer>
+
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>

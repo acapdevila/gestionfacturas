@@ -22,7 +22,7 @@ namespace GestionFacturas.Aplicacion
             var data = new Attachment(stream, archivoAdjunto.Nombre, archivoAdjunto.MimeType);
             // Add time stamp information for the file.
             var disposition = data.ContentDisposition;
-            disposition.CreationDate = DateTime.Now;
+            disposition!.CreationDate = DateTime.Now;
             disposition.DispositionType = archivoAdjunto.MimeType;
             disposition.Size = stream.Length;
 
