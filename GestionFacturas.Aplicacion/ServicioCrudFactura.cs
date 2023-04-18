@@ -95,7 +95,7 @@ namespace GestionFacturas.Aplicacion
             return await _contexto.SaveChangesAsync();
         }
 
-        public async Task<Factura?> BuscarFacturaAsync(int? idFactura)
+        public async Task<Factura?> BuscarFacturaAsync(int idFactura)
         {
             return await _contexto.Facturas
                         .Include(m => m.Lineas)

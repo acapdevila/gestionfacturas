@@ -10,7 +10,7 @@ namespace GestionFacturas.Aplicacion
 {
     public class ServicioFactura : ServicioCrudFactura
     {
-        private readonly ServicioEmail _servicioEmail;
+        private readonly IServicioEmail _servicioEmail;
         
         private int PorcentajeIvaPorDefecto
         {
@@ -19,7 +19,7 @@ namespace GestionFacturas.Aplicacion
 
         public ServicioFactura(
             SqlDb contexto, 
-            ServicioEmail servicioEmail) : base(contexto)
+            IServicioEmail servicioEmail) : base(contexto)
         {
             _servicioEmail = servicioEmail;
         }
@@ -138,7 +138,7 @@ namespace GestionFacturas.Aplicacion
             return editor;
         }
 
-        public async Task<VisorFactura> BuscarVisorFacturaAsync(int? idFactura)
+        public async Task<VisorFactura> BuscarVisorFacturaAsync(int idFactura)
         {
             var factura = await BuscarFacturaAsync(idFactura); 
             var visor = new VisorFactura();
@@ -146,7 +146,7 @@ namespace GestionFacturas.Aplicacion
             return visor;
         }
 
-        public async Task<EditorFactura> BuscaEditorFacturaAsync(int? idFactura)
+        public async Task<EditorFactura> BuscaEditorFacturaAsync(int idFactura)
         {
             var factura = await BuscarFacturaAsync(idFactura);
             var editor = new EditorFactura();

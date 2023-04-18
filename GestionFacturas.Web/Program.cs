@@ -1,9 +1,9 @@
 using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.Aplicacion;
-using GestionFacturas.Dominio;
 using GestionFacturas.Web.Pages.Facturas;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,20 +42,23 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.PropertyNamingPolicy = null;
     options.JsonSerializerOptions.WriteIndented = true;
 });
-
-
-builder.Services.AddScoped<ServicioEmail>();
+var mailSettings = new MailSettings();
+builder.Configuration.GetSection("MailSettings").Bind(mailSettings);
+builder.Services.AddSingleton(mailSettings);
+builder.Services.AddScoped<IServicioEmail, ServicioEmailMailKid>();
 builder.Services.AddScoped<ServicioFactura>();
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
-//if (!app.Environment.IsDevelopment())
-//{
+// if (!app.Environment.IsDevelopment())
+// {
 //    app.UseExceptionHandler("/Error");
 //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 //    app.UseHsts();
 //}
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

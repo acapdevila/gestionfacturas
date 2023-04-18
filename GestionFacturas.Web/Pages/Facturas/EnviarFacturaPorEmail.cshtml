@@ -5,26 +5,39 @@
     ViewBag.Title = "Enviar factura";
 }
 
-
-<h2>Enviar factura @Model.NumeroFactura</h2>
-
-<form>
-    @Html.EditorFor(m => m.EditorEmail, "EditorEmail")
-    
-    @Html.HiddenFor(m=>m.Id)
-
-<p>
-    <div class="col-md-12">
-      
-        <input type="submit" value="Enviar" class="btn btn-primary" />
-
-        <a asp-page="@DetallesFacturaModel.NombrePagina" asp-route="@Model.Id" class="btn btn-primary">Detalles</a>
-        <a asp-page="@ListaGestionFacturasModel.NombrePagina" class="btn btn-light">"Volver a la lista de facturas"</a>
-        
+<div class="container">
+    <h2>Enviar factura @Model.NumeroFactura</h2>
+    <form method="post">
+    <div class="card">
+        <div class="card-body">
+            
+            <partial model="@Model.EditorEmail" name="Shared/EditorEmail"/>
+        </div>
     </div>
-</p>
 
-</form>
-<br /><br />
+   
+       
 
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.NumeroFactura)
+        <p>
+            <div class="col-md-12">
+
+                <input type="submit" value="Enviar" class="btn btn-primary"/>
+
+                <a asp-page="@DetallesFacturaModel.NombrePagina" asp-route-id="@Model.Id" class="btn btn-primary">Detalles</a>
+                <a asp-page="@ListaGestionFacturasModel.NombrePagina" class="btn btn-link">Volver a la lista de facturas</a>
+
+            </div>
+        </p>
+
+    </form>
+    <br/><br/>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 
