@@ -16,6 +16,7 @@ namespace GestionFacturas.Aplicacion
     {
         public string DeliveryMethod { get; set; } = string.Empty;
         public string PickupDirectoryLocation { get; set; } = string.Empty;
+        public string From { get; set; } = string.Empty;
         public string UserName { get; set; } = string.Empty;
         public string DisplayName { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
@@ -53,16 +54,18 @@ namespace GestionFacturas.Aplicacion
         private MimeMessage GenerarEmail(MensajeEmail mensaje)
         {
             var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse(mensaje.DireccionRemitente);
-            email.Sender.Name = mensaje.NombreRemitente;
-            email.Subject = mensaje.Asunto;
+
+            email.From.Add(new MailboxAddress(_mailSettings.DisplayName, _mailSettings.From));
             foreach (var destinatario in mensaje.DireccionesDestinatarios)
             {
                 email.To.Add(MailboxAddress.Parse(destinatario));
             }
             email.ReplyTo.Add(MailboxAddress.Parse(mensaje.DireccionRemitente));
+            email.Subject = mensaje.Asunto;
 
-
+            email.Sender = MailboxAddress.Parse(_mailSettings.UserName); 
+            email.Sender.Name = _mailSettings.DisplayName;
+            
             var builder = new BodyBuilder();
             
             if (mensaje.Adjuntos.Any())
@@ -117,10 +120,10 @@ namespace GestionFacturas.Aplicacion
             }
 
             using var smtp = new SmtpClient();
-            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+            await smtp.ConnectAsync(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
+            await smtp.AuthenticateAsync(_mailSettings.UserName, _mailSettings.Password);
             await smtp.SendAsync(email);
-            smtp.Disconnect(true);
+            await smtp.DisconnectAsync(true);
         }
 
         public static void SaveToPickupDirectory(MimeMessage message, string pickupDirectory)

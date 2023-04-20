@@ -64,7 +64,7 @@ namespace GestionFacturas.Web.Pages.Facturas
 
             var mensaje = GenerarMensajeEmail(EditorEmail, factura);
 
-            _servicioFactura.EnviarFacturaPorEmail(mensaje, factura);
+            await _servicioFactura.EnviarFacturaPorEmail(mensaje, factura);
 
             var numeroFacturaCodificada = WebUtility.UrlEncode(factura.NumeroFactura);
 

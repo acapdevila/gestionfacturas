@@ -176,12 +176,12 @@ namespace GestionFacturas.Aplicacion
         }
          
 
-        public void EnviarFacturaPorEmail(MensajeEmail mensaje, Factura factura)
+        public async Task EnviarFacturaPorEmail(MensajeEmail mensaje, Factura factura)
         {
-            _servicioEmail.EnviarMensaje(mensaje);
+            await _servicioEmail.EnviarMensajeAsync(mensaje);
             
             factura.EstadoFactura = EstadoFacturaEnum.Enviada;
-            _contexto.SaveChanges();
+            await _contexto.SaveChangesAsync();
         }
         
         public async Task ImportarFacturasDeExcel(Stream stream, SelectorColumnasExcelFactura columnas, bool soloImportarFacturasDeClientesExistentes)
