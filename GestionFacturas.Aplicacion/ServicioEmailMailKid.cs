@@ -3,6 +3,7 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using MimeKit.IO;
+using System;
 
 namespace GestionFacturas.Aplicacion
 {
@@ -15,7 +16,7 @@ namespace GestionFacturas.Aplicacion
     {
         public string DeliveryMethod { get; set; } = string.Empty;
         public string PickupDirectoryLocation { get; set; } = string.Empty;
-        public string Mail { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
         public string DisplayName { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string Host { get; set; } = string.Empty;
@@ -63,9 +64,7 @@ namespace GestionFacturas.Aplicacion
 
 
             var builder = new BodyBuilder();
-            builder.HtmlBody = mensaje.Cuerpo;
-            email.Body = builder.ToMessageBody();
-
+            
             if (mensaje.Adjuntos.Any())
             {
                 byte[] fileBytes;
@@ -73,14 +72,14 @@ namespace GestionFacturas.Aplicacion
                 {
                     if (file.Archivo.Length > 0)
                     {
-                        var stream = new MemoryStream(file.Archivo) { Position = 0 };
-                        fileBytes = stream.ToArray();
-                        builder.Attachments.Add(mensaje.Cuerpo, fileBytes, ContentType.Parse(file.MimeType));
+                        fileBytes = file.Archivo.ToArray();
+                        builder.Attachments.Add(file.Nombre, fileBytes, ContentType.Parse(file.MimeType));
                     }
                 }
             }
 
-
+            builder.HtmlBody = mensaje.Cuerpo;
+            email.Body = builder.ToMessageBody();
             return email;
         }
         
@@ -104,7 +103,7 @@ namespace GestionFacturas.Aplicacion
             }
             using var smtp = new SmtpClient();
             smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+            smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
             smtp.Send(email);
             smtp.Disconnect(true);
         }
@@ -119,7 +118,7 @@ namespace GestionFacturas.Aplicacion
 
             using var smtp = new SmtpClient();
             smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+            smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
             await smtp.SendAsync(email);
             smtp.Disconnect(true);
         }
