@@ -114,11 +114,9 @@ public class EditorFactura
     [StringLength(10)]
     public string CompradorCodigoPostal { get; set; } = string.Empty;
 
-    [EmailAddress]
     [Display(Name = "E-mail")]
     [StringLength(50)]
     public string CompradorEmail { get; set; } = string.Empty;
-
 
 
     public List<EditorLineaFactura> Lineas { get; set; } = new ();

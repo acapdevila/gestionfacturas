@@ -52,7 +52,7 @@ namespace GestionFacturas.Web.Pages.Facturas
            
 
             await _servicioFactura.CrearFacturaAsync(Editor);
-            return RedirectToPage("DetallesFactura", new { Editor.Id });
+            return RedirectToPage(DetallesFacturaModel.NombrePagina, new { Editor.Id });
         }
         
     }

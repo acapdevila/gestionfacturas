@@ -151,6 +151,8 @@ namespace GestionFacturas.Aplicacion
             var factura = await BuscarFacturaAsync(idFactura);
             var editor = new EditorFactura();
             editor.InyectarFactura(factura);
+            editor.FechaEmisionFactura = factura.FechaEmisionFactura.ToInputDate();
+            editor.FechaVencimientoFactura = factura.FechaVencimientoFactura?.ToInputDate();
             return editor;
         }
 

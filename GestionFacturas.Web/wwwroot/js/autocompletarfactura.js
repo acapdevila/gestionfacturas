@@ -33,8 +33,12 @@ function completarDatosCliente(ui) {
 }
 
 
-function configurarInputsAutocomplete() {
-    autocompleteJqueryUiCliente("Editor_CompradorNombreOEmpresa", '@Url.Action("AutocompletarPorNombre", "AutocompletarClientes")');
-    autocompleteJqueryUiCliente("Editor_IdComprador", '@Url.Action("AutocompletarPorId", "AutocompletarClientes")');
-    autocompleteJqueryUiCliente("Editor_CompradorNumeroIdentificacionFiscal", '@Url.Action("AutocompletarPorIdentificacionFiscal", "AutocompletarClientes")');
+function configurarInputsAutocomplete(
+    autocompletarPorIdUrl,
+    autocompletarPorNombreUrl,
+    autocompletarPorIdentificacionFiscalUrl) {
+
+    autocompleteJqueryUiCliente("Editor_CompradorNombreOEmpresa", autocompletarPorNombreUrl);
+    autocompleteJqueryUiCliente("Editor_IdComprador", autocompletarPorIdUrl);
+    autocompleteJqueryUiCliente("Editor_CompradorNumeroIdentificacionFiscal", autocompletarPorIdentificacionFiscalUrl);
 }

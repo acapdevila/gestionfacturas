@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GestionFacturas.Aplicacion;
 using System.Net;
+using CSharpFunctionalExtensions;
 using GestionFacturas.Dominio;
 using GestionFacturas.Web.Pages.Shared;
 
@@ -43,7 +44,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                 Remitente = factura.VendedorEmail,
                 Asunto = $"Factura {factura.NumeroFactura}",
                 ContenidoHtml = @"Hola,",
-                Destinatario = factura.CompradorEmail
+                Destinatarios = factura.CompradorEmail
             };
            
 
@@ -64,28 +65,34 @@ namespace GestionFacturas.Web.Pages.Facturas
 
             var mensaje = GenerarMensajeEmail(EditorEmail, factura);
 
-            await _servicioFactura.EnviarFacturaPorEmail(mensaje, factura);
+            if (mensaje.IsFailure)
+            {
+                ModelState.AddModelError("", mensaje.Error);
+                return Page();
+            }
+
+            await _servicioFactura.EnviarFacturaPorEmail(mensaje.Value, factura);
 
             var numeroFacturaCodificada = WebUtility.UrlEncode(factura.NumeroFactura);
 
             return RedirectToPage(EnviarFacturaPorEmailModelConfirmadoModel.NombrePagina,new { numeroFacturaEnviada = numeroFacturaCodificada } );
         }
 
-        private MensajeEmail GenerarMensajeEmail(EditorEmail editorEmail, Factura factura)
+        private Result<MensajeEmail> GenerarMensajeEmail(EditorEmail editorEmail, Factura factura)
         {
             var informeLocal = GeneraLocalReportFactura.GenerarInformeLocalFactura(factura, _env.WebRootPath);
 
             byte[] pdf = informeLocal.Render("PDF");
             
-            var mensaje = new MensajeEmail
+            var mensaje = new MensajeEmail(
+                nombreRemitente: factura.VendedorNombreOEmpresa,
+                direccionRemitente: editorEmail.Remitente,
+                asunto: editorEmail.Asunto,
+                cuerpo: editorEmail.ContenidoHtml
+                )
             {
-                Asunto = editorEmail.Asunto,
-                Cuerpo = editorEmail.ContenidoHtml,
-                DireccionRemitente = editorEmail.Remitente,
-                NombreRemitente = factura.VendedorNombreOEmpresa,
-                DireccionesDestinatarios = new List<string> { editorEmail.Destinatario },
                 Adjuntos = new List<ArchivoAdjunto> {
-                    new ArchivoAdjunto
+                    new ()
                     {
                         Archivo = pdf,
                         MimeType = "application/pdf",
@@ -93,6 +100,18 @@ namespace GestionFacturas.Web.Pages.Facturas
                     }
                 }
             };
+
+            var validacionDestinatarios = 
+                            mensaje.AñadirDestinatarios(
+                                       editorEmail.Destinatarios
+                                           .Split(new[] { ';' },
+                                               StringSplitOptions.RemoveEmptyEntries | 
+                                                      StringSplitOptions.TrimEntries )
+                                           .ToList());
+
+
+            if (validacionDestinatarios.IsFailure) 
+                return validacionDestinatarios.ConvertFailure<MensajeEmail>();
 
             return mensaje;
         }

@@ -56,7 +56,7 @@ namespace GestionFacturas.Aplicacion
             var email = new MimeMessage();
 
             email.From.Add(new MailboxAddress(_mailSettings.DisplayName, _mailSettings.From));
-            foreach (var destinatario in mensaje.DireccionesDestinatarios)
+            foreach (var destinatario in mensaje.DireccionesDestinatarios())
             {
                 email.To.Add(MailboxAddress.Parse(destinatario));
             }
@@ -92,7 +92,7 @@ namespace GestionFacturas.Aplicacion
             if (string.IsNullOrEmpty(mensaje.DireccionRemitente))
                 throw new ArgumentException("No se ha indicado el remitente", "DireccionRemitente");
 
-            if (!mensaje.DireccionesDestinatarios.Any())
+            if (!mensaje.DireccionesDestinatarios().Any())
                 throw new ArgumentException("No se ha indicado ningún destinatario", "DireccionesDestinatarios");
         }
 

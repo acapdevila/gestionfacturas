@@ -27,7 +27,13 @@
     <script type="text/javascript">
      
         $(document).ready(function () {
-           configurarInputsAutocomplete();           
+
+             configurarInputsAutocomplete(
+               '@Url.Action("AutocompletarPorId", "AutocompletarClientes")',
+               '@Url.Action("AutocompletarPorNombre", "AutocompletarClientes")',
+               '@Url.Action("AutocompletarPorIdentificacionFiscal", "AutocompletarClientes")'
+             );
+                
         });
     </script>
     

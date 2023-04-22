@@ -37,7 +37,7 @@ namespace GestionFacturas.Web.Pages.Facturas
             
 
             await _servicioFactura.ActualizarFacturaAsync(Editor);
-            return RedirectToAction("Detalles", new { Editor.Id });
+            return RedirectToPage(DetallesFacturaModel.NombrePagina, new { Editor.Id });
         }
     }
 }
