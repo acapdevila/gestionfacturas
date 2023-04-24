@@ -80,7 +80,7 @@
                 <thead>
                 <tr>
                     <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Id)" data-visible="false" data-serchable="false">ID</th>
-                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.NumeroFactura)" data-width="50">Factura</th>
+                        <th scope="col" data-field="@nameof(LineaListaGestionFacturas.NumeroFactura)" data-formatter="detallesFormatter" data-width="50">Factura</th>
                     <th scope="col" data-field="@nameof(LineaListaGestionFacturas.FechaEmisionFactura)" data-width="50">Fecha</th>
                     <th scope="col" data-field="@nameof(LineaListaGestionFacturas.CompradorNombreOEmpresa)" data-width="40" data-width-unit="%">Descripción</th>
                     <th scope="col" data-field="@nameof(LineaListaGestionFacturas.EstadoFactura)" data-footer-formatter="etiquetaTotalFormatter" data-formatter="estadoFormatter" data-width="50">Estado</th>
@@ -181,19 +181,29 @@
         function accionesFormatter(value, row, index) {
 
             return [
-                '<div class="dropdown text-center">',
-                '<button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">',
-                'Acciones',
+                '<div class="btn-group text-center">',
+                '<a class="btn btn-outline-primary" href="@EditarFacturaModel.NombrePagina/' + row.Id + ' ? ' + returnUrl + '">Editar</a>',
+                '<button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">',
+                '<span class="visually-hidden">Toggle Dropdown</span>',
                 '</button>',
                 '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">',
-                '<li><a class="dropdown-item" href="@DetallesFacturaModel.NombrePagina/' + row.Id + '?' + returnUrl + '">Detalles</a></li>',
-                '<li><a class="dropdown-item" href="@EditarFacturaModel.NombrePagina/' + row.Id + ' ? ' + returnUrl + '">Editar</a></li>',
+                //'<li><a class="dropdown-item" href="@DetallesFacturaModel.NombrePagina/' + row.Id + '?' + returnUrl + '">Detalles</a></li>',
+                //'<li><a class="dropdown-item" href="@EditarFacturaModel.NombrePagina/' + row.Id + ' ? ' + returnUrl + '">Editar</a></li>',
                 '<li><a class="dropdown-item" href="DescargasFacturas/Descargar/' + row.Id + '">Descargar</a></li>',
                 '<li><a class="dropdown-item" href="@CrearFacturaModel.NombrePagina/?id=' + row.Id + '&' + returnUrl + '">Duplicar</a></li>',
                 '<li><a class="dropdown-item" href="@EnviarFacturaPorEmailModel.NombrePagina/' + row.Id + '?' + returnUrl + '"> Enviar</a></li>',
                @* '<li><a class="dropdown-item" href="@EnviarFacturaPorEmailModel.NombrePagina/' + row.Id + '?' + returnUrl + '"><i class="bi bi-trash text-danger"></i> Eliminar</a></li>',
                *@'</ul>',
                 '</div>'
+            ].join('');
+                                  
+
+        }
+
+        function detallesFormatter(value, row, index) {
+
+            return [
+                '<a class="btn btn-link" href="@DetallesFacturaModel.NombrePagina/' + row.Id + '?' + returnUrl + '">'+value+'</a>'               
             ].join('');
         }
 
