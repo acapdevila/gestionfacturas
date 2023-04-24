@@ -5,6 +5,7 @@ using System.Net;
 using CSharpFunctionalExtensions;
 using GestionFacturas.Dominio;
 using GestionFacturas.Web.Pages.Shared;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
@@ -15,12 +16,14 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         private readonly ServicioFactura _servicioFactura;
         private readonly IWebHostEnvironment _env;
+        private readonly MailSettings _mailSettings;
         
 
-        public EnviarFacturaPorEmailModel(ServicioFactura servicioFactura, IWebHostEnvironment env)
+        public EnviarFacturaPorEmailModel(ServicioFactura servicioFactura, IWebHostEnvironment env, MailSettings mailSettings)
         {
             _servicioFactura = servicioFactura;
             _env = env;
+            _mailSettings = mailSettings;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -46,15 +49,22 @@ namespace GestionFacturas.Web.Pages.Facturas
                 ContenidoHtml = @"Hola,",
                 Destinatarios = factura.CompradorEmail
             };
-           
+
+            CargarCombos();
 
             return Page();
         }
-        
+
+        private void CargarCombos()
+        {
+            EditorEmail.Remitentes = _mailSettings.ReplyToList().Select(m => new SelectListItem(m, m)).ToList();
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                CargarCombos();
                 return Page();
             }
 
@@ -68,6 +78,7 @@ namespace GestionFacturas.Web.Pages.Facturas
             if (mensaje.IsFailure)
             {
                 ModelState.AddModelError("", mensaje.Error);
+                CargarCombos();
                 return Page();
             }
 

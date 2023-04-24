@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GestionFacturas.Web.Pages.Shared;
 
@@ -21,6 +22,8 @@ public class EditorEmail
 
     [Display(Name = @"Mensaje")]
     public string ContenidoHtml { get; set; } = string.Empty;
+
+    public List<SelectListItem> Remitentes { get; set; } = new();
 
 
 }

@@ -10,7 +10,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Remitente, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Remitente, new { @class = "form-control" })
+                            <select asp-for="Remitente" asp-items="@Model.Remitentes" class="form-control"></select>
                             @Html.ValidationMessageFor(model => model.Remitente, "", new { @class = "text-danger" })
                         </div>
                     </div>                
