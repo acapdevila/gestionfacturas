@@ -35,57 +35,38 @@
                         Datos de la factura
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.SerieFactura, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                <div class="input-group">
-                                    @Html.EditorFor(model => model.SerieFactura, new { htmlAttributes = new { @class = "form-control" } })
-                                    
-                                </div>
-                                @Html.ValidationMessageFor(model => model.SerieFactura, "", new { @class = "text-danger" })
-                            </div>
+                        
+                        <div class="form-group mb-2">
+                            <label asp-for="SerieFactura"></label>
+                            <input asp-for="SerieFactura" class="form-control">
+                            <span asp-validation-for="SerieFactura" class="text-danger"></span>
                         </div>
-                            
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NumeracionFactura, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                <div class="input-group">
-                                    @Html.EditorFor(model => model.NumeracionFactura, new { htmlAttributes = new { @class = "form-control" } })
-                                    
-                                </div>
-                                @Html.ValidationMessageFor(model => model.NumeracionFactura, "", new { @class = "text-danger" })
-                            </div>
+                      
+                     
+                        <div class="form-group mb-2">
+                            <label asp-for="NumeracionFactura"></label>
+                            <input asp-for="NumeracionFactura" class="form-control">
+                            <span asp-validation-for="NumeracionFactura" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.FechaEmisionFactura, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                <div class="input-group">
-                                        <input asp-for="FechaEmisionFactura" type="date" class="form-control">
-                                  
-                                    
-                                </div>
-                                @Html.ValidationMessageFor(model => model.FechaEmisionFactura, "", new { @class = "text-danger" })
-                            </div>
+
+                        <div class="form-group mb-2">
+                            <label asp-for="FechaEmisionFactura"></label>
+                            <input asp-for="FechaEmisionFactura" type="date" class="form-control">
+                            <span asp-validation-for="FechaEmisionFactura" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.FechaVencimientoFactura, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-
-                                    <input asp-for="FechaVencimientoFactura" type="date" class="form-control">
-                                @Html.ValidationMessageFor(model => model.FechaVencimientoFactura, "", new { @class = "text-danger" })
-                            </div>
+                        <div class="form-group mb-2">
+                                <label asp-for="FechaVencimientoFactura"></label>
+                                <input asp-for="FechaVencimientoFactura" type="date" class="form-control">
+                                <span asp-validation-for="FechaVencimientoFactura" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.EstadoFactura, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                <select asp-for="EstadoFactura" class="form-select" asp-items="Html.GetEnumSelectList<EstadoFacturaEnum>()">
-                                </select>
-
-
-                                @Html.ValidationMessageFor(model => model.EstadoFactura, "", new { @class = "text-danger" })
-                            </div>
+                        
+                        <div class="form-group mb-2">
+                                <label asp-for="EstadoFactura"></label>
+                            <select asp-for="EstadoFactura" class="form-select" asp-items="Html.GetEnumSelectList<EstadoFacturaEnum>()">
+                            </select>
+                                <span asp-validation-for="EstadoFactura" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -99,24 +80,22 @@
                         Forma de pago
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.FormaPago, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                <select asp-for="FormaPago" class="form-select" asp-items="Html.GetEnumSelectList<FormaPagoEnum>()">
+                        
+                        <div class="form-group mb-2">
+                                <label asp-for="FormaPago"></label>
+                            <select asp-for="FormaPago" class="form-select" asp-items="Html.GetEnumSelectList<FormaPagoEnum>()">
 
-                                </select>
-
-                                @Html.ValidationMessageFor(model => model.FormaPago, "", new { @class = "text-danger" })
-                            </div>
+                            </select>
+                                <span asp-validation-for="FormaPago" class="text-danger"></span>
                         </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.FormaPagoDetalles, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.FormaPagoDetalles, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.FormaPagoDetalles, "", new { @class = "text-danger" })
-                            </div>
+                        
+                        
+                        <div class="form-group mb-2">
+                                <label asp-for="FormaPagoDetalles"></label>
+                                <input asp-for="FormaPagoDetalles" class="form-control">
+                                <span asp-validation-for="FormaPagoDetalles" class="text-danger"></span>
                         </div>
+                     
                     </div>
                 </div>
             </div>             
@@ -132,71 +111,54 @@
                         </div>
                         <div class="card-body">
                         
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.IdVendedor, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.IdVendedor, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.IdVendedor, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="IdVendedor"></label>
+                                <input asp-for="IdVendedor" class="form-control">
+                                <span asp-validation-for="IdVendedor" class="text-danger"></span>
                             </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.VendedorNombreOEmpresa, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.VendedorNombreOEmpresa, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.VendedorNombreOEmpresa, "", new { @class = "text-danger" })
-                                </div>
+                            
+                            <div class="form-group mb-2">
+                                <label asp-for="VendedorNombreOEmpresa"></label>
+                                <input asp-for="VendedorNombreOEmpresa" class="form-control">
+                                <span asp-validation-for="VendedorNombreOEmpresa" class="text-danger"></span>
                             </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.VendedorNumeroIdentificacionFiscal, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.VendedorNumeroIdentificacionFiscal, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.VendedorNumeroIdentificacionFiscal, "", new { @class = "text-danger" })
-                                </div>
+                            
+                            <div class="form-group mb-2">
+                                <label asp-for="VendedorNumeroIdentificacionFiscal"></label>
+                                <input asp-for="VendedorNumeroIdentificacionFiscal" class="form-control">
+                                <span asp-validation-for="VendedorNumeroIdentificacionFiscal" class="text-danger"></span>
                             </div>
-
-
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.VendedorDireccion, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.VendedorDireccion, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.VendedorDireccion, "", new { @class = "text-danger" })
-                                </div>
+                            
+                            <div class="form-group mb-2">
+                                <label asp-for="VendedorDireccion"></label>
+                                <input asp-for="VendedorDireccion" class="form-control">
+                                <span asp-validation-for="VendedorDireccion" class="text-danger"></span>
                             </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.VendedorLocalidad, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.VendedorLocalidad, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.VendedorLocalidad, "", new { @class = "text-danger" })
-                                </div>
+                            
+                            <div class="form-group mb-2">
+                                <label asp-for="VendedorLocalidad"></label>
+                                <input asp-for="VendedorLocalidad" class="form-control">
+                                <span asp-validation-for="VendedorLocalidad" class="text-danger"></span>
                             </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.VendedorProvincia, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.VendedorProvincia, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.VendedorProvincia, "", new { @class = "text-danger" })
-                                </div>
+                            
+                            <div class="form-group mb-2">
+                                <label asp-for="VendedorProvincia"></label>
+                                <input asp-for="VendedorProvincia" class="form-control">
+                                <span asp-validation-for="VendedorProvincia" class="text-danger"></span>
                             </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.VendedorCodigoPostal, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.VendedorCodigoPostal, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.VendedorCodigoPostal, "", new { @class = "text-danger" })
-                                </div>
+                            
+                            <div class="form-group mb-2">
+                                <label asp-for="VendedorCodigoPostal"></label>
+                                <input asp-for="VendedorCodigoPostal" class="form-control">
+                                <span asp-validation-for="VendedorCodigoPostal" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.VendedorEmail, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-
-                                    @Html.EditorFor(model => model.VendedorEmail, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.VendedorEmail, "", new { @class = "text-danger" })
-                                </div>
+                            
+                            <div class="form-group mb-2">
+                                <label asp-for="VendedorEmail"></label>
+                                <input asp-for="VendedorEmail" class="form-control">
+                                <span asp-validation-for="VendedorEmail" class="text-danger"></span>
                             </div>
+                            
                         </div>
                     </div>
                     
@@ -209,78 +171,61 @@
                             Datos del cliente
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.IdComprador, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.TextBoxFor(model => model.IdComprador, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.IdComprador, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="IdComprador"></label>
+                                <input asp-for="IdComprador" class="form-control">
+                                <span asp-validation-for="IdComprador" class="text-danger"></span>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompradorNombreOEmpresa, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CompradorNombreOEmpresa, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.CompradorNombreOEmpresa, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="CompradorNombreOEmpresa"></label>
+                                <input asp-for="CompradorNombreOEmpresa" class="form-control">
+                                <span asp-validation-for="CompradorNombreOEmpresa" class="text-danger"></span>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompradorNumeroIdentificacionFiscal, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CompradorNumeroIdentificacionFiscal, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.CompradorNumeroIdentificacionFiscal, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="CompradorNumeroIdentificacionFiscal"></label>
+                                <input asp-for="CompradorNumeroIdentificacionFiscal" class="form-control">
+                                <span asp-validation-for="CompradorNumeroIdentificacionFiscal" class="text-danger"></span>
                             </div>
 
-
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompradorDireccion1, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CompradorDireccion1, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.CompradorDireccion1, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="CompradorDireccion1"></label>
+                                <input asp-for="CompradorDireccion1" class="form-control">
+                                <span asp-validation-for="CompradorDireccion1" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group mb-2">
+                                <label asp-for="CompradorDireccion2"></label>
+                                <input asp-for="CompradorDireccion2" class="form-control">
+                                <span asp-validation-for="CompradorDireccion2" class="text-danger"></span>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompradorDireccion2, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CompradorDireccion2, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.CompradorDireccion2, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="CompradorLocalidad"></label>
+                                <input asp-for="CompradorLocalidad" class="form-control">
+                                <span asp-validation-for="CompradorLocalidad" class="text-danger"></span>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompradorLocalidad, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CompradorLocalidad, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.CompradorLocalidad, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="CompradorProvincia"></label>
+                                <input asp-for="CompradorProvincia" class="form-control">
+                                <span asp-validation-for="CompradorProvincia" class="text-danger"></span>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompradorProvincia, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CompradorProvincia, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.CompradorProvincia, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="CompradorCodigoPostal"></label>
+                                <input asp-for="CompradorCodigoPostal" class="form-control">
+                                <span asp-validation-for="CompradorCodigoPostal" class="text-danger"></span>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompradorCodigoPostal, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CompradorCodigoPostal, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.CompradorCodigoPostal, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group mb-2">
+                                <label asp-for="CompradorEmail"></label>
+                                <input asp-for="CompradorEmail" class="form-control">
+                                <span asp-validation-for="CompradorEmail" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompradorEmail, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.CompradorEmail, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.CompradorEmail, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+
+                            
                         </div>
                     </div>
                     
@@ -324,35 +269,35 @@
             <br/>
             <div class="card">
                 <div class="card-header">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.Comentarios, new { @class = "form-control", rows = "3" })
-                            @Html.ValidationMessageFor(model => model.Comentarios, "", new { @class = "text-danger" })
-                        </div>
+
+
+                    <div class="form-group mb-2">
+                        <label asp-for="Comentarios"></label>
+                        <textarea asp-for="Comentarios" class="form-control"></textarea>
+                        <span asp-validation-for="Comentarios" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ComentarioInterno, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.ComentarioInterno, new { @class = "form-control", rows = "3" })
-                            @Html.ValidationMessageFor(model => model.ComentarioInterno, "", new { @class = "text-danger" })
-                        </div>
+                    
+                    <div class="form-group mb-2">
+                        <label asp-for="ComentarioInterno"></label>
+                        <textarea asp-for="ComentarioInterno" class="form-control"></textarea>
+                        <span asp-validation-for="ComentarioInterno" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group mb-2">
+                        <label asp-for="ComentariosPie"></label>
+                        <textarea asp-for="ComentariosPie" class="form-control"></textarea>
+                        <span asp-validation-for="ComentariosPie" class="text-danger"></span>
+                    </div>
+                   
+                    
+
+
+                    <div class="form-group mb-2">
+                        <label asp-for="NombreArchivoPlantillaInforme"></label>
+                        <input asp-for="NombreArchivoPlantillaInforme" class="form-control">
+                        <span asp-validation-for="NombreArchivoPlantillaInforme" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ComentariosPie, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.ComentariosPie, htmlAttributes: new { @class = "form-control", rows = "5" })
-                            @Html.ValidationMessageFor(model => model.ComentariosPie, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.NombreArchivoPlantillaInforme, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.NombreArchivoPlantillaInforme, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NombreArchivoPlantillaInforme, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
                 </div>
                
             </div>
