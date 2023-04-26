@@ -104,19 +104,19 @@ public class EditorFactura
 
     [Display(Name = "Municipio")]
     [StringLength(50)]
-    public string CompradorLocalidad { get; set; } = string.Empty;
+    public string? CompradorLocalidad { get; set; } = string.Empty;
 
     [Display(Name = "Provincia")]
     [StringLength(50)]
-    public string CompradorProvincia { get; set; } = string.Empty;
+    public string? CompradorProvincia { get; set; } = string.Empty;
 
     [Display(Name = "Código postal")]
     [StringLength(10)]
-    public string CompradorCodigoPostal { get; set; } = string.Empty;
+    public string? CompradorCodigoPostal { get; set; } = string.Empty;
 
     [Display(Name = "E-mail")]
     [StringLength(50)]
-    public string CompradorEmail { get; set; } = string.Empty;
+    public string? CompradorEmail { get; set; } = string.Empty;
 
 
     public List<EditorLineaFactura> Lineas { get; set; } = new ();
@@ -150,13 +150,13 @@ public class EditorFactura
     public void AsignarDatosCliente(Cliente cliente)
     {
         IdComprador = cliente.Id;
-        CompradorCodigoPostal = cliente.CodigoPostal;
-        CompradorDireccion1 = cliente.Direccion1;
-        CompradorDireccion2 = cliente.Direccion2;
-        CompradorEmail = cliente.Email;
-        CompradorLocalidad = cliente.Localidad;
+        CompradorCodigoPostal = cliente.CodigoPostal ?? string.Empty;
+        CompradorDireccion1 = cliente.Direccion1();
+        CompradorDireccion2 = cliente.Direccion2();
+        CompradorEmail = cliente.Email ?? string.Empty;
+        CompradorLocalidad = cliente.Localidad ?? string.Empty;
         CompradorNombreOEmpresa = cliente.NombreOEmpresa;
         CompradorNumeroIdentificacionFiscal = cliente.NumeroIdentificacionFiscal;
-        CompradorProvincia = cliente.Provincia;
+        CompradorProvincia = cliente.Provincia ?? string.Empty;
     }
 }

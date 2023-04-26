@@ -47,7 +47,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                 Remitente = factura.VendedorEmail,
                 Asunto = $"Factura {factura.NumeroFactura}",
                 ContenidoHtml = @"Hola,",
-                Destinatarios = factura.CompradorEmail
+                Destinatarios = factura.CompradorEmail ?? string.Empty
             };
 
             CargarCombos();

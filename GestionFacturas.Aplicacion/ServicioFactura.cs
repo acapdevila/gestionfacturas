@@ -280,10 +280,10 @@ namespace GestionFacturas.Aplicacion
                         editor.CompradorNombreOEmpresa = clienteExistente.NombreOEmpresa;
 
                     if (string.IsNullOrEmpty(editor.CompradorDireccion1))
-                        editor.CompradorDireccion1 = clienteExistente.Direccion1;
+                        editor.CompradorDireccion1 = clienteExistente.Direccion1();
 
                     if (string.IsNullOrEmpty(editor.CompradorDireccion2))
-                        editor.CompradorDireccion2 = clienteExistente.Direccion2;
+                        editor.CompradorDireccion2 = clienteExistente.Direccion2();
 
                     if (string.IsNullOrEmpty(editor.CompradorLocalidad))
                         editor.CompradorLocalidad = clienteExistente.Localidad;
