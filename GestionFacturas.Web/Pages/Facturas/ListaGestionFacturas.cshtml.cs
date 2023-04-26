@@ -17,6 +17,8 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         public int Orden { get; set; }
 
+        public int EstadoFactura { get; set; } = new();
+
         public EditorEstadoFactura EditorEstadoFactura { get; set; } = new();
 
         public IActionResult OnGet()

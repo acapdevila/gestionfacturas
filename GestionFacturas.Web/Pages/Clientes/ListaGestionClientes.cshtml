@@ -1,5 +1,6 @@
 ﻿@page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using GestionFacturas.Web.Pages.Facturas
 @model ListaGestionClientesModel
 @{
     ViewData["Title"] = "Clientes";
@@ -107,14 +108,16 @@
                    
                    $("#table1").bootstrapTable({
                       // toolbar:"#toolbar-table1",
-                       url: "@Url.Action("Buscar", "GridClientes")"
+                       url: "@Url.Action("Buscar", "GridClientes")",
+                        sortable: true
                    });
                }
               
                 function numFacturasFormatter(value, row, index) {
                    return [
-                        @*'<a href="@ListaGestionFacturasModel.NombrePagina/'+ row.Id+'">'+ value +'</a>'*@
-                        row.@nameof(LineaListaGestionClientesVm.NumFacturas)
+                '<a class="btn btn-link" href="@ListaGestionFacturasModel.NombrePagina?@nameof(ListaGestionFacturasModel.NombreOEmpresa)=' + row.@nameof(LineaListaGestionClientesVm.NombreOEmpresa) + '">' + value + '</a>'
+                        @*'<a href="@ListaGestionFacturasModel.NombrePagina/'+ row.Id+'">'+ value +'</a>'
+                        row.@nameof(LineaListaGestionClientesVm.NumFacturas)*@
                    ].join('');
                }
 
@@ -135,6 +138,8 @@
                 '</div>'
             ].join('');
         }
+        
+        
 
                function generarUrlExcelClientes(element) {
                    const params = obtenerDatosFiltros("#toolbar1");

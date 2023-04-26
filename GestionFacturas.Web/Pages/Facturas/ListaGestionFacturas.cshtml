@@ -1,6 +1,7 @@
 ﻿@page
 @using Microsoft.AspNetCore.Http.Extensions
 @using GestionFacturas.Dominio
+@using GestionFacturas.Web.Pages.Clientes
 @model ListaGestionFacturasModel
 @{
     ViewData["Title"] = "Facturas";
@@ -35,7 +36,12 @@
                             
                         </select>
                     </div>
-                    
+                    <div class="col-12">
+                        <label asp-for="EstadoFactura">Estado</label>
+                        <select asp-for="EstadoFactura" class="form-select" asp-items="Html.GetEnumSelectList<EstadoFacturaEnum>()">
+                            <option value="0">Todos</option>
+                        </select>
+                    </div>
 
                 </div>
             </div>
@@ -82,7 +88,7 @@
                     <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Id)" data-visible="false" data-serchable="false">ID</th>
                         <th scope="col" data-field="@nameof(LineaListaGestionFacturas.NumeroFactura)" data-formatter="detallesFormatter" data-width="50">Factura</th>
                     <th scope="col" data-field="@nameof(LineaListaGestionFacturas.FechaEmisionFactura)" data-width="50">Fecha</th>
-                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.CompradorNombreOEmpresa)" data-width="40" data-width-unit="%">Descripción</th>
+                    <th scope="col" data-field="@nameof(LineaListaGestionFacturas.CompradorNombreOEmpresa)" data-width="40" data-width-unit="%" data-formatter="clienteFormatter">Descripción</th>
                     <th scope="col" data-field="@nameof(LineaListaGestionFacturas.EstadoFactura)" data-footer-formatter="etiquetaTotalFormatter" data-formatter="estadoFormatter" data-width="50">Estado</th>
                     <th scope="col" data-field="@nameof(LineaListaGestionFacturas.BaseImponible)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">BI</th>
                     <th scope="col" data-field="@nameof(LineaListaGestionFacturas.Impuestos)" data-footer-formatter="totalFormatter" data-formatter="priceFormatter" data-width="50">IVA</th>
@@ -159,14 +165,19 @@
             $("#@Html.IdFor(m => m.Desde)").change(refrescar);
             $("#@Html.IdFor(m => m.Hasta)").change(refrescar);
             $("#@Html.IdFor(m => m.Orden)").change(refrescar);
-                      
+            $("#@Html.IdFor(m => m.EstadoFactura)").change(refrescar);
 
             $("#tablaAcciones").bootstrapTable({
                 //toolbar:"#toolbar1",
                 //search: false,
                 url: "@Url.Action("Buscar", "GridFacturas")",
-                showFooter: true,
+                showFooter: true
             });
+            
+            @if (!string.IsNullOrEmpty(Model.NombreOEmpresa))
+            {
+                <text>refrescar()</text>
+            }
         }
 
     </script>
@@ -197,6 +208,14 @@
                 '</div>'
             ].join('');
                                   
+
+        }
+        
+         function clienteFormatter(value, row, index) {
+
+              return [
+                '<a class="btn btn-link" href="@EditarClienteModel.NombrePagina/' + row.@(nameof(LineaListaGestionFacturas.IdComprador)) + '?' + returnUrl + '">'+value+'</a>'               
+            ].join(''); 
 
         }
 

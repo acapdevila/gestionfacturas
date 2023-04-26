@@ -4,6 +4,5 @@ public enum EstadoFacturaEnum
 {
     Borrador = 1,
     Enviada = 2,
-    Cobrada = 3,
-    Transferida = 4
+    Cobrada = 3
 }

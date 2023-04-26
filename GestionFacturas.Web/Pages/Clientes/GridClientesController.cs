@@ -4,6 +4,7 @@ using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.AccesoDatosSql.Filtros;
 using GestionFacturas.Dominio.Clientes;
 using GestionFacturas.Web.Framework.Grid;
+using MailKit.Search;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +32,8 @@ namespace GestionFacturas.Web.Pages.Clientes
                     Nif = m.NumeroIdentificacionFiscal,
                     Email = m.Email,
                     NumFacturas = m.Facturas.Count
-                });
+                })
+                .OrderByDescending(m=>m.Id);
 
 
             var source = await consulta.ToGrid(gridParams);

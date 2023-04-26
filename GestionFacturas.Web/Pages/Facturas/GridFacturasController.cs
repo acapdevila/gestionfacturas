@@ -89,6 +89,8 @@ namespace GestionFacturas.Web.Pages.Facturas
         
         public OrdenFacturas Orden { get; set; }
 
+        public EstadoFacturaEnum EstadoFactura { get; set; }
+
     }
 
     public static class GridParamsCarteraClientesExtensiones
@@ -109,6 +111,10 @@ namespace GestionFacturas.Web.Pages.Facturas
                 .ThenWhere(m => gridParams.DesdeFecha <= m.FechaEmisionFactura)
                 .If(!string.IsNullOrEmpty(gridParams.Hasta))
                 .ThenWhere(m => m.FechaEmisionFactura <= gridParams.HastaFecha)
+
+                .If(0 < gridParams.EstadoFactura)
+                .ThenWhere(m => gridParams.EstadoFactura == m.EstadoFactura)
+
               ;
 
         }
