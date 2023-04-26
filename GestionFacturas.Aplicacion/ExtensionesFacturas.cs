@@ -11,30 +11,17 @@ namespace GestionFacturas.Aplicacion
 
             switch (orden)
             {
-                case OrdenFacturas.NumeroDesc:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                        .ThenByDescending(m => m.NumeracionFactura)
-                        .ThenByDescending(m => m.FechaEmisionFacturaDateTime);
-                    break;
-                case OrdenFacturas.NumeroAsc:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                        .ThenBy(m => m.NumeracionFactura)
-                        .ThenBy(m => m.FechaEmisionFacturaDateTime);
-                    break;
                 case OrdenFacturas.FechaDesc:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                        .ThenByDescending(m => m.FechaEmisionFacturaDateTime)
-                        .ThenByDescending(m => m.NumeracionFactura);
+                    consultaOrdenada = consulta.OrderByDescending(m => m.FechaEmisionFacturaDateTime)
+                            .ThenByDescending(m => m.NumeracionFactura);
                     break;
                 case OrdenFacturas.FechaAsc:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                        .ThenBy(m => m.FechaEmisionFacturaDateTime)
+                    consultaOrdenada = consulta.OrderBy(m => m.FechaEmisionFacturaDateTime)
                         .ThenBy(m => m.NumeracionFactura);
                     break;
                 default:
-                    consultaOrdenada = consulta.OrderBy(m => m.SerieFactura)
-                        .ThenByDescending(m => m.NumeracionFactura)
-                        .ThenByDescending(m => m.FechaEmisionFacturaDateTime);
+                    consultaOrdenada = consulta.OrderByDescending(m => m.FechaEmisionFacturaDateTime)
+                        .ThenByDescending(m => m.NumeracionFactura);
                     break;
             }
 

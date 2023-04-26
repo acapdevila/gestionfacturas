@@ -42,3 +42,7 @@ GestionFacturas.Website/Properties/PublishProfiles/*
 **.pbix
 /packages
 /GestionFacturas.Web/appsettings.Development.json
+/GestionFacturas.Web/appsettings.*.json
+/GestionFacturas.Web/.config/**
+/GestionFacturas.Web/Properties/PublishProfiles/**.pubxml
+/GestionFacturas.Web/Properties/ServiceDependencies/gestionfacturasbuclenet-test - Web Deploy/profile.arm.json
