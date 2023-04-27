@@ -46,3 +46,4 @@ GestionFacturas.Website/Properties/PublishProfiles/*
 /GestionFacturas.Web/.config/**
 /GestionFacturas.Web/Properties/PublishProfiles/**.pubxml
 /GestionFacturas.Web/Properties/ServiceDependencies/gestionfacturasbuclenet-test - Web Deploy/profile.arm.json
+/GestionFacturas.Web/wwwroot/Informes/Factura?*.rdlc
