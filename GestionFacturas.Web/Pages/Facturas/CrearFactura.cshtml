@@ -9,7 +9,9 @@
     <p>
         <div class="col-md-12">
             <input type="submit" value="Crear" class="btn btn-primary" />
-            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-link" })
+            
+            <a class="btn btn-link" href="@Model.HrefCancelar">Cancelar</a>
+            
         </div>
     </p>
 </form>

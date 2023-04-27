@@ -13,8 +13,8 @@
     <p>
         <div class="col-md-12">
             <input type="submit" value="Guardar" class="btn btn-primary" />
-            <a asp-page="@DetallesFacturaModel.NombrePagina" asp-route-id="Model.Factura.Id" class="btn btn-secondary">Detalles</a>
-            <a asp-page="@ListaGestionFacturasModel.NombrePagina" asp-route-id="Model.Factura.Id" class="btn btn-link">Lista de facturas</a>
+            <a asp-page="@DetallesFacturaModel.NombrePagina" asp-route-id="@Model.Editor.Id" class="btn btn-secondary">Detalles</a>
+            <a asp-page="@ListaGestionFacturasModel.NombrePagina" class="btn btn-link">Lista de facturas</a>
         </div>
     </p>
 </form>

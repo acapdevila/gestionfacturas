@@ -1,27 +1,20 @@
-﻿using ClosedXML.Excel;
-using GestionFacturas.AccesoDatosSql;
+﻿using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.Dominio;
-using GestionFacturas.Dominio.Clientes;
 using GestionFacturas.Dominio.Infra;
 using Microsoft.EntityFrameworkCore;
-using X.PagedList;
 
 namespace GestionFacturas.Aplicacion
 {
     public class ServicioFactura : ServicioCrudFactura
     {
-        private readonly IServicioEmail _servicioEmail;
-        
         private int PorcentajeIvaPorDefecto
         {
             get { return 21; }
         }
 
         public ServicioFactura(
-            SqlDb contexto, 
-            IServicioEmail servicioEmail) : base(contexto)
+            SqlDb contexto) : base(contexto)
         {
-            _servicioEmail = servicioEmail;
         }
 
         public async Task<EditorFactura> ObtenerEditorFacturaParaCrearNuevaFactura(string serie, int? idCliente)
@@ -30,7 +23,7 @@ namespace GestionFacturas.Aplicacion
 
             var ultimaFacturaCreada = await ObtenerUlitmaFacturaDeLaSerie(serie);
 
-            if (ultimaFacturaCreada == null)
+            if (ultimaFacturaCreada is null)
             {
                 editor = new EditorFactura
                 {
@@ -141,8 +134,7 @@ namespace GestionFacturas.Aplicacion
         public async Task<VisorFactura> BuscarVisorFacturaAsync(int idFactura)
         {
             var factura = await BuscarFacturaAsync(idFactura); 
-            var visor = new VisorFactura();
-            visor.InyectarFactura(factura);
+            var visor = new VisorFactura(factura);
             return visor;
         }
 
@@ -151,6 +143,8 @@ namespace GestionFacturas.Aplicacion
             var factura = await BuscarFacturaAsync(idFactura);
             var editor = new EditorFactura();
             editor.InyectarFactura(factura);
+            editor.CompradorDireccion1 = factura.CompradorDireccion1();
+            editor.CompradorDireccion2 = factura.CompradorDireccion2();
             editor.FechaEmisionFactura = factura.FechaEmisionFactura.ToInputDate();
             editor.FechaVencimientoFactura = factura.FechaVencimientoFactura?.ToInputDate();
             return editor;
@@ -177,130 +171,7 @@ namespace GestionFacturas.Aplicacion
                         .FirstOrDefaultAsync();
         }
          
-
-        public async Task EnviarFacturaPorEmail(MensajeEmail mensaje, Factura factura)
-        {
-            await _servicioEmail.EnviarMensajeAsync(mensaje);
-            
-            factura.EstadoFactura = EstadoFacturaEnum.Enviada;
-            await _contexto.SaveChangesAsync();
-        }
-        
-        public async Task ImportarFacturasDeExcel(Stream stream, SelectorColumnasExcelFactura columnas, bool soloImportarFacturasDeClientesExistentes)
-        {
-            var editoresFacturas = ObtenerFacturasDeExcel(stream, columnas);
-
-            var clientesExistentes = await _contexto.Clientes.ToListAsync();
-
-            if (soloImportarFacturasDeClientesExistentes)
-            {
-                var idsClientes = clientesExistentes.Select(m => m.NumeroIdentificacionFiscal).ToList();
-                editoresFacturas = editoresFacturas.Where(m => idsClientes.Contains(m.CompradorNumeroIdentificacionFiscal)).ToList();
-            }
-
-            CompletarDatosCompradores(editoresFacturas, clientesExistentes);
-            
-            await CrearFacturasAsync(editoresFacturas);
-        }
              
-        private List<EditorFactura> ObtenerFacturasDeExcel(Stream stream, SelectorColumnasExcelFactura columnas)
-        {
-            var workbook = new XLWorkbook(stream);
-            var worksheet = workbook.Worksheets.First();
-
-            var firstRow = worksheet.FirstRowUsed();
-            var rowUsed = firstRow.RowUsed();
-            rowUsed = rowUsed.RowBelow();
-
-            var facturas = new List<EditorFactura>();
-
-            while (!rowUsed.Cell(columnas.NumeroFactura).IsEmpty())
-            {
-                var factura = new EditorFactura
-                {
-                    IdUsuario = columnas.IdUsuario,
-                    SerieFactura = columnas.SerieFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.SerieFactura).GetString() : columnas.SerieFactura,
-                    NumeracionFactura = Convert.ToInt32(rowUsed.Cell(columnas.NumeroFactura).GetString()),
-                    FormatoNumeroFactura = columnas.FormatoNumeroFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.FormatoNumeroFactura).GetString() : columnas.FormatoNumeroFactura,
-                    FechaEmisionFactura = rowUsed.Cell(columnas.FechaEmisionFactura).GetString(),
-                    FechaVencimientoFactura = columnas.FechaVencimientoFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.FechaVencimientoFactura).GetString() : columnas.FechaVencimientoFactura,
-                    EstadoFactura = (EstadoFacturaEnum)Enum.Parse(typeof(EstadoFacturaEnum), (columnas.EstadoFactura.EsLetraMayuscula() ? rowUsed.Cell(columnas.EstadoFactura).GetString() : columnas.EstadoFactura), true),
-                    FormaPago = (FormaPagoEnum)Enum.Parse(typeof(FormaPagoEnum), (columnas.FormaPago.EsLetraMayuscula() ? rowUsed.Cell(columnas.FormaPago).GetString() : columnas.FormaPago), true),
-                    FormaPagoDetalles = columnas.FormaPagoDetalles.EsLetraMayuscula() ? rowUsed.Cell(columnas.FormaPagoDetalles).GetString() : columnas.FormaPagoDetalles,
-                    IdVendedor = columnas.IdVendedor.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.IdVendedor).GetDouble()) : string.IsNullOrEmpty(columnas.IdVendedor) ? (int?)null : Convert.ToInt32(columnas.IdVendedor),
-                    VendedorCodigoPostal = columnas.VendedorCodigoPostal.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorCodigoPostal).GetString() : columnas.VendedorCodigoPostal,
-                    VendedorDireccion = columnas.VendedorDireccion.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorDireccion).GetString() : columnas.VendedorDireccion,
-                    VendedorEmail = columnas.VendedorEmail.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorEmail).GetString() : columnas.VendedorEmail,
-                    VendedorLocalidad = columnas.VendedorLocalidad.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorLocalidad).GetString() : columnas.VendedorLocalidad,
-                    VendedorNombreOEmpresa = columnas.VendedorNombreOEmpresa.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorNombreOEmpresa).GetString() : columnas.VendedorNombreOEmpresa,
-                    VendedorNumeroIdentificacionFiscal = columnas.VendedorNumeroIdentificacionFiscal.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorNumeroIdentificacionFiscal).GetString() : columnas.VendedorNumeroIdentificacionFiscal,
-                    VendedorProvincia = columnas.VendedorProvincia.EsLetraMayuscula() ? rowUsed.Cell(columnas.VendedorProvincia).GetString() : columnas.VendedorProvincia,
-                    IdComprador = columnas.IdComprador.EsLetraMayuscula() ?  rowUsed.Cell(columnas.IdComprador).GetValue<int>() : string.IsNullOrEmpty(columnas.IdComprador) ? (int?)null : Convert.ToInt32(columnas.IdComprador),
-                    CompradorCodigoPostal = columnas.CompradorCodigoPostal.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorCodigoPostal).GetString() : columnas.CompradorCodigoPostal,
-                    CompradorDireccion1 = columnas.CompradorDireccion.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorDireccion).GetString() : columnas.CompradorDireccion,
-                    CompradorEmail = columnas.CompradorEmail.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorEmail).GetString() : columnas.CompradorEmail,
-                    CompradorLocalidad = columnas.CompradorLocalidad.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorLocalidad).GetString() : columnas.CompradorLocalidad,
-                    CompradorNombreOEmpresa = columnas.CompradorNombreOEmpresa.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorNombreOEmpresa).GetString() : columnas.CompradorNombreOEmpresa,
-                    CompradorNumeroIdentificacionFiscal = columnas.CompradorNumeroIdentificacionFiscal.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorNumeroIdentificacionFiscal).GetString() : columnas.CompradorNumeroIdentificacionFiscal,
-                    CompradorProvincia = columnas.CompradorProvincia.EsLetraMayuscula() ? rowUsed.Cell(columnas.CompradorProvincia).GetString() : columnas.CompradorProvincia,
-                    PorcentajeIvaPorDefecto = columnas.PorcentajeImpuesto.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.PorcentajeImpuesto).GetDouble()) : Convert.ToInt32(columnas.PorcentajeImpuesto),
-                    Lineas = new List<EditorLineaFactura> {
-                        new EditorLineaFactura {
-                            Cantidad = columnas.Cantidad.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.Cantidad).GetDouble()) : Convert.ToInt32(columnas.Cantidad),
-                            PorcentajeImpuesto =  columnas.PorcentajeImpuesto.EsLetraMayuscula() ? Convert.ToInt32(rowUsed.Cell(columnas.PorcentajeImpuesto).GetDouble()) : Convert.ToInt32(columnas.PorcentajeImpuesto),
-                            Descripcion = rowUsed.Cell(columnas.Descripcion).GetString(),
-                            PrecioUnitario = Convert.ToDecimal(rowUsed.Cell(columnas.PrecioUnitario).GetDouble())
-                        }
-                    },
-                    Comentarios = columnas.Comentarios.EsLetraMayuscula() ? rowUsed.Cell(columnas.Comentarios).GetString() : columnas.Comentarios,
-                    ComentarioInterno = columnas.ComentarioInterno.EsLetraMayuscula() ? rowUsed.Cell(columnas.ComentarioInterno).GetString() : columnas.ComentarioInterno,
-                    ComentariosPie = columnas.ComentariosPie.EsLetraMayuscula() ? rowUsed.Cell(columnas.ComentariosPie).GetString() : columnas.ComentariosPie
-                };
-
-                facturas.Add(factura);
-
-                rowUsed = rowUsed.RowBelow();
-            }
-
-            return facturas.Distinct().ToList();
-        }
-
-        private void CompletarDatosCompradores(List<EditorFactura> editoresFacturas, List<Cliente> clientesExistentes)
-        {
-            foreach (var editor in editoresFacturas)
-            {
-                var clienteExistente = clientesExistentes.FirstOrDefault(m => m.NumeroIdentificacionFiscal == editor.CompradorNumeroIdentificacionFiscal);
-
-                if (clienteExistente != null)
-                {
-                    if (!editor.IdComprador.HasValue)
-                        editor.IdComprador = clienteExistente.Id;
-
-                    if (string.IsNullOrEmpty(editor.CompradorNombreOEmpresa))
-                        editor.CompradorNombreOEmpresa = clienteExistente.NombreOEmpresa;
-
-                    if (string.IsNullOrEmpty(editor.CompradorDireccion1))
-                        editor.CompradorDireccion1 = clienteExistente.Direccion1();
-
-                    if (string.IsNullOrEmpty(editor.CompradorDireccion2))
-                        editor.CompradorDireccion2 = clienteExistente.Direccion2();
-
-                    if (string.IsNullOrEmpty(editor.CompradorLocalidad))
-                        editor.CompradorLocalidad = clienteExistente.Localidad;
-                                      
-                    if (string.IsNullOrEmpty(editor.CompradorProvincia))
-                        editor.CompradorProvincia = clienteExistente.Provincia;
-
-                    if (string.IsNullOrEmpty(editor.CompradorCodigoPostal))
-                        editor.CompradorCodigoPostal = clienteExistente.CodigoPostal;
-
-                    if (string.IsNullOrEmpty(editor.CompradorEmail))
-                        editor.CompradorEmail = clienteExistente.Email;
-                }
-            }
-        }
-
-
        
     }
 }

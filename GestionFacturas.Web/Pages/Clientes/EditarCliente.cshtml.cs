@@ -3,7 +3,6 @@ using GestionFacturas.Web.Framework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Omu.ValueInjecter;
 
 namespace GestionFacturas.Web.Pages.Clientes;
 
@@ -33,7 +32,7 @@ public class EditarClienteModel : PageModel
             return NotFound();
         }
 
-        Editor.InjectFrom(cliente);
+        Editor = new EditorClienteVm(cliente);
 
         return Page();
     }
@@ -46,7 +45,17 @@ public class EditarClienteModel : PageModel
         }
 
         var cliente = await _db.Clientes.FirstAsync(m => m.Id == Id);
-        cliente.InjectFrom(Editor);
+
+        cliente.NumeroIdentificacionFiscal = Editor.NumeroIdentificacionFiscal;
+        cliente.NombreOEmpresa = Editor.NombreOEmpresa;
+        cliente.NombreComercial = Editor.NombreComercial;
+        cliente.Localidad = Editor.Localidad;
+        cliente.Provincia = Editor.Provincia;
+        cliente.CodigoPostal = Editor.CodigoPostal;
+        cliente.Email = Editor.Email;
+        cliente.PersonaContacto = Editor.PersonaContacto;
+        cliente.ComentarioInterno = Editor.ComentarioInterno;
+
 
         cliente.Direccion = Editor.Direccion1;
         if(!string.IsNullOrEmpty(Editor.Direccion2))

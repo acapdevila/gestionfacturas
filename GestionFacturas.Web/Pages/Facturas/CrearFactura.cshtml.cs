@@ -12,6 +12,9 @@ namespace GestionFacturas.Web.Pages.Facturas
         
         private readonly ServicioFactura _servicioFactura;
 
+
+        public string HrefCancelar { get; set; } = string.Empty;
+
         public CrearFacturaModel(ServicioFactura servicioFactura)
         {
             _servicioFactura = servicioFactura;
@@ -22,12 +25,15 @@ namespace GestionFacturas.Web.Pages.Facturas
             if (id.HasValue)
             {
                 Editor = await _servicioFactura.GenerarNuevoEditorFacturaDuplicado(id.Value);
+                HrefCancelar = Url.Page(DetallesFacturaModel.NombrePagina, new { id = id.Value })!;
             }
             else
             {
                 Editor =
                     await _servicioFactura
                         .ObtenerEditorFacturaParaCrearNuevaFactura(serie: string.Empty, idCliente: IdCliente);
+               
+                HrefCancelar = Url.Page(ListaGestionFacturasModel.NombrePagina)!;
             }
 
             Editor.IdUsuario = User.FindFirstValue(ClaimTypes.NameIdentifier);

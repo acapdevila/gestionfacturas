@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using GestionFacturas.AccesoDatosSql;
+﻿using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.Dominio;
 using GestionFacturas.Dominio.Infra;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +10,7 @@ namespace GestionFacturas.Aplicacion
     {
         
         protected readonly SqlDb _contexto;
-
-        private Factura Factura { get; set; }
-
+        
         public ServicioCrudFactura(SqlDb contexto)
         {
             _contexto = contexto;
@@ -24,67 +19,43 @@ namespace GestionFacturas.Aplicacion
 
         public async Task<int> CrearFacturaAsync(EditorFactura editor)
         {
-            Factura = new Factura();
+            var factura = new Factura();
 
-            ModificarFactura(editor);         
+            ModificarFactura(editor, factura);         
 
-            _contexto.Facturas.Add(Factura);
+            _contexto.Facturas.Add(factura);
 
             var cambios = await GuardarCambiosAsync();
             
-            editor.InyectarFactura(Factura);
+            editor.InyectarFactura(factura);
 
             return cambios;
         }
-
-        public async Task<int> CrearFacturasAsync(List<EditorFactura> editores)
-        {
-            foreach (var editor in editores)
-            {
-                Factura = new Factura();
-
-                ModificarFactura(editor);
-
-                _contexto.Facturas.Add(Factura);
-            }
-            var cambios = await GuardarCambiosAsync();
-
-            return cambios;
-        }
-
+        
         public async Task<int> ActualizarFacturaAsync(EditorFactura editor)
         {
-            Factura = await BuscarFacturaAsync(editor.Id);
+            var factura = await _contexto.Facturas
+                .Include(m => m.Lineas)
+                .FirstAsync(m => m.Id == editor.Id); 
 
-            ModificarFactura(editor);
+            ModificarFactura(editor, factura);
                              
-            _contexto.Entry(Factura).State = EntityState.Modified;
+            _contexto.Entry(factura).State = EntityState.Modified;
             return  await GuardarCambiosAsync();
          }
 
-
-        public async Task CambiarEstadoFacturaAsync(EditorEstadoFactura editor)
-        {
-            Factura = await BuscarFacturaAsync(editor.IdFactura);
-
-            Factura.EstadoFactura = editor.EstadoFactura;
-
-            _contexto.Entry(Factura).State = EntityState.Modified;
-            await GuardarCambiosAsync();
-        }
-
-
+        
         public async Task<int> EliminarFactura(int idFactura)
         {
-            Factura = await BuscarFacturaAsync(idFactura);
-            
-            while (Factura.Lineas.Any())
+            var factura = await _contexto.Facturas.Include(m => m.Lineas).FirstAsync(m => m.Id == idFactura);
+
+            while (factura.Lineas.Any())
             {
-                var linea = Factura.Lineas.First();
+                var linea = factura.Lineas.First();
                 _contexto.FacturasLineas.Remove(linea);
             }
 
-            _contexto.Facturas.Remove(Factura);
+            _contexto.Facturas.Remove(factura);
 
            return  await GuardarCambiosAsync();
         }
@@ -95,13 +66,13 @@ namespace GestionFacturas.Aplicacion
             return await _contexto.SaveChangesAsync();
         }
 
-        public async Task<Factura?> BuscarFacturaAsync(int idFactura)
+        public async Task<Factura> BuscarFacturaAsync(int idFactura)
         {
             return await _contexto.Facturas
                         .Include(m => m.Lineas)
-                        .FirstOrDefaultAsync(m => m.Id == idFactura);
+                        .FirstAsync(m => m.Id == idFactura);
         }
-
+        
 
         public void Dispose()
         {
@@ -110,31 +81,31 @@ namespace GestionFacturas.Aplicacion
 
         #region Lineas de factura
 
-        private void ModificarFactura(EditorFactura editor)
+        private void ModificarFactura(EditorFactura editor, Factura factura)
         {
-            ModificarCabeceraFactura(editor);
-            ModificarLineasFactura(editor.Lineas);
+            ModificarCabeceraFactura(editor, factura);
+            ModificarLineasFactura(editor.Lineas, factura);
         }
 
-        private void ModificarCabeceraFactura(EditorFactura editor)
+        private void ModificarCabeceraFactura(EditorFactura editor, Factura factura)
         {
-            Factura.InjectFrom(editor);
+            factura.InjectFrom(editor);
 
-            Factura.FechaEmisionFactura = editor.FechaEmisionFactura.FromInputToDateTime();
-            Factura.FechaVencimientoFactura = editor.FechaVencimientoFactura?.FromInputToDateTime();
+            factura.FechaEmisionFactura = editor.FechaEmisionFactura.FromInputToDateTime();
+            factura.FechaVencimientoFactura = editor.FechaVencimientoFactura?.FromInputToDateTime();
         }
 
-        private void ModificarLineasFactura(ICollection<EditorLineaFactura> lineasEditor)
+        private void ModificarLineasFactura(ICollection<EditorLineaFactura> lineasEditor, Factura factura)
         {
             foreach (var lineaEditor in lineasEditor)
             {
-                var lineaFactura = Factura.Lineas.FirstOrDefault(m => lineaEditor.Id > 0 && m.Id == lineaEditor.Id);
+                var lineaFactura = factura.Lineas.FirstOrDefault(m => lineaEditor.Id > 0 && m.Id == lineaEditor.Id);
 
                 if (lineaFactura != null)
                 {
                     if (lineaEditor.EstaMarcadoParaEliminar)
                     {
-                        Factura.Lineas.Remove(lineaFactura);
+                        factura.Lineas.Remove(lineaFactura);
                         _contexto.FacturasLineas.Remove(lineaFactura);
                     }
                     else
@@ -144,7 +115,7 @@ namespace GestionFacturas.Aplicacion
                 {
                     lineaFactura = new LineaFactura();
                     lineaFactura.InjectFrom(lineaEditor);
-                    Factura.Lineas.Add(lineaFactura);
+                    factura.Lineas.Add(lineaFactura);
                 }
             }
         }

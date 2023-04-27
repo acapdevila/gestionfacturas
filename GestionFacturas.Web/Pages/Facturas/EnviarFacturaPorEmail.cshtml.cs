@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using GestionFacturas.Aplicacion;
 using System.Net;
 using CSharpFunctionalExtensions;
+using GestionFacturas.AccesoDatosSql;
 using GestionFacturas.Dominio;
 using GestionFacturas.Web.Pages.Shared;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
@@ -13,17 +15,19 @@ namespace GestionFacturas.Web.Pages.Facturas
     public class EnviarFacturaPorEmailModel : PageModel
     {
         public const string NombrePagina = @"/Facturas/EnviarFacturaPorEmail";
-
-        private readonly ServicioFactura _servicioFactura;
+        
         private readonly IWebHostEnvironment _env;
+        private readonly SqlDb _db;
         private readonly MailSettings _mailSettings;
+        private readonly IServicioEmail _email;
         
 
-        public EnviarFacturaPorEmailModel(ServicioFactura servicioFactura, IWebHostEnvironment env, MailSettings mailSettings)
+        public EnviarFacturaPorEmailModel(IWebHostEnvironment env, MailSettings mailSettings, SqlDb db, IServicioEmail email)
         {
-            _servicioFactura = servicioFactura;
             _env = env;
             _mailSettings = mailSettings;
+            _db = db;
+            _email = email;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -36,7 +40,16 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var factura = await _servicioFactura.BuscaEditorFacturaAsync(Id);
+
+            var factura = await _db.Facturas
+                .Include(m => m.Lineas)
+                .FirstOrDefaultAsync(m => m.Id == Id);
+
+            if (factura == null)
+            {
+                return NotFound();
+            }
+            
 
             Id = factura.Id;
 
@@ -44,7 +57,7 @@ namespace GestionFacturas.Web.Pages.Facturas
 
             EditorEmail = new EditorEmail
             {
-                Remitente = factura.VendedorEmail,
+                Remitente = factura.VendedorEmail ?? string.Empty,
                 Asunto = $"Factura {factura.NumeroFactura}",
                 ContenidoHtml = @"Hola,",
                 Destinatarios = factura.CompradorEmail ?? string.Empty
@@ -68,7 +81,9 @@ namespace GestionFacturas.Web.Pages.Facturas
                 return Page();
             }
 
-            var factura = await _servicioFactura.BuscarFacturaAsync(Id);
+            var factura = await _db.Facturas
+                .Include(m => m.Lineas)
+                .FirstOrDefaultAsync(m => m.Id == Id);
 
             if (factura is null)
                 return NotFound();
@@ -82,7 +97,11 @@ namespace GestionFacturas.Web.Pages.Facturas
                 return Page();
             }
 
-            await _servicioFactura.EnviarFacturaPorEmail(mensaje.Value, factura);
+            await _email.EnviarMensajeAsync(mensaje.Value);
+
+            factura.EstadoFactura = EstadoFacturaEnum.Enviada;
+            await _db.SaveChangesAsync();
+            
 
             var numeroFacturaCodificada = WebUtility.UrlEncode(factura.NumeroFactura);
 

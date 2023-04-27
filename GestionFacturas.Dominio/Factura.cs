@@ -35,7 +35,7 @@ namespace GestionFacturas.Dominio
         public string VendedorLocalidad { get; set; } = string.Empty;
         public string VendedorProvincia { get; set; } = string.Empty;
         public string VendedorCodigoPostal { get; set; } = string.Empty;
-        public string VendedorEmail { get; set; } = string.Empty;
+        public string? VendedorEmail { get; set; } = string.Empty;
 
         public int? IdComprador { get; set; }
         public string CompradorNumeroIdentificacionFiscal { get; set; } = string.Empty;
@@ -53,7 +53,7 @@ namespace GestionFacturas.Dominio
 
         public string CompradorLocalidad { get; set; } = string.Empty;
         public string CompradorProvincia { get; set; } = string.Empty;
-        public string CompradorCodigoPostal { get; set; } = string.Empty;
+        public string? CompradorCodigoPostal { get; set; } = string.Empty;
 
         public string? CompradorEmail { get; set; } = string.Empty;
 

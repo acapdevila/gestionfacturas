@@ -21,20 +21,7 @@ namespace GestionFacturas.Aplicacion
                 editor.Lineas.Add(lineaEditor);
             }
         }
-
-        public static void InyectarFactura(this VisorFactura visor, Factura factura)
-        {
-            visor.InjectFrom(factura);
-
-            visor.BorrarLineasFactura();
-
-            foreach (var lineaFactura in factura.Lineas)
-            {
-                var lineaVisor = new LineaVisorFactura();
-                lineaVisor.InjectFrom(lineaFactura);
-                visor.Lineas.Add(lineaVisor);
-            }
-        }
+        
 
         public static void InyectarFactura(this DataSetFactura datasetFactura, Factura factura, string urlRaizWeb)
         {

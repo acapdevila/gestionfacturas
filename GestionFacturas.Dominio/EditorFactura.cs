@@ -76,8 +76,8 @@ public class EditorFactura
 
     [EmailAddress]
     [Display(Name = "E-mail")]
-    [StringLength(50)]
-    public string VendedorEmail { get; set; } = string.Empty;
+    [StringLength(256)]
+    public string? VendedorEmail { get; set; } = string.Empty;
 
     [Display(Name = "Número de referencia")]
     public int? IdComprador { get; set; }
@@ -115,7 +115,7 @@ public class EditorFactura
     public string? CompradorCodigoPostal { get; set; } = string.Empty;
 
     [Display(Name = "E-mail")]
-    [StringLength(50)]
+    [StringLength(256)]
     public string? CompradorEmail { get; set; } = string.Empty;
 
 

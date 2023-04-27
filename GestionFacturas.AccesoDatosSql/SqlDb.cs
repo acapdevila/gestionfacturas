@@ -60,7 +60,7 @@ namespace GestionFacturas.AccesoDatosSql
 
                 entity.Property(e => e.Direccion).HasMaxLength(128);
 
-                entity.Property(e => e.Email).HasMaxLength(50);
+                entity.Property(e => e.Email).HasMaxLength(256);
 
                 entity.Property(e => e.Localidad).HasMaxLength(50);
 
@@ -95,7 +95,7 @@ namespace GestionFacturas.AccesoDatosSql
 
                 entity.Property(e => e.CompradorDireccion).HasMaxLength(128);
 
-                entity.Property(e => e.CompradorEmail).HasMaxLength(50);
+                entity.Property(e => e.CompradorEmail).HasMaxLength(256);
 
                 entity.Property(e => e.CompradorLocalidad).HasMaxLength(50);
 
@@ -125,7 +125,7 @@ namespace GestionFacturas.AccesoDatosSql
 
                 entity.Property(e => e.VendedorDireccion).HasMaxLength(128);
 
-                entity.Property(e => e.VendedorEmail).HasMaxLength(50);
+                entity.Property(e => e.VendedorEmail).HasMaxLength(256);
 
                 entity.Property(e => e.VendedorLocalidad).HasMaxLength(50);
 

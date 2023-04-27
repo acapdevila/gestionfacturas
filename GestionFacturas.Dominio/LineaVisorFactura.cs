@@ -2,12 +2,24 @@
 
 public class LineaVisorFactura
 {
-    public int Id { get; set; }
-    public int IdFactura { get; set; }
+    public LineaVisorFactura()
+    {
+        
+    }
+
+    public LineaVisorFactura(LineaFactura linea)
+    {
+        Descripcion = linea.Descripcion;
+        Cantidad = linea.Cantidad;
+        PrecioUnitario = linea.PrecioUnitario;
+        PorcentajeImpuesto = linea.PorcentajeImpuesto;
+        Importe = linea.Importe;
+        
+    }
+    
     public string Descripcion { get; set; } = string.Empty;
     public decimal Cantidad { get; set; }
     public decimal PrecioUnitario { get; set; }
-    public decimal PrecioXCantidad { get; set; }
     public int PorcentajeImpuesto { get; set; }
     public decimal Importe { get; set; }
 }
