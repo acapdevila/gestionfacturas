@@ -102,9 +102,9 @@
                
                function initTable() {
 
-                   $("#@Html.IdFor(m => m.NombreOEmpresa)").change(refrescar);
-                   $("#@Html.IdFor(m => m.Nif)").change(refrescar);
-                   $("#@Html.IdFor(m => m.Ref)").change(refrescar);
+            $("#@Html.IdFor(m => m.NombreOEmpresa)").change(refrescar).val(recuperaInputFiltro);
+            $("#@Html.IdFor(m => m.Nif)").change(refrescar).val(recuperaInputFiltro);
+            $("#@Html.IdFor(m => m.Ref)").change(refrescar).val(recuperaInputFiltro);
                    
                    $("#table1").bootstrapTable({
                       // toolbar:"#toolbar-table1",

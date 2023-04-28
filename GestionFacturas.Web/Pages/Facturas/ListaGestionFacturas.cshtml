@@ -161,11 +161,11 @@
 
         function initTable() {
 
-            $("#@Html.IdFor(m => m.NombreOEmpresa)").change(refrescar);
-            $("#@Html.IdFor(m => m.Desde)").change(refrescar);
-            $("#@Html.IdFor(m => m.Hasta)").change(refrescar);
-            $("#@Html.IdFor(m => m.Orden)").change(refrescar);
-            $("#@Html.IdFor(m => m.EstadoFactura)").change(refrescar);
+            $("#@Html.IdFor(m => m.NombreOEmpresa)").change(refrescar).val(recuperaInputFiltro);
+            $("#@Html.IdFor(m => m.Desde)").change(refrescar).val(recuperaInputFiltro);
+            $("#@Html.IdFor(m => m.Hasta)").change(refrescar).val(recuperaInputFiltro);
+            $("#@Html.IdFor(m => m.Orden)").change(refrescar).val(recuperaInputFiltro);
+            $("#@Html.IdFor(m => m.EstadoFactura)").change(refrescar).val(recuperaInputFiltro);
 
             $("#tablaAcciones").bootstrapTable({
                 //toolbar:"#toolbar1",
@@ -375,15 +375,17 @@
 
 
         function DescargarZip() {
-            window.location = '@Url.Action("DescargarZip", "DescargasFacturas")?' + ParametrosBusquedaFormulario();
+            window.location = '@Url.Action("DescargarZip", "DescargasFacturas")?' + queryStringFiltros();
         }
 
         function DescargarExcel() {
-            window.location = '@Url.Action("DescargarExcel", "DescargasFacturas")?' + ParametrosBusquedaFormulario();
+            window.location = '@Url.Action("DescargarExcel", "DescargasFacturas")?' + queryStringFiltros();
         }
 
-        function ParametrosBusquedaFormulario() {
-            return $('#toolbar1').serialize();
+        function queryStringFiltros() {
+             var params = obtenerDatosFiltros('#toolbar1');
+             var queryString = $.param(params);
+             return queryString;
 
         }
 
