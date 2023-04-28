@@ -21,6 +21,12 @@ namespace GestionFacturas.Aplicacion
         {
             var factura = new Factura();
 
+            var comprador = await _contexto
+                                        .Clientes
+                                        .FirstAsync(m => m.Id == editor.IdComprador);
+
+            factura.Comprador = comprador;
+
             ModificarFactura(editor, factura);         
 
             _contexto.Facturas.Add(factura);
@@ -91,6 +97,7 @@ namespace GestionFacturas.Aplicacion
         {
             factura.InjectFrom(editor);
 
+            factura.IdComprador = editor.IdComprador;
             factura.FechaEmisionFactura = editor.FechaEmisionFactura.FromInputToDateTime();
             factura.FechaVencimientoFactura = editor.FechaVencimientoFactura?.FromInputToDateTime();
         }
