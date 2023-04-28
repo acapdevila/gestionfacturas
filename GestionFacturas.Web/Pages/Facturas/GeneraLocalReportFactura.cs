@@ -4,12 +4,16 @@ using Microsoft.Reporting.NETCore;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
-    public class GeneraLocalReportFactura
+    public static class GeneraLocalReportFactura
     {
         
         public static LocalReport GenerarInformeLocalFactura(Factura factura, string webRootPath)
         {
-            var rutaReport = Path.Combine(webRootPath, "informes", "Factura.rdlc");
+            var plantillaRdlc = string.IsNullOrEmpty(factura.NombreArchivoPlantillaInforme)
+                                                    ? "Factura.rdlc"
+                                                    : factura.NombreArchivoPlantillaInforme;
+
+            var rutaReport = Path.Combine(webRootPath, "informes", plantillaRdlc);
 
             var informeLocal = new LocalReport
             {
@@ -17,7 +21,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                 EnableExternalImages = true
             };
             
-            var datasetFactura = ConvertirADataSet(factura, webRootPath);
+            var datasetFactura = ConvertirADataSet(factura);
 
             informeLocal.DataSources.Add(new ReportDataSource("Facturas", datasetFactura.Tables[0]));
             informeLocal.DataSources.Add(new ReportDataSource("Lineas", datasetFactura.Tables[1]));
@@ -25,11 +29,29 @@ namespace GestionFacturas.Web.Pages.Facturas
             return informeLocal;
         }
 
-        private static DataSetFactura ConvertirADataSet(Factura factura, string urlRaizWeb)
+        private static DataSetFactura ConvertirADataSet(Factura factura)
         {
             var datasetFactura = new DataSetFactura();
+            
+            var filaDatasetFactura = datasetFactura.Facturas.NewFacturasRow();
 
-            datasetFactura.InyectarFactura(factura, urlRaizWeb);
+            filaDatasetFactura.InyectarFactura(factura);
+
+            datasetFactura.Facturas.AddFacturasRow(filaDatasetFactura);
+
+            foreach (var linea in factura.Lineas)
+            {
+                var filaDatasetLineaFactura = datasetFactura.FacturasLineas.NewFacturasLineasRow();
+
+                filaDatasetLineaFactura.Id = linea.Id;
+                filaDatasetLineaFactura.IdFactura = linea.IdFactura;
+                filaDatasetLineaFactura.Descripcion = linea.Descripcion;
+                filaDatasetLineaFactura.Cantidad = linea.Cantidad;
+                filaDatasetLineaFactura.PrecioUnitario = linea.PrecioUnitario;
+                filaDatasetLineaFactura.PorcentajeImpuesto = linea.PorcentajeImpuesto;
+
+                datasetFactura.FacturasLineas.AddFacturasLineasRow(filaDatasetLineaFactura);
+            }
 
             return datasetFactura;
         }

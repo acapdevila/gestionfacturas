@@ -111,7 +111,7 @@ namespace GestionFacturas.Web.Pages.Facturas
 
             var workbook = ServicioExcel.GenerarExcelFactura(gridParams, facturas);
 
-            var nombreArchivoExcel = $"Facturacion_desde_{gridParams.Desde}_hasta_{gridParams.Desde}.xlsx";
+            var nombreArchivoExcel = $"Facturacion_desde_{gridParams.Desde}_hasta_{gridParams.Hasta}.xlsx";
 
             return workbook.Deliver(nombreArchivoExcel,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             
