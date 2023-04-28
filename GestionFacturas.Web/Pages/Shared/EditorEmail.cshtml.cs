@@ -5,6 +5,11 @@ namespace GestionFacturas.Web.Pages.Shared;
 
 public class EditorEmail
 {
+    [Display(Name = @"DisplayName de e-mail")]
+    [Required(ErrorMessage = @"Escribe el nombre del remitente")]
+    public string DisplayName { get; set; } = string.Empty;
+
+
     [Display(Name = @"De")]
     [Required(ErrorMessage = @"Escribe la dirección de e-mail del remitente")]
     [RegularExpression(
@@ -23,7 +28,9 @@ public class EditorEmail
     [Display(Name = @"Mensaje")]
     public string ContenidoHtml { get; set; } = string.Empty;
 
-    public List<SelectListItem> Remitentes { get; set; } = new();
+    public List<SelectListItem> EmailRemitentes { get; set; } = new();
+
+    public List<SelectListItem> NombresRemitentes { get; set; } = new();
 
 
 }

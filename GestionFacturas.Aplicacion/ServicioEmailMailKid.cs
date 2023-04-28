@@ -18,7 +18,6 @@ namespace GestionFacturas.Aplicacion
         public string PickupDirectoryLocation { get; set; } = string.Empty;
         public string From { get; set; } = string.Empty;
         public string UserName { get; set; } = string.Empty;
-        public string DisplayName { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string Host { get; set; } = string.Empty;
         public int Port { get; set; }
@@ -27,6 +26,12 @@ namespace GestionFacturas.Aplicacion
 
         public string[] ReplyToList() =>
             ReplyTo.Split(';', StringSplitOptions.RemoveEmptyEntries |
+                               StringSplitOptions.TrimEntries);
+
+        public string DisplayNames { get; set; } = string.Empty;
+
+        public string[] DisplayNamesList() =>
+            DisplayNames.Split(';', StringSplitOptions.RemoveEmptyEntries |
                                StringSplitOptions.TrimEntries);
 
     }
@@ -61,8 +66,8 @@ namespace GestionFacturas.Aplicacion
         private MimeMessage GenerarEmail(MensajeEmail mensaje)
         {
             var email = new MimeMessage();
-
-            email.From.Add(new MailboxAddress(_mailSettings.DisplayName, _mailSettings.From));
+            
+            email.From.Add(  new MailboxAddress(mensaje.NombreRemitente, _mailSettings.From));
             foreach (var destinatario in mensaje.DireccionesDestinatarios())
             {
                 email.To.Add(MailboxAddress.Parse(destinatario));
@@ -71,7 +76,7 @@ namespace GestionFacturas.Aplicacion
             email.Subject = mensaje.Asunto;
 
             email.Sender = MailboxAddress.Parse(_mailSettings.UserName); 
-            email.Sender.Name = _mailSettings.DisplayName;
+            email.Sender.Name = mensaje.NombreRemitente;
             
             var builder = new BodyBuilder();
             

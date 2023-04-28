@@ -60,7 +60,8 @@ namespace GestionFacturas.Web.Pages.Facturas
                 Remitente = factura.VendedorEmail ?? string.Empty,
                 Asunto = $"Factura {factura.NumeroFactura}",
                 ContenidoHtml = @"Hola,",
-                Destinatarios = factura.CompradorEmail ?? string.Empty
+                Destinatarios = factura.CompradorEmail ?? string.Empty,
+                DisplayName = factura.VendedorNombreOEmpresa
             };
 
             CargarCombos();
@@ -70,7 +71,8 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         private void CargarCombos()
         {
-            EditorEmail.Remitentes = _mailSettings.ReplyToList().Select(m => new SelectListItem(m, m)).ToList();
+            EditorEmail.EmailRemitentes = _mailSettings.ReplyToList().Select(m => new SelectListItem(m, m)).ToList();
+            EditorEmail.NombresRemitentes = _mailSettings.DisplayNamesList().Select(m => new SelectListItem(m, m)).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -115,7 +117,7 @@ namespace GestionFacturas.Web.Pages.Facturas
             byte[] pdf = informeLocal.Render("PDF");
             
             var mensaje = new MensajeEmail(
-                nombreRemitente: factura.VendedorNombreOEmpresa,
+                nombreRemitente: editorEmail.DisplayName, 
                 direccionRemitente: editorEmail.Remitente,
                 asunto: editorEmail.Asunto,
                 cuerpo: editorEmail.ContenidoHtml
