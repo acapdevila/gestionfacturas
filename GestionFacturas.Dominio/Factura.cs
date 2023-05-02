@@ -51,8 +51,8 @@ namespace GestionFacturas.Dominio
         public string CompradorDireccion2() => 
             LineasCompradorDireccion().Length > 1 ? LineasCompradorDireccion()[1] : string.Empty;
 
-        public string CompradorLocalidad { get; set; } = string.Empty;
-        public string CompradorProvincia { get; set; } = string.Empty;
+        public string? CompradorLocalidad { get; set; } = string.Empty;
+        public string? CompradorProvincia { get; set; } = string.Empty;
         public string? CompradorCodigoPostal { get; set; } = string.Empty;
 
         public string? CompradorEmail { get; set; } = string.Empty;

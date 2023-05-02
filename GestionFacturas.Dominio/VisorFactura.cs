@@ -71,8 +71,8 @@ public class VisorFactura
     public string CompradorNumeroIdentificacionFiscal { get; set; } = string.Empty;
     public string CompradorNombreOEmpresa { get; set; } = string.Empty;
     public string CompradorDireccion { get; set; } = string.Empty;
-    public string CompradorLocalidad { get; set; } = string.Empty;
-    public string CompradorProvincia { get; set; } = string.Empty;
+    public string? CompradorLocalidad { get; set; } = string.Empty;
+    public string? CompradorProvincia { get; set; } = string.Empty;
     public string? CompradorCodigoPostal { get; set; } = string.Empty;
 
     public FormaPagoEnum FormaPago { get; set; }
