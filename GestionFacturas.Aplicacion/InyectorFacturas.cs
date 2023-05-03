@@ -1,4 +1,5 @@
 ﻿using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Infra;
 using Omu.ValueInjecter;
 
 namespace GestionFacturas.Aplicacion
@@ -22,30 +23,7 @@ namespace GestionFacturas.Aplicacion
             }
         }
         
-
-        public static void InyectarFactura(this DataSetFactura datasetFactura, Factura factura, string urlRaizWeb)
-        {
-            var filaDatasetFactura = datasetFactura.Facturas.NewFacturasRow();
-
-            filaDatasetFactura.InyectarFactura(factura);
-
-            datasetFactura.Facturas.AddFacturasRow(filaDatasetFactura);
-
-            foreach (var linea in factura.Lineas)
-            {
-                var filaDatasetLineaFactura = datasetFactura.FacturasLineas.NewFacturasLineasRow();
-
-                filaDatasetLineaFactura.Id = linea.Id;
-                filaDatasetLineaFactura.IdFactura = linea.IdFactura;
-                filaDatasetLineaFactura.Descripcion = linea.Descripcion;
-                filaDatasetLineaFactura.Cantidad = linea.Cantidad;
-                filaDatasetLineaFactura.PrecioUnitario = linea.PrecioUnitario;
-                filaDatasetLineaFactura.PorcentajeImpuesto = linea.PorcentajeImpuesto;
-
-                datasetFactura.FacturasLineas.AddFacturasLineasRow(filaDatasetLineaFactura);
-            }
-        }
-
+        
         public static void InyectarFactura(this DataSetFactura.FacturasRow fila, Factura factura)
         {            
             fila.Id = factura.Id;

@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using GestionFacturas.Dominio.Infra;
 
-namespace GestionFacturas.AccesoDatosSql.Filtros
+namespace GestionFacturas.AccesoDatosSql
 {
     public static class GridOrdenarQueryExtensions
     {
@@ -50,13 +50,13 @@ namespace GestionFacturas.AccesoDatosSql.Filtros
              this IQueryable<T> consulta,
              bool condicion)
         {
-             return new IfThenDto<T>(condicion, consulta);
+            return new IfThenDto<T>(condicion, consulta);
         }
 
         public static IQueryable<T> ThenWhere<T>(
              this IfThenDto<T> dto, Expression<Func<T, bool>> predicate)
         {
-            if(dto.Condicion)
+            if (dto.Condicion)
             {
                 return dto.Consulta.Where(predicate);
             }
@@ -93,7 +93,7 @@ namespace GestionFacturas.AccesoDatosSql.Filtros
             return dto.Consulta;
         }
 
-    } 
+    }
 
     public class IfThenDto<T>
     {
