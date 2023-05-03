@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using GestionFacturas.Dominio;
 
-namespace GestionFacturas.Dominio;
+namespace GestionFacturas.Web.Pages.Facturas.EditorTemplates;
 
 public class EditorEstadoFactura
 {

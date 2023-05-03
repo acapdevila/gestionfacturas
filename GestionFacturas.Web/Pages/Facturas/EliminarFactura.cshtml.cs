@@ -10,9 +10,9 @@ namespace GestionFacturas.Web.Pages.Facturas
     {
         public const string NombrePagina = @"/Facturas/EliminarFactura";
 
-        private readonly ServicioFactura _servicioFactura;
+        private readonly ServicioCrudFactura _servicioFactura;
 
-        public EliminarFacturaModel(ServicioFactura servicioFactura)
+        public EliminarFacturaModel(ServicioCrudFactura servicioFactura)
         {
             _servicioFactura = servicioFactura;
         }
@@ -22,7 +22,8 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Editor = await _servicioFactura.BuscaEditorFacturaAsync(id);
+            var factura = await _servicioFactura.BuscarFacturaAsync(id);
+            Editor = new EditorFactura(factura);
             return Page();
         }
         

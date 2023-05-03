@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace GestionFacturas.Aplicacion
+﻿namespace GestionFacturas.Dominio.Infra
 {
-    public static class ServicioFechas
+    public static class FuncionesFechas
     {
         public static DateTime PrimerDiaMesAnterior()
         {

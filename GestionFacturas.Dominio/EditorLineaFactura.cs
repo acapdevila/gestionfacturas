@@ -13,7 +13,17 @@ public class EditorLineaFactura
     {
     }
 
+    public EditorLineaFactura(LineaFactura linea)
+    {
+        Id = linea.Id;
+        IdFactura = linea.IdFactura;
+        Descripcion = linea.Descripcion;
+        Cantidad = linea.Cantidad;
+        PrecioUnitario = linea.PrecioUnitario;
+        PorcentajeImpuesto = linea.PorcentajeImpuesto;
         
+    }
+
     public int Id { get; set; }
     public int IdFactura { get; set; }
 

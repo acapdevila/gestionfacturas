@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GestionFacturas.AccesoDatosSql;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using GestionFacturas.Dominio;
-using GestionFacturas.Aplicacion;
+using GestionFacturas.Web.Pages.Facturas.DisplayTemplates;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
@@ -9,11 +10,11 @@ namespace GestionFacturas.Web.Pages.Facturas
     {
         public const string NombrePagina = @"/Facturas/DetallesFactura";
 
-        private readonly ServicioFactura _servicioFactura;
+        private readonly SqlDb _db;
 
-        public DetallesFacturaModel(ServicioFactura servicioFactura)
+        public DetallesFacturaModel(SqlDb servicioFactura)
         {
-            _servicioFactura = servicioFactura;
+            _db = servicioFactura;
         }
 
       public VisorFactura Factura { get; set; } = default!;
@@ -21,7 +22,14 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Factura = await _servicioFactura.BuscarVisorFacturaAsync(id);
+            var factura = 
+                await _db.Facturas
+                    .AsNoTracking()
+                    .Include(m => m.Lineas)
+                        .FirstAsync(m => m.Id == id);
+            
+            Factura = new VisorFactura(factura);
+            
             return Page();
 
         }

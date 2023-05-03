@@ -17,7 +17,7 @@ namespace GestionFacturas.Aplicacion
         }
             
 
-        public async Task<int> CrearFacturaAsync(EditorFactura editor)
+        public async Task<Factura> CrearFacturaAsync(EditorFactura editor)
         {
             var factura = new Factura();
 
@@ -31,11 +31,9 @@ namespace GestionFacturas.Aplicacion
 
             _contexto.Facturas.Add(factura);
 
-            var cambios = await GuardarCambiosAsync();
+             await GuardarCambiosAsync();
             
-            editor.InyectarFactura(factura);
-
-            return cambios;
+            return factura;
         }
         
         public async Task<int> ActualizarFacturaAsync(EditorFactura editor)

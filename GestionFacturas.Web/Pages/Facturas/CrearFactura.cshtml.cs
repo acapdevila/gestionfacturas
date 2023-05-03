@@ -3,36 +3,51 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GestionFacturas.Dominio;
 using GestionFacturas.Aplicacion;
+using static GestionFacturas.Dominio.CambiarEstadoFactura;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.InkML;
+using GestionFacturas.AccesoDatosSql;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
     public class CrearFacturaModel : PageModel
     {
         public static readonly string NombrePagina = "/Facturas/CrearFactura";
-        
-        private readonly ServicioFactura _servicioFactura;
 
+        private readonly ServicioCrudFactura _servicio;
+        private readonly SqlDb _db;
 
         public string HrefCancelar { get; set; } = string.Empty;
 
-        public CrearFacturaModel(ServicioFactura servicioFactura)
+        public CrearFacturaModel( SqlDb db, ServicioCrudFactura servicio)
         {
-            _servicioFactura = servicioFactura;
+            _db = db;
+            _servicio = servicio;
         }
 
         public async Task<IActionResult> OnGet(int? id)
         {
             if (id.HasValue)
             {
-                Editor = await _servicioFactura.GenerarNuevoEditorFacturaDuplicado(id.Value);
+                var factura = await _db.Facturas
+                    .Include(m => m.Lineas)
+                    .FirstAsync(m => m.Id == id.Value);
+                
+                var ultimaFacturaSerie = await _db.ObtenerUlitmaFacturaDeLaSerie(factura.SerieFactura);
+                var cliente = await _db.Clientes.FindAsync(factura.IdComprador);
+                
+                Editor = new EditorFactura();
+                Editor.GenerarNuevoEditorFacturaDuplicado(factura, ultimaFacturaSerie, cliente!);
+                
                 HrefCancelar = Url.Page(DetallesFacturaModel.NombrePagina, new { id = id.Value })!;
             }
             else
             {
-                Editor =
-                    await _servicioFactura
-                        .ObtenerEditorFacturaParaCrearNuevaFactura(serie: string.Empty, idCliente: IdCliente);
-               
+                var ultimaFacturaSerie = await _db.ObtenerUlitmaFacturaDeLaSerie(string.Empty);
+                var cliente = await _db.Clientes.FindAsync(IdCliente);
+                
+                Editor.ObtenerEditorFacturaParaCrearNuevaFactura(ultimaFacturaSerie, cliente);
                 HrefCancelar = Url.Page(ListaGestionFacturasModel.NombrePagina)!;
             }
 
@@ -54,11 +69,9 @@ namespace GestionFacturas.Web.Pages.Facturas
             {
                 return Page();
             }
-
-           
-
-            await _servicioFactura.CrearFacturaAsync(Editor);
-            return RedirectToPage(DetallesFacturaModel.NombrePagina, new { Editor.Id });
+            var factura = await _servicio.CrearFacturaAsync(Editor);
+            
+            return RedirectToPage(DetallesFacturaModel.NombrePagina, new { factura.Id });
         }
         
     }

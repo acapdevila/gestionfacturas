@@ -1,4 +1,6 @@
-﻿namespace GestionFacturas.Dominio;
+﻿using GestionFacturas.Dominio;
+
+namespace GestionFacturas.Web.Pages.Facturas.DisplayTemplates;
 
 public class LineaVisorFactura
 {

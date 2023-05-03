@@ -3,7 +3,6 @@ using GestionFacturas.Aplicacion;
 using GestionFacturas.Web.Pages.Facturas;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using System.Configuration;
 using GestionFacturas.AccesoDatosSql.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,7 +46,7 @@ var mailSettings = new MailSettings();
 builder.Configuration.GetSection("MailSettings").Bind(mailSettings);
 builder.Services.AddSingleton(mailSettings);
 builder.Services.AddScoped<IServicioEmail, ServicioEmailMailKid>();
-builder.Services.AddScoped<ServicioFactura>();
+builder.Services.AddScoped<ServicioCrudFactura>();
 builder.Services.AddScoped<CambiarEstadoFacturaServicio>();
 builder.Services.AddScoped<CambiarEstadoFacturaRepo>();
 

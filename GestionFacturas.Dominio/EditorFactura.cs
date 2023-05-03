@@ -1,6 +1,7 @@
 ﻿using GestionFacturas.Dominio.Clientes;
-using System.ComponentModel.DataAnnotations;
 using GestionFacturas.Dominio.Infra;
+using System.ComponentModel.DataAnnotations;
+using Omu.ValueInjecter;
 
 namespace GestionFacturas.Dominio;
 
@@ -8,6 +9,26 @@ public class EditorFactura
 {
     public EditorFactura()
     {
+    }
+
+    public EditorFactura(Factura factura)
+    {
+        this.InjectFrom(factura);
+
+        this.PorcentajeIvaPorDefecto = 21;
+
+        this.BorrarLineasFactura();
+
+        foreach (var lineaFactura in factura.Lineas)
+        {
+            var lineaEditor = new EditorLineaFactura(lineaFactura);
+            this.Lineas.Add(lineaEditor);
+        }
+
+        this.CompradorDireccion1 = factura.CompradorDireccion1();
+        this.CompradorDireccion2 = factura.CompradorDireccion2();
+        this.FechaEmisionFactura = factura.FechaEmisionFactura.ToInputDate();
+        this.FechaVencimientoFactura = factura.FechaVencimientoFactura?.ToInputDate();
     }
 
     public int Id { get; set; }
@@ -159,4 +180,115 @@ public class EditorFactura
         CompradorNumeroIdentificacionFiscal = cliente.NumeroIdentificacionFiscal;
         CompradorProvincia = cliente.Provincia ?? string.Empty;
     }
+
+    public EditorFactura GenerarNuevoEditorFacturaDuplicado(
+                    Factura factura,
+                    Factura ultimaFacturaSerie,
+                    Cliente cliente)
+    {
+        var editor = new EditorFactura
+        {
+            SerieFactura = factura.SerieFactura,
+            NumeracionFactura = ultimaFacturaSerie!.NumeracionFactura + 1,
+            FormatoNumeroFactura = ultimaFacturaSerie.FormatoNumeroFactura,
+            FechaEmisionFactura = DateTime.Today.ToInputDate(),
+            NombreArchivoPlantillaInforme = factura.NombreArchivoPlantillaInforme,
+            PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+            FormaPago = factura.FormaPago,
+            FormaPagoDetalles = factura.FormaPagoDetalles,
+            ComentariosPie = factura.ComentariosPie,
+            EstadoFactura = EstadoFacturaEnum.Borrador,
+            IdVendedor = factura.IdVendedor,
+            VendedorCodigoPostal = factura.VendedorCodigoPostal,
+            VendedorDireccion = factura.VendedorDireccion,
+            VendedorEmail = factura.VendedorEmail,
+            VendedorLocalidad = factura.VendedorLocalidad,
+            VendedorNombreOEmpresa = factura.VendedorNombreOEmpresa,
+            VendedorNumeroIdentificacionFiscal = factura.VendedorNumeroIdentificacionFiscal,
+            VendedorProvincia = factura.VendedorProvincia,
+            Lineas = new List<EditorLineaFactura>()
+        };
+
+
+        foreach (var linea in factura.Lineas)
+        {
+            editor.Lineas.Add(new EditorLineaFactura
+            {
+                PorcentajeImpuesto = linea.PorcentajeImpuesto,
+                Cantidad = linea.Cantidad,
+                Descripcion = linea.Descripcion,
+                PrecioUnitario = linea.PrecioUnitario
+            });
+        }
+       
+        editor.AsignarDatosCliente(cliente!);
+
+        return editor;
+    }
+
+    public EditorFactura ObtenerEditorFacturaParaCrearNuevaFactura(Factura? ultimaFacturaCreada, Cliente? cliente)
+    {
+        EditorFactura editor;
+        
+        if (ultimaFacturaCreada is null)
+        {
+            editor = new EditorFactura
+            {
+                SerieFactura = string.Empty,
+                NumeracionFactura = 1,
+                FormatoNumeroFactura = "{0}{1:1000}",
+                FechaEmisionFactura = DateTime.Today.ToInputDate(),
+                PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+                FormaPago = FormaPagoEnum.Transferencia,
+                EstadoFactura = EstadoFacturaEnum.Borrador,
+
+                Lineas = new List<EditorLineaFactura> {
+                            new EditorLineaFactura {
+                                    Cantidad = 1,
+                                    PorcentajeImpuesto = PorcentajeIvaPorDefecto
+                            }
+                      }
+            };
+        }
+        else
+        {
+            editor = new EditorFactura
+            {
+                SerieFactura = ultimaFacturaCreada.SerieFactura,
+                NumeracionFactura = ultimaFacturaCreada.NumeracionFactura + 1,
+                FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
+                FechaEmisionFactura = DateTime.Today.ToInputDate(),
+                NombreArchivoPlantillaInforme = ultimaFacturaCreada.NombreArchivoPlantillaInforme,
+                PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+                FormaPago = ultimaFacturaCreada.FormaPago,
+                FormaPagoDetalles = ultimaFacturaCreada.FormaPagoDetalles,
+                ComentariosPie = ultimaFacturaCreada.ComentariosPie,
+                EstadoFactura = EstadoFacturaEnum.Borrador,
+                IdVendedor = ultimaFacturaCreada.IdVendedor,
+                VendedorCodigoPostal = ultimaFacturaCreada.VendedorCodigoPostal,
+                VendedorDireccion = ultimaFacturaCreada.VendedorDireccion,
+                VendedorEmail = ultimaFacturaCreada.VendedorEmail,
+                VendedorLocalidad = ultimaFacturaCreada.VendedorLocalidad,
+                VendedorNombreOEmpresa = ultimaFacturaCreada.VendedorNombreOEmpresa,
+                VendedorNumeroIdentificacionFiscal = ultimaFacturaCreada.VendedorNumeroIdentificacionFiscal,
+                VendedorProvincia = ultimaFacturaCreada.VendedorProvincia,
+
+                Lineas = new List<EditorLineaFactura> {
+                            new EditorLineaFactura {
+                                    Cantidad = 1,
+                                    PorcentajeImpuesto = PorcentajeIvaPorDefecto
+                            }
+                      }
+            };
+        }
+
+        if (cliente is not null)
+        {
+           editor.AsignarDatosCliente(cliente);
+        }
+
+        return editor;
+    }
+
+
 }

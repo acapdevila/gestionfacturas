@@ -10,9 +10,9 @@ namespace GestionFacturas.Web.Pages.Facturas
     {
         public const string NombrePagina = @"/Facturas/EnviarFacturaPorEmailConfirmado";
 
-        private readonly ServicioFactura _servicioFactura;
+        private readonly ServicioCrudFactura _servicioFactura;
 
-        public EnviarFacturaPorEmailModelConfirmadoModel(ServicioFactura servicioFactura)
+        public EnviarFacturaPorEmailModelConfirmadoModel(ServicioCrudFactura servicioFactura)
         {
             _servicioFactura = servicioFactura;
         }

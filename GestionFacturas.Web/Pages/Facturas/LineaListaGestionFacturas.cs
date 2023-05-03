@@ -1,7 +1,8 @@
-﻿using GestionFacturas.Dominio.Infra;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Infra;
 
-namespace GestionFacturas.Dominio;
+namespace GestionFacturas.Web.Pages.Facturas;
 
 public class LineaListaGestionFacturas
 {

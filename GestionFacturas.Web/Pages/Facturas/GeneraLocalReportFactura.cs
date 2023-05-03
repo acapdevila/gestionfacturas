@@ -1,5 +1,6 @@
 ﻿using GestionFacturas.Aplicacion;
 using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Infra;
 using Microsoft.Reporting.NETCore;
 
 namespace GestionFacturas.Web.Pages.Facturas
@@ -35,7 +36,7 @@ namespace GestionFacturas.Web.Pages.Facturas
             
             var filaDatasetFactura = datasetFactura.Facturas.NewFacturasRow();
 
-            filaDatasetFactura.InyectarFactura(factura);
+            filaDatasetFactura.CopiarFactura(factura);
 
             datasetFactura.Facturas.AddFacturasRow(filaDatasetFactura);
 
@@ -54,6 +55,44 @@ namespace GestionFacturas.Web.Pages.Facturas
             }
 
             return datasetFactura;
+        }
+
+        public static void CopiarFactura(this DataSetFactura.FacturasRow fila, Factura factura)
+        {
+            fila.Id = factura.Id;
+            fila.RutaLogo = "/Content/Logos/LogoGF.jpg";
+
+            fila.NumeroFactura = factura.NumeroFactura;
+            fila.FechaEmisionFactura = factura.FechaEmisionFactura;
+
+            if (factura.FechaVencimientoFactura.HasValue)
+                fila.FechaVencimientoFactura = factura.FechaVencimientoFactura.Value;
+            else
+                fila.SetFechaVencimientoFacturaNull();
+
+            fila.VendedorNumeroIdentificacionFiscal = factura.VendedorNumeroIdentificacionFiscal;
+            fila.VendedorNombreOEmpresa = factura.VendedorNombreOEmpresa;
+            fila.VendedorDireccion = factura.VendedorDireccion;
+            fila.VendedorLocalidad = factura.VendedorLocalidad;
+            fila.VendedorProvincia = factura.VendedorProvincia;
+            fila.VendedorCodigoPostal = factura.VendedorCodigoPostal;
+
+            fila.CompradorNumeroIdentificacionFiscal = factura.CompradorNumeroIdentificacionFiscal;
+            fila.CompradorNombreOEmpresa = factura.CompradorNombreOEmpresa;
+            fila.CompradorDireccion = factura.CompradorDireccion;
+            fila.CompradorLocalidad = factura.CompradorLocalidad;
+            fila.CompradorProvincia = factura.CompradorProvincia;
+            fila.CompradorCodigoPostal = factura.CompradorCodigoPostal;
+
+            fila.Comentarios = factura.Comentarios;
+            fila.ComentariosPie = factura.ComentariosPie;
+
+            fila.FormaPago = factura.FormaPago.ObtenerNombreAtributoDisplay();
+            fila.FormaPagoDetalles = factura.FormaPagoDetalles;
+
+            fila.BaseImponible = factura.BaseImponible();
+            fila.ImporteImpuestos = factura.ImporteImpuestos();
+            fila.ImporteTotal = factura.ImporteTotal();
         }
     }
 }

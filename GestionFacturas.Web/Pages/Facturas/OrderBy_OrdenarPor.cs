@@ -1,8 +1,8 @@
 ﻿using GestionFacturas.Dominio;
 
-namespace GestionFacturas.Aplicacion
+namespace GestionFacturas.Web.Pages.Facturas
 {
-    public static class ExtensionesFacturas
+    public static class OrderBy_OrdenarPorExtension
     {
             
         public static IOrderedQueryable<LineaListaGestionFacturas> OrderBy_OrdenarPor(this IQueryable<LineaListaGestionFacturas> consulta, OrdenFacturas orden)

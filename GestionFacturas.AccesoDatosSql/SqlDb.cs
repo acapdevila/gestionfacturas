@@ -46,5 +46,25 @@ namespace GestionFacturas.AccesoDatosSql
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public async Task<Factura> ObtenerUlitmaFacturaDeLaSerie(string serie)
+        {
+            if (string.IsNullOrEmpty(serie))
+            {
+                var factura = await Facturas.Where(m => m.SerieFactura != null && m.SerieFactura != "")
+                    .OrderByDescending(m => m.FechaEmisionFactura)
+                    .FirstOrDefaultAsync();
+
+                if (factura == null) return null;
+
+                serie = factura.SerieFactura;
+            }
+
+            var consulta = Facturas.Where(m => m.SerieFactura == serie);
+
+            return await consulta
+                .OrderByDescending(m => m.NumeracionFactura)
+                .FirstAsync();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GestionFacturas.Aplicacion;
 using GestionFacturas.Dominio;
+using static GestionFacturas.Dominio.CambiarEstadoFactura;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
@@ -10,9 +11,9 @@ namespace GestionFacturas.Web.Pages.Facturas
     {
         public const string NombrePagina = @"/Facturas/EditarFactura";
 
-        private readonly ServicioFactura _servicioFactura;
+        private readonly ServicioCrudFactura _servicioFactura;
 
-        public EditarFacturaModel(ServicioFactura servicioFactura)
+        public EditarFacturaModel(ServicioCrudFactura servicioFactura)
         {
             _servicioFactura = servicioFactura;
         }
@@ -22,7 +23,8 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Editor = await _servicioFactura.BuscaEditorFacturaAsync(id);
+            var factura = await _servicioFactura.BuscarFacturaAsync(id);
+            this.Editor = new EditorFactura(factura);
             return Page();
         }
 

@@ -1,4 +1,5 @@
 ﻿using GestionFacturas.Dominio;
+using GestionFacturas.Web.Pages.Facturas.EditorTemplates;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
