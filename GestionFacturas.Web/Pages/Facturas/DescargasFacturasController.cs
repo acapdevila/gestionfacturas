@@ -3,6 +3,7 @@ using GestionFacturas.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using ClosedXML.Extensions;
 using GestionFacturas.AccesoDatosSql;
+using GestionFacturas.Dominio.Infra;
 using Ionic.Zip;
 using Microsoft.EntityFrameworkCore;
 

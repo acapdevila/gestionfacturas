@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using GestionFacturas.Aplicacion;
 using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Infra;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {

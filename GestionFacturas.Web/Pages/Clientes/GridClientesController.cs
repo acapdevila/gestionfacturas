@@ -1,7 +1,6 @@
 ﻿using ClosedXML.Excel;
 using ClosedXML.Extensions;
 using GestionFacturas.AccesoDatosSql;
-using GestionFacturas.AccesoDatosSql.Filtros;
 using GestionFacturas.Dominio.Clientes;
 using GestionFacturas.Web.Framework.Grid;
 using MailKit.Search;

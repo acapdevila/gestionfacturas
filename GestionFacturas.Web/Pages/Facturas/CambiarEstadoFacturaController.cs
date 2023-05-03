@@ -1,18 +1,17 @@
-﻿using GestionFacturas.AccesoDatosSql;
-using GestionFacturas.Aplicacion;
+﻿using GestionFacturas.Aplicacion;
 using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Infra;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
     public class CambiarEstadoFacturaController : Controller
     {
-        private readonly SqlDb _db;
+        private readonly CambiarEstadoFacturaServicio _app;
 
-        public CambiarEstadoFacturaController(SqlDb context)
+        public CambiarEstadoFacturaController(CambiarEstadoFacturaServicio context)
         {
-            _db = context;
+            _app = context;
         }
 
         [HttpPost]
@@ -20,9 +19,22 @@ namespace GestionFacturas.Web.Pages.Facturas
         {
             if (ModelState.IsValid)
             {
-                var factura = await _db.Facturas.FirstAsync(m => m.Id == editorEstadoFactura.IdFactura);
-                factura.EstadoFactura = editorEstadoFactura.EstadoFactura;
-                await _db.SaveChangesAsync();
+                var comando = new CambiarEstadoFacturaComando(
+                    editorEstadoFactura.IdFactura, 
+                    editorEstadoFactura.EstadoFactura);
+
+               var ejecucion = await _app.Ejecutar(comando);
+
+               if (ejecucion.IsFailure)
+               {
+                   return Json(new
+                   {
+                       editorEstadoFactura.IdFactura,
+                       editorEstadoFactura.NumeroFactura,
+                       editorEstadoFactura.EstadoFactura,
+                       TextoEstadoFactura = "error"
+                   });
+                }
             }
 
             return Json(new
