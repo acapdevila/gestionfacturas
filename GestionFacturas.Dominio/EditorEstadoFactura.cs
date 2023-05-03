@@ -6,7 +6,7 @@ public class EditorEstadoFactura
 {
     public int IdFactura { get; set; }
 
-    public int NumeroFactura { get; set; }
+    public string NumeroFactura { get; set; } = string.Empty;
 
     [Display(Name = "Estado")]
     public EstadoFacturaEnum EstadoFactura { get; set; }
