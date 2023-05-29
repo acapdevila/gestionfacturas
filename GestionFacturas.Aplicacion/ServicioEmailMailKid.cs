@@ -93,7 +93,8 @@ namespace GestionFacturas.Aplicacion
                 }
             }
 
-            builder.HtmlBody = mensaje.Cuerpo;
+            builder.TextBody = mensaje.Cuerpo;
+            //builder.HtmlBody = mensaje.Cuerpo;
             email.Body = builder.ToMessageBody();
             return email;
         }
