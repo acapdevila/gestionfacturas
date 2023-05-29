@@ -2,6 +2,8 @@
 @using Microsoft.AspNetCore.Http.Extensions
 @using GestionFacturas.Dominio
 @using GestionFacturas.Web.Pages.Clientes
+@using System.Web
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ListaGestionFacturasModel
 @{
     ViewData["Title"] = "Facturas";
@@ -259,6 +261,9 @@
             } else if (estadoFactura === 4) {
                 return "danger";
             }
+            else if (estadoFactura === 5) {
+                return "secondary";
+            }
             return "";
         }
 
@@ -271,6 +276,10 @@
                 return "@EstadoFacturaEnum.Cobrada";
             } else if (estadoFactura === 4) {
                 return "@EstadoFacturaEnum.Impagada";
+            }
+            else if (estadoFactura === 5) {
+                return "@Html.Raw(EstadoFacturaEnum.Rectificación.ToString())";
+                
             }
             return "";
         }
