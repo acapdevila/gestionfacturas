@@ -256,6 +256,8 @@
                 return "warning";
             } else if (estadoFactura === 3) {
                 return "success";
+            } else if (estadoFactura === 4) {
+                return "danger";
             }
             return "";
         }
@@ -267,6 +269,8 @@
                 return "@EstadoFacturaEnum.Enviada";
             } else if (estadoFactura === 3) {
                 return "@EstadoFacturaEnum.Cobrada";
+            } else if (estadoFactura === 4) {
+                return "@EstadoFacturaEnum.Impagada";
             }
             return "";
         }
