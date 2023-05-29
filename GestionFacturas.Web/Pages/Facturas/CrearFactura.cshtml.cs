@@ -37,8 +37,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                 var ultimaFacturaSerie = await _db.ObtenerUlitmaFacturaDeLaSerie(factura.SerieFactura);
                 var cliente = await _db.Clientes.FindAsync(factura.IdComprador);
                 
-                Editor = new EditorFactura();
-                Editor.GenerarNuevoEditorFacturaDuplicado(factura, ultimaFacturaSerie, cliente!);
+                Editor = EditorFactura.GenerarNuevoEditorFacturaDuplicado(factura, ultimaFacturaSerie, cliente!);
                 
                 HrefCancelar = Url.Page(DetallesFacturaModel.NombrePagina, new { id = id.Value })!;
             }
@@ -46,8 +45,8 @@ namespace GestionFacturas.Web.Pages.Facturas
             {
                 var ultimaFacturaSerie = await _db.ObtenerUlitmaFacturaDeLaSerie(string.Empty);
                 var cliente = await _db.Clientes.FindAsync(IdCliente);
-                
-                Editor.ObtenerEditorFacturaParaCrearNuevaFactura(ultimaFacturaSerie, cliente);
+
+                Editor = EditorFactura.ObtenerEditorFacturaParaCrearNuevaFactura(ultimaFacturaSerie, cliente);
                 HrefCancelar = Url.Page(ListaGestionFacturasModel.NombrePagina)!;
             }
 

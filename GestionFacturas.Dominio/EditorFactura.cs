@@ -181,7 +181,7 @@ public class EditorFactura
         CompradorProvincia = cliente.Provincia ?? string.Empty;
     }
 
-    public EditorFactura GenerarNuevoEditorFacturaDuplicado(
+    public static EditorFactura GenerarNuevoEditorFacturaDuplicado(
                     Factura factura,
                     Factura ultimaFacturaSerie,
                     Cliente cliente)
@@ -193,7 +193,7 @@ public class EditorFactura
             FormatoNumeroFactura = ultimaFacturaSerie.FormatoNumeroFactura,
             FechaEmisionFactura = DateTime.Today.ToInputDate(),
             NombreArchivoPlantillaInforme = factura.NombreArchivoPlantillaInforme,
-            PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+            PorcentajeIvaPorDefecto = 21,
             FormaPago = factura.FormaPago,
             FormaPagoDetalles = factura.FormaPagoDetalles,
             ComentariosPie = factura.ComentariosPie,
@@ -226,7 +226,7 @@ public class EditorFactura
         return editor;
     }
 
-    public EditorFactura ObtenerEditorFacturaParaCrearNuevaFactura(Factura? ultimaFacturaCreada, Cliente? cliente)
+    public static EditorFactura ObtenerEditorFacturaParaCrearNuevaFactura(Factura? ultimaFacturaCreada, Cliente? cliente)
     {
         EditorFactura editor;
         
@@ -238,14 +238,14 @@ public class EditorFactura
                 NumeracionFactura = 1,
                 FormatoNumeroFactura = "{0}{1:1000}",
                 FechaEmisionFactura = DateTime.Today.ToInputDate(),
-                PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+                PorcentajeIvaPorDefecto = 21,
                 FormaPago = FormaPagoEnum.Transferencia,
                 EstadoFactura = EstadoFacturaEnum.Borrador,
 
                 Lineas = new List<EditorLineaFactura> {
                             new EditorLineaFactura {
                                     Cantidad = 1,
-                                    PorcentajeImpuesto = PorcentajeIvaPorDefecto
+                                    PorcentajeImpuesto = 21
                             }
                       }
             };
@@ -259,7 +259,7 @@ public class EditorFactura
                 FormatoNumeroFactura = ultimaFacturaCreada.FormatoNumeroFactura,
                 FechaEmisionFactura = DateTime.Today.ToInputDate(),
                 NombreArchivoPlantillaInforme = ultimaFacturaCreada.NombreArchivoPlantillaInforme,
-                PorcentajeIvaPorDefecto = PorcentajeIvaPorDefecto,
+                PorcentajeIvaPorDefecto = 21,
                 FormaPago = ultimaFacturaCreada.FormaPago,
                 FormaPagoDetalles = ultimaFacturaCreada.FormaPagoDetalles,
                 ComentariosPie = ultimaFacturaCreada.ComentariosPie,
@@ -276,7 +276,7 @@ public class EditorFactura
                 Lineas = new List<EditorLineaFactura> {
                             new EditorLineaFactura {
                                     Cantidad = 1,
-                                    PorcentajeImpuesto = PorcentajeIvaPorDefecto
+                                    PorcentajeImpuesto = 21
                             }
                       }
             };
