@@ -40,8 +40,8 @@ namespace GestionFacturas.Web.Pages.Facturas
                         BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
                         Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100), 2)) ?? 0,
                         CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
-                        ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
-                        CompradorNombreComercial = m.Comprador.NombreComercial
+                        CompradorNombreComercial = m.Comprador.NombreComercial,
+                        DescripcionPrimeraLinea = m.DescripcionPrimeraLinea
                     })
                     .OrderBy_OrdenarPor(gridParams.Orden)
                     .ToListAsync();
@@ -72,7 +72,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                     var informeLocal = GeneraLocalReportFactura.GenerarInformeLocalFactura(factura, _env.WebRootPath);
 
                     byte[] pdf = informeLocal.Render("PDF");
-                    var nombrePdf = factura.Titulo().Replace(":", " ").Replace("·", "").Replace("€", "").Replace("/", "-").EliminarDiacriticos() + ".pdf";
+                    var nombrePdf = factura.NumeroYEmpresaFactura().Replace(":", " ").Replace("·", "").Replace("€", "").Replace("/", "-").EliminarDiacriticos() + ".pdf";
                     zip.AddEntry(nombrePdf, pdf);
                 }
                 zip.Save(archivoZip);
@@ -103,7 +103,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                     BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
                     Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100), 2)) ?? 0,
                     CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
-                    ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
+                    DescripcionPrimeraLinea = m.DescripcionPrimeraLinea,
                     CompradorNombreComercial = m.Comprador.NombreComercial
                 })
                 .OrderBy_OrdenarPor(gridParams.Orden)
@@ -127,7 +127,7 @@ namespace GestionFacturas.Web.Pages.Facturas
             var informeLocal = GeneraLocalReportFactura.GenerarInformeLocalFactura(factura, _env.WebRootPath);
             
             byte[] pdf = informeLocal.Render("PDF");
-            var nombrePdf = factura.Titulo().Replace(":", " ").Replace("·", "").Replace("€", "").Replace("/", "-").EliminarDiacriticos() + ".pdf";
+            var nombrePdf = factura.NumeroYEmpresaFactura().Replace(":", " ").Replace("·", "").Replace("€", "").Replace("/", "-").EliminarDiacriticos() + ".pdf";
             
             var cabecera = new System.Net.Mime.ContentDisposition
             {

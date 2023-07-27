@@ -37,6 +37,8 @@ namespace GestionFacturas.Dominio
         public string VendedorCodigoPostal { get; set; } = string.Empty;
         public string? VendedorEmail { get; set; } = string.Empty;
 
+        public string DescripcionPrimeraLinea { get; set; } = string.Empty; 
+
         public int? IdComprador { get; set; }
         public string CompradorNumeroIdentificacionFiscal { get; set; } = string.Empty;
         public string CompradorNombreOEmpresa { get; set; } = string.Empty;
@@ -67,7 +69,7 @@ namespace GestionFacturas.Dominio
 
         public string NombreArchivoPlantillaInforme { get; set; } = string.Empty;
 
-        public string Titulo() =>string.Format("Factura {0} {1}", NumeroFactura, CompradorNombreOEmpresa);
+        public string NumeroYEmpresaFactura() =>string.Format("Factura {0} {1}", NumeroFactura, CompradorNombreOEmpresa);
            
 
         public decimal BaseImponible()  

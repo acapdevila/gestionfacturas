@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GestionFacturas.Dominio;
 using GestionFacturas.Aplicacion;
-using static GestionFacturas.Dominio.CambiarEstadoFactura;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.InkML;
 using GestionFacturas.AccesoDatosSql;
 using Microsoft.EntityFrameworkCore;
 

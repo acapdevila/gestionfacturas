@@ -87,17 +87,18 @@ namespace GestionFacturas.Aplicacion
 
         private void ModificarFactura(EditorFactura editor, Factura factura)
         {
-            ModificarCabeceraFactura(editor, factura);
+            ModificarCabeceraFactura(editor, factura, editor.Lineas.First());
             ModificarLineasFactura(editor.Lineas, factura);
         }
 
-        private void ModificarCabeceraFactura(EditorFactura editor, Factura factura)
+        private void ModificarCabeceraFactura(EditorFactura editor, Factura factura, EditorLineaFactura primeraLinea)
         {
             factura.InjectFrom(editor);
 
             factura.IdComprador = editor.IdComprador;
             factura.FechaEmisionFactura = editor.FechaEmisionFactura.FromInputToDateTime();
             factura.FechaVencimientoFactura = editor.FechaVencimientoFactura?.FromInputToDateTime();
+            factura.DescripcionPrimeraLinea = primeraLinea.Descripcion;
         }
 
         private void ModificarLineasFactura(ICollection<EditorLineaFactura> lineasEditor, Factura factura)

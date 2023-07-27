@@ -41,7 +41,7 @@ public class VisorFactura
         ComentariosPie = factura.ComentariosPie;
         ComentarioInterno = factura.ComentarioInterno;
 
-        Titulo = factura.Titulo();
+        Titulo = factura.NumeroYEmpresaFactura();
 
         BaseImponible = factura.BaseImponible();
 

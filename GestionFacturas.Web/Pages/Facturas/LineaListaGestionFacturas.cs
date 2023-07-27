@@ -13,18 +13,14 @@ public class LineaListaGestionFacturas
     public int NumeracionFactura { get; set; }
     public string FormatoNumeroFactura { get; set; } = string.Empty;
 
+    public string DescripcionPrimeraLinea { get; set; } = string.Empty;
+    
     public string NumeroFactura { get { return string.Format(FormatoNumeroFactura, SerieFactura, NumeracionFactura); } }
 
     [JsonIgnore]
     public DateTime FechaEmisionFacturaDateTime { get; set; }
     public string FechaEmisionFactura => FechaEmisionFacturaDateTime.ToFechaCorta();
     public DateTime? FechaVencimientoFactura { get; set; }
-
-    public IEnumerable<string> ListaDescripciones { get; set; } = new List<string>();
-
-    public string Conceptos { get {
-        return string.Join(", ", ListaDescripciones);
-    } }
 
     public int? IdComprador { get; set; }
     public string CompradorNombreOEmpresa { get; set; } = string.Empty;

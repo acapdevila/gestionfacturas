@@ -17,6 +17,8 @@ namespace GestionFacturas.AccesoDatosSql.Tablas
 
             entity.Property(e => e.ComentarioInterno).HasMaxLength(250).IsRequired(false);
 
+            entity.Property(e => e.DescripcionPrimeraLinea).HasMaxLength(250).IsRequired();
+
             entity.Property(e => e.Comentarios).HasMaxLength(250).IsRequired(false);
 
             entity.Property(e => e.ComentariosPie).HasMaxLength(800).IsRequired(false);

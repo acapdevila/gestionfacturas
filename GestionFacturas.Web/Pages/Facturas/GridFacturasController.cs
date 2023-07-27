@@ -31,6 +31,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                     IdUsuario = m.IdUsuario,
                     IdComprador = m.IdComprador,
                     FormatoNumeroFactura = m.FormatoNumeroFactura,
+                    DescripcionPrimeraLinea = m.DescripcionPrimeraLinea,
                     NumeracionFactura = m.NumeracionFactura,
                     SerieFactura = m.SerieFactura,
                     FechaEmisionFacturaDateTime = m.FechaEmisionFactura,
@@ -39,7 +40,6 @@ namespace GestionFacturas.Web.Pages.Facturas
                     BaseImponible = m.Lineas.Sum(l => (decimal?)(l.PrecioUnitario * l.Cantidad)) ?? 0,
                     Impuestos = m.Lineas.Sum(l => (decimal?)Math.Round((l.PrecioUnitario * l.Cantidad * l.PorcentajeImpuesto / 100), 2)) ?? 0,
                     CompradorNombreOEmpresa = m.CompradorNombreOEmpresa,
-                    ListaDescripciones = m.Lineas.Select(l => l.Descripcion),
                     CompradorNombreComercial = m.Comprador.NombreComercial
                 })
                 .OrderBy_OrdenarPor(gridParams.Orden);

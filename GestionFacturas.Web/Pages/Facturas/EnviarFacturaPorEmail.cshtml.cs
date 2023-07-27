@@ -128,7 +128,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                     {
                         Archivo = pdf,
                         MimeType = "application/pdf",
-                        Nombre = factura.Titulo() + ".pdf"
+                        Nombre = factura.NumeroYEmpresaFactura() + ".pdf"
                     }
                 }
             };

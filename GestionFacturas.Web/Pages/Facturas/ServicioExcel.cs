@@ -67,8 +67,7 @@ namespace GestionFacturas.Web.Pages.Facturas
                 col++;
                 worksheet.Cell(row, col).Value = factura.CompradorNombreOEmpresa;
                 col++;
-                worksheet.Cell(row, col).Value = factura.Conceptos.TruncarConElipsis(70);
-                worksheet.Cell(row, col).CreateComment().AddText(factura.Conceptos);
+                worksheet.Cell(row, col).Value = factura.DescripcionPrimeraLinea.TruncarConElipsis(70);
                 col++;
                 //worksheet.Cell(row, col).SetDataType() = XLDataType.Number;
                 worksheet.Cell(row, col).Value = factura.BaseImponible;
