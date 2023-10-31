@@ -132,6 +132,8 @@ namespace GestionFacturas.Aplicacion
                 return;
             }
 
+            // https://codewithmukesh.com/blog/send-emails-with-aspnet-core/
+
             using var smtp = new SmtpClient();
             await smtp.ConnectAsync(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
             await smtp.AuthenticateAsync(_mailSettings.UserName, _mailSettings.Password);

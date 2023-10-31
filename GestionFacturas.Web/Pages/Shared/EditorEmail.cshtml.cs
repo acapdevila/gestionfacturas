@@ -33,4 +33,8 @@ public class EditorEmail
     public List<SelectListItem> NombresRemitentes { get; set; } = new();
 
 
+    [Display(Name = @"Adjuntar archivos")]
+    public List<IFormFile>? ArchivosAdjuntos { get; set; } = default!;
+
+
 }

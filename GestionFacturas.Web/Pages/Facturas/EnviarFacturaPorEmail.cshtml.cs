@@ -90,6 +90,7 @@ namespace GestionFacturas.Web.Pages.Facturas
             if (factura is null)
                 return NotFound();
 
+            
             var mensaje = GenerarMensajeEmail(EditorEmail, factura);
 
             if (mensaje.IsFailure)
@@ -132,6 +133,30 @@ namespace GestionFacturas.Web.Pages.Facturas
                     }
                 }
             };
+
+            if (editorEmail.ArchivosAdjuntos != null)
+                foreach (var archivo in editorEmail.ArchivosAdjuntos)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        archivo.CopyTo(memoryStream);
+
+                        // Upload the file if less than 2 MB
+                        if (memoryStream.Length < 2097152)
+                        {
+                            mensaje.Adjuntos.Add(new ArchivoAdjunto
+                            {
+                                Archivo = memoryStream.ToArray(),
+                                MimeType = archivo.ContentType,
+                                Nombre = archivo.FileName
+                            });
+                        }
+                        else
+                        {
+                            return Result.Failure<MensajeEmail>("Los archivos adjuntos tienen un máximo de 2Mb");
+                        }
+                    }
+                }
 
             var validacionDestinatarios = 
                             mensaje.AñadirDestinatarios(
