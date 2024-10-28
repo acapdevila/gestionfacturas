@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using GestionFacturas.Aplicacion;
 using GestionFacturas.Dominio;
 using static GestionFacturas.Dominio.CambiarEstadoFactura;
+using EditorFactura = GestionFacturas.Web.Pages.Facturas.EditorTemplates.EditorFactura;
+using DocumentFormat.OpenXml.InkML;
+using Microsoft.EntityFrameworkCore;
+using GestionFacturas.AccesoDatosSql;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
@@ -11,11 +15,12 @@ namespace GestionFacturas.Web.Pages.Facturas
     {
         public const string NombrePagina = @"/Facturas/EditarFactura";
 
-        private readonly ServicioCrudFactura _servicioFactura;
+        private readonly SqlDb _db;
 
-        public EditarFacturaModel(ServicioCrudFactura servicioFactura)
+        public EditarFacturaModel(SqlDb db)
         {
-            _servicioFactura = servicioFactura;
+            
+            _db = db;
         }
 
         [BindProperty]
@@ -23,7 +28,11 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var factura = await _servicioFactura.BuscarFacturaAsync(id);
+            var factura = await _db.Facturas
+                .Include(m => m.Lineas)
+                .FirstAsync(m => m.Id == id);
+
+
             this.Editor = new EditorFactura(factura);
             return Page();
         }
@@ -37,9 +46,21 @@ namespace GestionFacturas.Web.Pages.Facturas
                 return Page();
             }
             
-
-            await _servicioFactura.ActualizarFacturaAsync(Editor);
+            await ActualizarFacturaAsync(Editor);
             return RedirectToPage(DetallesFacturaModel.NombrePagina, new { Editor.Id });
+        }
+
+        public async Task<int> ActualizarFacturaAsync(EditorFactura editor)
+        {
+            var factura = await _db.Facturas
+                .Include(m => m.Lineas)
+                .FirstAsync(m => m.Id == editor.Id);
+
+            // Pendiente de refactorizar
+            EditorFactura.ModificarFactura(editor, factura, _db);
+
+            _db.Entry(factura).State = EntityState.Modified;
+            return await _db.SaveChangesAsync();
         }
     }
 }

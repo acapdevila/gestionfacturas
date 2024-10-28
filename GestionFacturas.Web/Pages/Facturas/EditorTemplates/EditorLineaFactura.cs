@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using GestionFacturas.Dominio;
+using GestionFacturas.Web.Framework;
 
-namespace GestionFacturas.Dominio;
+namespace GestionFacturas.Web.Pages.Facturas.EditorTemplates;
 
 public class EditorLineaFactura
 {
     public EditorLineaFactura(int iva)
     {
-        Cantidad = 1;
+        Cantidad = "1";
         PorcentajeImpuesto = iva;
     }
     public EditorLineaFactura()
@@ -18,7 +20,7 @@ public class EditorLineaFactura
         Id = linea.Id;
         IdFactura = linea.IdFactura;
         Descripcion = linea.Descripcion;
-        Cantidad = linea.Cantidad;
+        Cantidad = linea.Cantidad.ToInputDecimal();
         PrecioUnitario = linea.PrecioUnitario;
         PorcentajeImpuesto = linea.PorcentajeImpuesto;
         
@@ -30,8 +32,8 @@ public class EditorLineaFactura
     [Display(Name = "Concepto")]
     public string Descripcion { get; set; } = string.Empty;
 
-    [Display(Name = "Cantidad")]
-    public decimal Cantidad { get; set; }
+    [Display(Name = "Cantidad")] 
+    public string Cantidad { get; set; } = string.Empty;
 
     [Display(Name = "Precio unitario")]
     public decimal PrecioUnitario { get; set; }

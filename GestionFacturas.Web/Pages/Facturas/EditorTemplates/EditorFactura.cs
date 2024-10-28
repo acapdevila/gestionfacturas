@@ -1,9 +1,12 @@
-﻿using GestionFacturas.Dominio.Clientes;
+﻿using System.ComponentModel.DataAnnotations;
+using GestionFacturas.AccesoDatosSql;
+using GestionFacturas.Dominio;
+using GestionFacturas.Dominio.Clientes;
 using GestionFacturas.Dominio.Infra;
-using System.ComponentModel.DataAnnotations;
+using GestionFacturas.Web.Framework;
 using Omu.ValueInjecter;
 
-namespace GestionFacturas.Dominio;
+namespace GestionFacturas.Web.Pages.Facturas.EditorTemplates;
 
 public class EditorFactura
 {
@@ -21,7 +24,7 @@ public class EditorFactura
 
         foreach (var lineaFactura in factura.Lineas)
         {
-            var lineaEditor = new EditorLineaFactura(lineaFactura);
+            var lineaEditor = new Web.Pages.Facturas.EditorTemplates.EditorLineaFactura(lineaFactura);
             this.Lineas.Add(lineaEditor);
         }
 
@@ -140,7 +143,7 @@ public class EditorFactura
     public string? CompradorEmail { get; set; } = string.Empty;
 
 
-    public List<EditorLineaFactura> Lineas { get; set; } = new ();
+    public List<Web.Pages.Facturas.EditorTemplates.EditorLineaFactura> Lineas { get; set; } = new ();
     
     [Display(Name = "Estado")]
     public EstadoFacturaEnum EstadoFactura { get; set; }
@@ -206,16 +209,16 @@ public class EditorFactura
             VendedorNombreOEmpresa = factura.VendedorNombreOEmpresa,
             VendedorNumeroIdentificacionFiscal = factura.VendedorNumeroIdentificacionFiscal,
             VendedorProvincia = factura.VendedorProvincia,
-            Lineas = new List<EditorLineaFactura>()
+            Lineas = new List<Web.Pages.Facturas.EditorTemplates.EditorLineaFactura>()
         };
 
 
         foreach (var linea in factura.Lineas)
         {
-            editor.Lineas.Add(new EditorLineaFactura
+            editor.Lineas.Add(new Web.Pages.Facturas.EditorTemplates.EditorLineaFactura
             {
                 PorcentajeImpuesto = linea.PorcentajeImpuesto,
-                Cantidad = linea.Cantidad,
+                Cantidad = linea.Cantidad.ToInputDecimal(),
                 Descripcion = linea.Descripcion,
                 PrecioUnitario = linea.PrecioUnitario
             });
@@ -242,9 +245,9 @@ public class EditorFactura
                 FormaPago = FormaPagoEnum.Transferencia,
                 EstadoFactura = EstadoFacturaEnum.Borrador,
 
-                Lineas = new List<EditorLineaFactura> {
-                            new EditorLineaFactura {
-                                    Cantidad = 1,
+                Lineas = new List<Web.Pages.Facturas.EditorTemplates.EditorLineaFactura> {
+                            new Web.Pages.Facturas.EditorTemplates.EditorLineaFactura {
+                                    Cantidad = "1",
                                     PorcentajeImpuesto = 21
                             }
                       }
@@ -273,9 +276,9 @@ public class EditorFactura
                 VendedorNumeroIdentificacionFiscal = ultimaFacturaCreada.VendedorNumeroIdentificacionFiscal,
                 VendedorProvincia = ultimaFacturaCreada.VendedorProvincia,
 
-                Lineas = new List<EditorLineaFactura> {
-                            new EditorLineaFactura {
-                                    Cantidad = 1,
+                Lineas = new List<Web.Pages.Facturas.EditorTemplates.EditorLineaFactura> {
+                            new Web.Pages.Facturas.EditorTemplates.EditorLineaFactura {
+                                    Cantidad = "1",
                                     PorcentajeImpuesto = 21
                             }
                       }
@@ -288,6 +291,51 @@ public class EditorFactura
         }
 
         return editor;
+    }
+
+    public static void ModificarFactura(EditorFactura editor, Factura factura, SqlDb db)
+    {
+        ModificarCabeceraFactura(editor, factura, editor.Lineas.First());
+        ModificarLineasFactura(editor.Lineas, factura, db);
+    }
+
+    private static void ModificarCabeceraFactura(EditorFactura editor, Factura factura, EditorLineaFactura primeraLinea)
+    {
+        factura.InjectFrom(editor);
+
+        factura.IdComprador = editor.IdComprador;
+        factura.FechaEmisionFactura = editor.FechaEmisionFactura.FromInputToDateTime();
+        factura.FechaVencimientoFactura = editor.FechaVencimientoFactura?.FromInputToDateTime();
+        factura.DescripcionPrimeraLinea = primeraLinea.Descripcion;
+    }
+
+    private static void ModificarLineasFactura(ICollection<EditorLineaFactura> lineasEditor, Factura factura, SqlDb db)
+    {
+        foreach (var lineaEditor in lineasEditor)
+        {
+            var lineaFactura = factura.Lineas.FirstOrDefault(m => lineaEditor.Id > 0 && m.Id == lineaEditor.Id);
+
+            if (lineaFactura != null)
+            {
+                if (lineaEditor.EstaMarcadoParaEliminar)
+                {
+                    factura.Lineas.Remove(lineaFactura);
+                    db.FacturasLineas.Remove(lineaFactura);
+                }
+                else
+                {
+                    lineaFactura.InjectFrom(lineaEditor);
+                    lineaFactura.Cantidad = lineaEditor.Cantidad.FromInputConComaOPuntoToDecimal();
+                }
+            }
+            else if (!lineaEditor.EstaMarcadoParaEliminar)
+            {
+                lineaFactura = new LineaFactura();
+                lineaFactura.InjectFrom(lineaEditor);
+                lineaFactura.Cantidad = lineaEditor.Cantidad.FromInputConComaOPuntoToDecimal();
+                factura.Lineas.Add(lineaFactura);
+            }
+        }
     }
 
 

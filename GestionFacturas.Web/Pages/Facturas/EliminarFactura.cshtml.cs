@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using GestionFacturas.Aplicacion;
-using GestionFacturas.Dominio;
+using EditorFactura = GestionFacturas.Web.Pages.Facturas.EditorTemplates.EditorFactura;
+using GestionFacturas.AccesoDatosSql;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
@@ -10,11 +11,11 @@ namespace GestionFacturas.Web.Pages.Facturas
     {
         public const string NombrePagina = @"/Facturas/EliminarFactura";
 
-        private readonly ServicioCrudFactura _servicioFactura;
+        private readonly SqlDb _db;
 
-        public EliminarFacturaModel(ServicioCrudFactura servicioFactura)
+        public EliminarFacturaModel(SqlDb db)
         {
-            _servicioFactura = servicioFactura;
+            _db = db;
         }
 
         [BindProperty]
@@ -22,7 +23,10 @@ namespace GestionFacturas.Web.Pages.Facturas
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var factura = await _servicioFactura.BuscarFacturaAsync(id);
+            var factura = await _db.Facturas
+                .Include(m => m.Lineas)
+                .FirstAsync(m => m.Id == id); 
+
             Editor = new EditorFactura(factura);
             return Page();
         }
@@ -35,8 +39,24 @@ namespace GestionFacturas.Web.Pages.Facturas
             }
             
 
-            await _servicioFactura.EliminarFactura(Editor.Id);
+            await EliminarFactura(Editor.Id);
             return RedirectToPage("/Facturas/EliminarFacturaConfirmado");
+        }
+
+
+        public async Task<int> EliminarFactura(int idFactura)
+        {
+            var factura = await _db.Facturas.Include(m => m.Lineas).FirstAsync(m => m.Id == idFactura);
+
+            while (factura.Lineas.Any())
+            {
+                var linea = factura.Lineas.First();
+                _db.FacturasLineas.Remove(linea);
+            }
+
+            _db.Facturas.Remove(factura);
+
+            return await _db.SaveChangesAsync();
         }
     }
 }

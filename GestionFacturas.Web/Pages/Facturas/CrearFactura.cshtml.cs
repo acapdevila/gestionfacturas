@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GestionFacturas.Dominio;
-using GestionFacturas.Aplicacion;
 using GestionFacturas.AccesoDatosSql;
 using Microsoft.EntityFrameworkCore;
+using EditorFactura = GestionFacturas.Web.Pages.Facturas.EditorTemplates.EditorFactura;
 
 namespace GestionFacturas.Web.Pages.Facturas
 {
@@ -12,15 +12,14 @@ namespace GestionFacturas.Web.Pages.Facturas
     {
         public static readonly string NombrePagina = "/Facturas/CrearFactura";
 
-        private readonly ServicioCrudFactura _servicio;
         private readonly SqlDb _db;
 
         public string HrefCancelar { get; set; } = string.Empty;
 
-        public CrearFacturaModel( SqlDb db, ServicioCrudFactura servicio)
+        public CrearFacturaModel( SqlDb db)
         {
             _db = db;
-            _servicio = servicio;
+            
         }
 
         public async Task<IActionResult> OnGet(int? id)
@@ -57,19 +56,39 @@ namespace GestionFacturas.Web.Pages.Facturas
         [BindProperty]
         public EditorFactura Editor { get; set; }  = new ();
 
-
-
+        
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            var factura = await _servicio.CrearFacturaAsync(Editor);
+
+
+            var factura =  await CrearFacturaAsync(Editor);
             
             return RedirectToPage(DetallesFacturaModel.NombrePagina, new { factura.Id });
         }
-        
+
+        public async Task<Factura> CrearFacturaAsync(EditorFactura editor)
+        {
+            var factura = new Factura();
+
+            var comprador = await _db
+                .Clientes
+                .FirstAsync(m => m.Id == editor.IdComprador);
+
+            factura.Comprador = comprador;
+
+            EditorFactura.ModificarFactura(editor, factura, _db);
+
+            _db.Facturas.Add(factura);
+
+            await _db.SaveChangesAsync();
+
+            return factura;
+        }
+
     }
     
 }

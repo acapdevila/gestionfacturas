@@ -4,8 +4,13 @@ using GestionFacturas.Web.Pages.Facturas;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using GestionFacturas.AccesoDatosSql.Repos;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var cultureInfo = new CultureInfo("es-ES");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // Sets the default scheme to cookies
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
@@ -46,7 +51,6 @@ var mailSettings = new MailSettings();
 builder.Configuration.GetSection("MailSettings").Bind(mailSettings);
 builder.Services.AddSingleton(mailSettings);
 builder.Services.AddScoped<IServicioEmail, ServicioEmailMailKid>();
-builder.Services.AddScoped<ServicioCrudFactura>();
 builder.Services.AddScoped<CambiarEstadoFacturaServicio>();
 builder.Services.AddScoped<CambiarEstadoFacturaRepo>();
 
